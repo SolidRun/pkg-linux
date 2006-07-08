@@ -16,6 +16,7 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
 
         packages_dummy = []
         packages_dummy.extend(self.process_packages(image_latest, vars))
+        packages_dummy.extend(self.process_packages(headers_latest, vars))
 
         for package in packages_dummy:
             name = package['Package']
