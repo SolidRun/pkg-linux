@@ -6,6 +6,14 @@ include /usr/src/linux-support-$(KERNELVERSION)/modules/rules.include
 
 GENCONTROL = debian/bin/gencontrol.py /usr/src/linux-support-$(KERNELVERSION)
 
+ifdef DEBIAN_KERNEL_BUILD_ANY
+binary-arch: binary-arch-all
+endif
+
+binary-arch-all: debian/control $(BUILD_DIR) $(STAMPS_DIR)
+	dh_testdir
+	$(MAKE) -f debian/rules.gen binary-arch
+
 maintainerclean:
 	-rm debian/control debian/control.md5sum debian/rules.gen
 
