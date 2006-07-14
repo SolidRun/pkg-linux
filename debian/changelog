@@ -1,3 +1,9 @@
+linux-latest-2.6 (0.2) testing; urgency=low
+
+  * Fix cross build of extra packages. 
+
+ -- Bastian Blank <waldi@debian.org>  Fri, 14 Jul 2006 17:32:29 +0200
+
 linux-latest-2.6 (0.1) testing; urgency=low
 
   * Initial release.
