@@ -36,6 +36,29 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
         makefile.append(("binary-arch-%s-%s-%s-real:" % (arch, subarch, flavour), cmds_binary_arch))
         makefile.append(("build-%s-%s-%s-real:" % (arch, subarch, flavour)))
 
+    def do_extra(self, packages, makefile):
+        templates_extra = self.templates["control.extra"]
+
+        packages.extend(self.process_packages(templates_extra, {}))
+        extra_arches = {}
+        for package in templates_extra:
+            arches = package['Architecture']
+            for arch in arches:
+                i = extra_arches.get(arch, [])
+                i.append(package)
+                extra_arches[arch] = i
+        archs = extra_arches.keys()
+        archs.sort()
+        for arch in archs:
+            cmds = []
+            for i in extra_arches[arch]:
+                tmp = []
+                if i.has_key('X-Version-Overwrite-Epoch'):
+                        tmp.append("-v1:%s" % self.version['source'])
+                cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], ' '.join(tmp)))
+            makefile.append("binary-arch-%s:: binary-arch-%s-extra" % (arch, arch))
+            makefile.append(("binary-arch-%s-extra:" % arch, cmds))
+
     def process_changelog_version(self):
         changelog_version = read_changelog()[0]['Version']
         # HACKALARM
