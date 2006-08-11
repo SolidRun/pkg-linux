@@ -11,6 +11,11 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
         self.process_config_version(config_parser({}, [sys.argv[1] + "/version"]))
         self.process_changelog_version()
 
+    def do_main_packages(self, packages, extra):
+        packages['source']['Build-Depends'].extend(
+            ['linux-support-%s%s' % (self.version['upstream'], self.abiname)]
+        )
+
     def do_flavour_packages(self, packages, makefile, arch, subarch, flavour, vars, makeflags, extra):
         image_latest = self.templates["control.image.latest"]
         headers_latest = self.templates["control.headers.latest"]
