@@ -1,7 +1,7 @@
 Package: linux-image@localversion@
 Section: admin
 Priority: optional
-Depends: linux-image-@major@@localversion@ (= ${Source-Version})
+Depends: linux-image-@major@@localversion@
 Description: Linux kernel image on @class@
  This package depends on the latest binary image for Linux kernel on
  @longclass@ machines.
@@ -9,7 +9,7 @@ Description: Linux kernel image on @class@
 Package: linux-image-@major@@localversion@
 Section: admin
 Priority: optional
-Depends: linux-image-@upstreamversion@@abiname@@localversion@ (= ${Source-Version})
+Depends: linux-image-@upstreamversion@@abiname@@localversion@
 Description: Linux kernel @major@ image on @class@
  This package depends on the latest binary image for Linux kernel @major@
  on @longclass@ machines.
