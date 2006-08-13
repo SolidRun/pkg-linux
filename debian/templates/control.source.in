@@ -1,5 +1,5 @@
 Source: linux-latest-@major@
-Section: devel
+Section: admin
 Priority: optional
 Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
 Uploaders: Bastian Blank <waldi@debian.org>
