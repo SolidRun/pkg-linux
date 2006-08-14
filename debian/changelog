@@ -1,5 +1,5 @@
-linux-latest-2.6 (1) UNRELEASED; urgency=low
+linux-latest-2.6 (1) unstable; urgency=low
 
   * Initial release.
 
- -- Bastian Blank <waldi@debian.org>  Fri, 11 Aug 2006 13:09:18 +0200
+ -- Bastian Blank <waldi@debian.org>  Mon, 14 Aug 2006 20:32:24 +0200
