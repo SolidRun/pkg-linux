@@ -327,4 +327,47 @@ Depends: linux-image-2.6-sparc64-smp
 Description: Linux 2.6 image on multi-processor 64-bit UltraSPARC class - transition package
  This package is for transition only.
 
+Package: kernel-image-2.6-amd64-generic 
+X-Version-Overwrite-Epoch: 1
+Architecture: amd64
+Section: admin
+Priority: extra
+Depends: linux-image-2.6-amd64
+Description: Linux kernel image for version 2.6 on generic x86_64 systems - transition package
+ This package is for transition only.
 
+Package: kernel-image-2.6-amd64-k8 
+X-Version-Overwrite-Epoch: 1
+Architecture: amd64
+Section: admin
+Priority: extra
+Depends: linux-image-2.6-amd64
+Description: Linux kernel image for version 2.6 on AMD64 systems - transition package
+ This package is for transition only.
+
+Package: kernel-image-2.6-amd64-k8-smp 
+X-Version-Overwrite-Epoch: 1
+Architecture: amd64
+Section: admin
+Priority: extra
+Depends: linux-image-2.6-amd64
+Description: Linux kernel image for version 2.6 on AMD64 SMP systems - transition package
+ This package is for transition only.
+
+Package: kernel-image-2.6-em64t-p4 
+X-Version-Overwrite-Epoch: 1
+Architecture: amd64
+Section: admin
+Priority: extra
+Depends: linux-image-2.6-amd64
+Description: Linux kernel image for version 2.6 on Intel EM64T systems - transition package
+ This package is for transition only.
+
+Package: kernel-image-2.6-em64t-p4-smp 
+X-Version-Overwrite-Epoch: 1
+Architecture: amd64
+Section: admin
+Priority: extra
+Depends: linux-image-2.6-amd64
+Description: Linux kernel image for version 2.6 on Intel EM64T SMP systems - transition package
+ This package is for transition only.
