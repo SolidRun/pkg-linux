@@ -17,12 +17,15 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
         )
 
     def do_flavour_packages(self, packages, makefile, arch, subarch, flavour, vars, makeflags, extra):
+        config_entry = self.config.merge('base', arch, subarch, flavour)
+
         image_latest = self.templates["control.image.latest"]
         headers_latest = self.templates["control.headers.latest"]
 
         packages_dummy = []
         packages_dummy.extend(self.process_packages(image_latest, vars))
-        packages_dummy.extend(self.process_packages(headers_latest, vars))
+        if config_entry.get('modules', True):
+            packages_dummy.extend(self.process_packages(headers_latest, vars))
 
         for package in packages_dummy:
             name = package['Package']
