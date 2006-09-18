@@ -1,10 +1,10 @@
-linux-latest-2.6 (2) UNRELEASED; urgency=low
+linux-latest-2.6 (2) unstable; urgency=high
 
   [ Bastian Blank ]
   * Don't generate headers packages for module-less kernels.
 
   [ Frederik Schüler ]
-  * [amd64] Add kernel-image-2.6-* transition packages. Closes: #377228
+  * [amd64] Add kernel-image-2.6-* transition packages. Closes: #377228 
 
  -- Frederik Schüler <fs@debian.org>  Mon, 18 Sep 2006 16:32:51 +0200
 
