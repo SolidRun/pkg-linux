@@ -60,10 +60,11 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
         for arch in archs:
             cmds = []
             for i in extra_arches[arch]:
-                tmp = []
                 if i.has_key('X-Version-Overwrite-Epoch'):
-                        tmp.append("-v1:%s" % self.package_version)
-                cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], ' '.join(tmp)))
+                    version = '-v1:%s' % self.package_version
+                else:
+                    version = '-v%s' % self.package_version
+                cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
             makefile.append("binary-arch-%s:: binary-arch-%s-extra" % (arch, arch))
             makefile.append(("binary-arch-%s-extra:" % arch, cmds))
 
