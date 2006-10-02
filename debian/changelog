@@ -1,3 +1,9 @@
+linux-latest-2.6 (3) unstable; urgency=low
+
+  * Update linux-latest to 2.6.18.
+
+ -- Frederik Schüler <fs@debian.org>  Mon,  2 Oct 2006 13:16:57 +0200
+
 linux-latest-2.6 (2) unstable; urgency=high
 
   [ Bastian Blank ]
