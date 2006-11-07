@@ -1,3 +1,9 @@
+linux-latest-2.6 (4) UNRELESED; urgency=low
+
+  * Update to 2.6.18-2.
+
+ -- maximilian attems <maks@sternwelten.at>  Tue,  7 Nov 2006 16:38:14 +0100
+
 linux-latest-2.6 (3) unstable; urgency=low
 
   * Update linux-latest to 2.6.18.
