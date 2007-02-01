@@ -18,7 +18,7 @@ Description: Linux 2.6 image on Alpha SMP - transition package
 
 Package: kernel-image-2.6-amd64-generic 
 X-Version-Overwrite-Epoch: 1
-Architecture: amd64
+Architecture: amd64 i386
 Section: admin
 Priority: extra
 Depends: linux-image-2.6-amd64
@@ -27,7 +27,7 @@ Description: Linux kernel image for version 2.6 on generic x86_64 systems - tran
 
 Package: kernel-image-2.6-amd64-k8 
 X-Version-Overwrite-Epoch: 1
-Architecture: amd64
+Architecture: amd64 i386
 Section: admin
 Priority: extra
 Depends: linux-image-2.6-amd64
@@ -36,7 +36,7 @@ Description: Linux kernel image for version 2.6 on AMD64 systems - transition pa
 
 Package: kernel-image-2.6-amd64-k8-smp 
 X-Version-Overwrite-Epoch: 1
-Architecture: amd64
+Architecture: amd64 i386
 Section: admin
 Priority: extra
 Depends: linux-image-2.6-amd64
@@ -45,7 +45,7 @@ Description: Linux kernel image for version 2.6 on AMD64 SMP systems - transitio
 
 Package: kernel-image-2.6-em64t-p4 
 X-Version-Overwrite-Epoch: 1
-Architecture: amd64
+Architecture: amd64 i386
 Section: admin
 Priority: extra
 Depends: linux-image-2.6-amd64
@@ -54,7 +54,7 @@ Description: Linux kernel image for version 2.6 on Intel EM64T systems - transit
 
 Package: kernel-image-2.6-em64t-p4-smp 
 X-Version-Overwrite-Epoch: 1
-Architecture: amd64
+Architecture: amd64 i386
 Section: admin
 Priority: extra
 Depends: linux-image-2.6-amd64
