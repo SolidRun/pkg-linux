@@ -13,7 +13,7 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
 
     def do_main_packages(self, packages, extra):
         packages['source']['Build-Depends'].extend(
-            ['linux-support-%s%s' % (self.version['linux']['upstream'], self.abiname)]
+            ['linux-support-%s%s' % (self.version.linux_upstream, self.abiname)]
         )
 
     def do_flavour_packages(self, packages, makefile, arch, subarch, flavour, vars, makeflags, extra):
@@ -69,12 +69,12 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
             makefile.append(("binary-arch-%s-extra:" % arch, cmds))
 
     def process_changelog_version(self):
-        changelog_version = read_changelog()[0]['Version']
-        self.package_version = '%s+%s' % (self.version['linux']['upstream'], changelog_version['complete'])
+        changelog_version = Changelog()[0].version
+        self.package_version = '%s+%s' % (self.version.upstream, changelog_version.complete)
 
     def process_config_version(self, config):
         entry = config['version',]
-        self.version = parse_version(entry['source'])
+        self.version = VersionLinux(entry['source'])
         self.abiname = entry['abiname']
         self.vars = self.process_version_linux(self.version, self.abiname)
 
