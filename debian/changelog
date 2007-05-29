@@ -1,9 +1,9 @@
-linux-latest-2.6 (7) UNRELEASED; urgency=low
+linux-latest-2.6 (7) unstable; urgency=low
 
   * Update to 2.6.21-1.
   * Remove etch transition packages.
 
- -- Bastian Blank <waldi@debian.org>  Fri, 25 May 2007 22:12:13 +0200
+ -- Bastian Blank <waldi@debian.org>  Tue, 29 May 2007 14:26:20 +0200
 
 linux-latest-2.6 (6) unstable; urgency=low
 
