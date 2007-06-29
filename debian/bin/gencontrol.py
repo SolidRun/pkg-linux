@@ -19,13 +19,16 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
     def do_flavour_packages(self, packages, makefile, arch, subarch, flavour, vars, makeflags, extra):
         config_entry = self.config.merge('base', arch, subarch, flavour)
 
-        image_latest = self.templates["control.image.latest"]
-        headers_latest = self.templates["control.headers.latest"]
+        templates = []
 
-        packages_dummy = []
-        packages_dummy.extend(self.process_packages(image_latest, vars))
+        if config_entry.get('type', None) == 'plain-xen':
+            templates.extend(self.templates["control.image.latest.type-modules"])
+        else:
+            templates.extend(self.templates["control.image.latest.type-standalone"])
         if config_entry.get('modules', True):
-            packages_dummy.extend(self.process_packages(headers_latest, vars))
+            templates.extend(self.templates["control.headers.latest"])
+
+        packages_dummy = self.process_packages(templates, vars)
 
         for package in packages_dummy:
             name = package['Package']

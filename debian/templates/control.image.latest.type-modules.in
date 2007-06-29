@@ -1,0 +1,33 @@
+Package: linux-image@localversion@
+Section: admin
+Priority: optional
+Depends: linux-image-@major@@localversion@, linux-modules@localversion@
+Description: Linux image on @class@
+ This package depends on the latest binary image for Linux kernel on
+ @longclass@ machines.
+
+Package: linux-image-@major@@localversion@
+Section: admin
+Priority: optional
+Depends: linux-image-@upstreamversion@@abiname@@localversion@, linux-modules-@major@@localversion@
+Description: Linux @major@ image on @class@
+ This package depends on the latest binary image for Linux kernel @major@
+ on @longclass@ machines.
+
+Package: linux-modules@localversion@
+Section: admin
+Priority: optional
+Depends: linux-modules-@major@@localversion@
+Description: Linux modules on @class@
+ This package depends on the latest pre-built loadable modules for Linux kernel
+ on @longclass@ machines.
+
+Package: linux-modules-@major@@localversion@
+Section: admin
+Priority: optional
+Depends: linux-modules-@upstreamversion@@abiname@@localversion@
+Provides: linux-latest-abi-@upstreamversion@@abiname@@localversion@
+Description: Linux @major@ modules on @class@
+ This package depends on the latest pre-built loadable modules for Linux kernel
+ @major@ on @longclass@ machines.
+
