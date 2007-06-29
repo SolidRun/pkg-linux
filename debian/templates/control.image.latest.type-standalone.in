@@ -10,7 +10,7 @@ Package: linux-image-@major@@localversion@
 Section: admin
 Priority: optional
 Depends: linux-image-@upstreamversion@@abiname@@localversion@
-Provides: linux-latest-abi-@upstreamversion@@abiname@@localversion@
+Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
 Description: Linux @major@ image on @class@
  This package depends on the latest binary image for Linux kernel @major@
  on @longclass@ machines.
