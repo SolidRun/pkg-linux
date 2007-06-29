@@ -1,6 +1,8 @@
 linux-latest-2.6 (8) UNRELEASED; urgency=low
 
   * Update to 2.6.21-2. 
+  * Add modules meta packages.
+  * Provide linux-latest-abi-*. (closes: #428783)
 
  -- Bastian Blank <waldi@debian.org>  Fri, 29 Jun 2007 16:33:04 +0200
 
