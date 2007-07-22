@@ -1,14 +1,14 @@
 #!/usr/bin/env python2.4
 import sys
 sys.path.append(sys.argv[1]+ "/lib/python")
-import debian_linux.gencontrol
+from debian_linux.gencontrol import Gencontrol as Base
 from debian_linux.config import *
 from debian_linux.debian import *
 
-class gencontrol(debian_linux.gencontrol.gencontrol):
+class Gencontrol(Base):
     def __init__(self, config):
-        super(gencontrol, self).__init__(config)
-        self.process_config_version(config_parser({}, [sys.argv[1] + "/version"]))
+        super(Gencontrol, self).__init__(config)
+        self.process_config_version(ConfigParser({}, [sys.argv[1] + "/version"]))
         self.process_changelog_version()
 
     def do_main_packages(self, packages, extra):
@@ -82,4 +82,4 @@ class gencontrol(debian_linux.gencontrol.gencontrol):
         self.vars = self.process_version_linux(self.version, self.abiname)
 
 if __name__ == '__main__':
-    gencontrol(sys.argv[1] + "/arch")()
+    Gencontrol(sys.argv[1] + "/arch")()
