@@ -1,8 +1,8 @@
-linux-latest-2.6 (9) UNRELEASED; urgency=low
+linux-latest-2.6 (9) unstable; urgency=low
 
   * Update to 2.6.22-1.
 
- -- Bastian Blank <waldi@debian.org>  Sun, 22 Jul 2007 13:40:15 +0200
+ -- Bastian Blank <waldi@debian.org>  Mon, 23 Jul 2007 14:13:49 +0200
 
 linux-latest-2.6 (8) unstable; urgency=low
 
