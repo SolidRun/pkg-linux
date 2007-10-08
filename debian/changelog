@@ -1,3 +1,9 @@
+linux-latest-2.6 (11) UNRELEASED; urgency=low
+
+  * Update to 2.6.22-3
+
+ -- maximilian attems <maks@debian.org>  Mon, 08 Oct 2007 23:54:20 +0200
+
 linux-latest-2.6 (10) unstable; urgency=low
 
   * Update to 2.6.22-2.
