@@ -1,8 +1,8 @@
-linux-latest-2.6 (13) UNRELEASED; urgency=low
+linux-latest-2.6 (13) unstable; urgency=low
 
-  * Add transition packages for i386/k7.
+  * Add transitional packages for k7.
 
- -- Bastian Blank <waldi@debian.org>  Mon, 04 Feb 2008 10:20:12 +0100
+ -- Bastian Blank <waldi@debian.org>  Mon, 04 Feb 2008 10:22:13 +0100
 
 linux-latest-2.6 (12) unstable; urgency=low
 
