@@ -1,3 +1,9 @@
+linux-latest-2.6 (14) UNRELEASED; urgency=low
+
+  * Update to 2.6.25-2.
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 08 May 2008 17:11:49 +0200
+
 linux-latest-2.6 (13) unstable; urgency=low
 
   * Add transitional packages for k7.
