@@ -15,7 +15,13 @@ class Gencontrol(Base):
         config_entry = self.config['version',]
         self.version = VersionLinux(config_entry['source'])
         self.abiname = config_entry['abiname']
-        self.vars = self.process_version_linux(self.version, self.abiname)
+        self.vars = {
+            'upstreamversion': self.version.linux_upstream,
+            'version': self.version.linux_version,
+            'source_upstream': self.version.upstream,
+            'major': self.version.linux_major,
+            'abiname': self.abiname,
+        }
 
         changelog_version = Changelog()[0].version
         self.package_version = '%s+%s' % (self.version.upstream, changelog_version.complete)
