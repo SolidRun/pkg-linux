@@ -1,9 +1,9 @@
-linux-latest-2.6 (15) UNRELEASED; urgency=low
+linux-latest-2.6 (15) unstable; urgency=low
 
   * Update to 2.6.26-1.
   * Make linux-image-* complete meta packages.
 
- -- Bastian Blank <waldi@debian.org>  Sat, 02 Aug 2008 13:17:10 +0200
+ -- Bastian Blank <waldi@debian.org>  Mon, 04 Aug 2008 14:58:33 +0200
 
 linux-latest-2.6 (14) unstable; urgency=low
 
