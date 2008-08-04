@@ -26,7 +26,7 @@ class Gencontrol(Base):
         changelog_version = Changelog()[0].version
         self.package_version = '%s+%s' % (self.version.upstream, changelog_version.complete)
 
-    def do_main_packages(self, packages, extra):
+    def do_main_packages(self, packages, vars, makeflags, extra):
         packages['source']['Build-Depends'].extend(
             ['linux-support-%s%s' % (self.version.linux_upstream, self.abiname)]
         )
