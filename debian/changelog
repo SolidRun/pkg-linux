@@ -1,3 +1,9 @@
+linux-latest-2.6 (16) unstable; urgency=low
+
+  * Rebuild to pick up new images
+
+ -- Bastian Blank <waldi@debian.org>  Sun, 31 Aug 2008 18:42:36 +0200
+
 linux-latest-2.6 (15) unstable; urgency=low
 
   * Update to 2.6.26-1.
