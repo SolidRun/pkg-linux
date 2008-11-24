@@ -32,15 +32,16 @@ class Gencontrol(Base):
         )
 
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
-        config_entry = self.config.merge('base', arch, featureset, flavour)
+        config_base = self.config.merge('base', arch, featureset, flavour)
+        config_image = self.config.merge('image', arch, featureset, flavour)
 
         templates = []
 
-        if config_entry.get('type', None) == 'plain-xen':
+        if config_image.get('type', None) == 'plain-xen':
             templates.extend(self.templates["control.image.latest.type-modules"])
         else:
             templates.extend(self.templates["control.image.latest.type-standalone"])
-        if config_entry.get('modules', True):
+        if config_base.get('modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
         packages_dummy = self.process_packages(templates, vars)
