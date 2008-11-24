@@ -4,7 +4,7 @@ import sys
 sys.path.append(sys.argv[1] + "/lib/python")
 
 from debian_linux.config import ConfigCoreDump
-from debian_linux.debian import Changelog, VersionLinux
+from debian_linux.debian import Changelog, PackageDescription, VersionLinux
 from debian_linux.gencontrol import Gencontrol as Base
 from debian_linux.utils import Templates
 
@@ -44,7 +44,19 @@ class Gencontrol(Base):
         if config_base.get('modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
-        packages_dummy = self.process_packages(templates, vars)
+        image_fields = {'Description': PackageDescription()}
+
+        if 'desc-parts' in config_image:
+            desc = image_fields['Description']
+            parts = config_image['desc-parts']
+            for part in parts:
+                desc.append(config_image['desc-long-part-' + part])
+                desc.append_short(config_image.get('desc-short-part-' + part, ''))
+
+        packages_dummy = []
+
+        packages_dummy.append(self.process_real_image(templates[0], image_fields, vars))
+        packages_dummy.extend(self.process_packages(templates[1:], vars))
 
         for package in packages_dummy:
             name = package['Package']
@@ -83,6 +95,16 @@ class Gencontrol(Base):
                 cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
             makefile.add('binary-arch_%s' % arch, ['binary-arch_%s_extra' % arch])
             makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
+
+    def process_real_image(self, entry, fields, vars):
+        entry = self.process_package(entry, vars)
+        for key, value in fields.iteritems():
+            if key in entry:
+                real = entry[key]
+                real.extend(value)
+            elif value:
+                entry[key] = value
+        return entry
 
 if __name__ == '__main__':
     Gencontrol(sys.argv[1] + "/config.defines.dump")()

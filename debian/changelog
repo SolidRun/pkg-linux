@@ -1,6 +1,7 @@
 linux-latest-2.6 (17) UNRELEASED; urgency=low
 
   * Use correct part of the config for image type.
+  * Add description parts.
 
  -- Bastian Blank <waldi@debian.org>  Mon, 24 Nov 2008 14:14:10 +0100
 
