@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Depends: linux-headers-@upstreamversion@@abiname@@localversion@
 Provides: linux-headers, linux-headers-@major@
-Description: Header files for Linux @major@ on @class@
+Description: Header files for Linux @major@@localversion@
  This package depends on the architecture-specific header files for the latest
- Linux kernel @major@ on @longclass@ machines.
+ Linux kernel @major@@localversion@.
 
