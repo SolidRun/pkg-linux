@@ -46,10 +46,10 @@ class Gencontrol(Base):
 
         image_fields = {'Description': PackageDescription()}
 
-        if 'desc-parts' in config_image:
+        desc_parts = self.config.get_merge('image', arch, featureset, flavour, 'desc-parts')
+        if desc_parts:
             desc = image_fields['Description']
-            parts = config_image['desc-parts']
-            for part in parts:
+            for part in desc_parts[::-1]:
                 desc.append(config_image['desc-long-part-' + part])
                 desc.append_short(config_image.get('desc-short-part-' + part, ''))
 
