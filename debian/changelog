@@ -3,7 +3,7 @@ linux-latest-2.6 (17) unstable; urgency=low
   * Use correct part of the config for image type.
   * Add description parts.
 
- -- Bastian Blank <waldi@debian.org>  Wed, 10 Dec 2008 12:44:59 +0100
+ -- Bastian Blank <waldi@debian.org>  Wed, 10 Dec 2008 13:23:15 +0100
 
 linux-latest-2.6 (16) unstable; urgency=low
 
