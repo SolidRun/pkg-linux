@@ -1,6 +1,7 @@
 linux-latest-2.6 (18) UNRELEASED; urgency=low
 
   * Update to 2.6.29-1.
+  * Use dh_prep.
 
  -- Bastian Blank <waldi@debian.org>  Tue, 31 Mar 2009 22:00:50 +0200
 

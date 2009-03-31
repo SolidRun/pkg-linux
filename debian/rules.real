@@ -23,5 +23,5 @@ install-base:
 install-dummy:
 	dh_testdir
 	dh_testroot
-	dh_clean -d -k
+	dh_prep
 	$(MAKE) -f debian/rules.real install-base
