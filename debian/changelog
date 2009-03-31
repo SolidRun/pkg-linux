@@ -1,3 +1,9 @@
+linux-latest-2.6 (18) UNRELEASED; urgency=low
+
+  * Update to 2.6.29-1.
+
+ -- Bastian Blank <waldi@debian.org>  Tue, 31 Mar 2009 22:00:50 +0200
+
 linux-latest-2.6 (17) unstable; urgency=low
 
   * Use correct part of the config for image type.
