@@ -2,6 +2,7 @@ linux-latest-2.6 (19) UNRELEASED; urgency=low
 
   * Update to 2.6.29-2.
   * Use debhelper compat level 7.
+  * Update copyright file.
 
  -- Bastian Blank <waldi@debian.org>  Sat, 09 May 2009 16:31:38 +0200
 
