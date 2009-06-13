@@ -1,6 +1,4 @@
 Package: linux-headers-@major@@localversion@
-Section: devel
-Priority: optional
 Depends: linux-headers-@upstreamversion@@abiname@@localversion@
 Provides: linux-headers, linux-headers-@major@
 Description: Header files for Linux @major@@localversion@

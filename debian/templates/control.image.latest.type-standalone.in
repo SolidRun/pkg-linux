@@ -1,6 +1,4 @@
 Package: linux-image@localversion@
-Section: admin
-Priority: optional
 Depends: linux-image-@upstreamversion@@abiname@@localversion@
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
 Description: Linux image on @class@
@@ -8,8 +6,6 @@ Description: Linux image on @class@
  @longclass@ machines.
 
 Package: linux-image-@major@@localversion@
-Section: admin
-Priority: optional
 Depends: linux-image-@upstreamversion@@abiname@@localversion@
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
 Description: Linux @major@ image on @class@
