@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.4
+#!/usr/bin/python
 
 import sys
 sys.path.append(sys.argv[1] + "/lib/python")
