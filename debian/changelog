@@ -1,6 +1,7 @@
 linux-latest-2.6 (20) UNRELEASED; urgency=low
 
   * Move into kernel section.
+  * Update to 2.6.30-1.
 
  -- Bastian Blank <waldi@debian.org>  Sat, 13 Jun 2009 13:04:12 +0200
 
