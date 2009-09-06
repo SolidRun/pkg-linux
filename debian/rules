@@ -4,7 +4,7 @@ SHELL := sh -e
 include debian/rules.defs
 include /usr/src/linux-support-$(KERNELVERSION)/modules/rules.include
 
-GENCONTROL = ALL_KERNELVERSIONS=$(ALL_KERNELVERSIONS) debian/bin/gencontrol.py
+GENCONTROL = debian/bin/gencontrol.py
 
 ifdef DEBIAN_KERNEL_BUILD_ANY
 binary-arch: binary-arch-all

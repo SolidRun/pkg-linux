@@ -1,9 +1,3 @@
-linux-latest-2.6 (21) UNRELEASED; urgency=low
-
-  * Add linux-support-all package to suport out-of-tree module building.
-
- -- Ben Hutchings <ben@decadent.org.uk>  Sun, 30 Aug 2009 15:08:48 +0100
-
 linux-latest-2.6 (20) unstable; urgency=low
 
   * Move into kernel section.

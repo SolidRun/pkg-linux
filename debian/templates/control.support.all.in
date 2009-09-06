@@ -1,6 +1,0 @@
-Package: linux-support-all
-Architecture: all
-Depends: @linuxsupport_allversions@
-Description: Linux module building support package
- This package supports building modules for all Linux kernel versions in
- a Debian release.
