@@ -25,3 +25,17 @@ install-dummy:
 	dh_testroot
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
+
+install-support-all:
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs usr/src/linux-support-all/modules
+	dh_install debian/modules/gencontrol.py debian/modules/rules.* \
+		usr/src/linux-support-all/modules
+	cat debian/rules.defs \
+		>> debian/install-support-all/debian/modules/rules.defs
+	dh_installdirs usr/src/linux-support-all/modules/templates
+	dh_install debian/modules/templates/*.in \
+		usr/src/linux-support-all/modules/templates
+	$(MAKE) -f debian/rules.real install-base

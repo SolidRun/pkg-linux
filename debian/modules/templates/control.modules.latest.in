@@ -1,0 +1,9 @@
+Package: @module@-modules-@major@@localversion@
+Section: kernel
+Priority: optional
+Depends: @module@-modules-@upstreamversion@@abiname@@localversion@, linux-latest-modules-@upstreamversion@@abiname@@localversion@
+Description: @desc@ for Linux @major@ on @class@
+ This package depends on the @desc@ modules for latest Linux kernel @major@ on
+ @longclass@ machines.
+ .
+ @longdesc@

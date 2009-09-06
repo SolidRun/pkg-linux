@@ -1,0 +1,67 @@
+MODULES_SUPPORT_DIR := /usr/src/linux-support-all/modules
+include $(MODULES_SUPPORT_DIR)/rules.defs
+
+MODULES_ARCH := $(shell dpkg-architecture -qDEB_HOST_ARCH)
+
+MODULES_BINNMU := $(shell dpkg-parsechangelog | sed -ne 's,^Version: .*\+b\(.*\)$$,\1,p')
+
+MODULES_BUILD_STAMP = $(MODULES_STAMPS_DIR)/modules-build
+MODULES_SETUP_STAMP = $(MODULES_STAMPS_DIR)/modules-setup
+
+modules-build: $(MODULES_BUILD_STAMP)
+$(MODULES_BUILD_STAMP): $(MODULES_SETUP_STAMP)
+	dh_testdir
+	$(MAKE) -f debian/rules.gen build_$(MODULES_ARCH)
+	touch $@
+
+$(MODULES_BUILD_DIR) $(MODULES_STAMPS_DIR):
+	@[ -d $@ ] || mkdir $@
+
+modules-clean: debian/control
+	dh_testdir
+	rm -rf $(MODULES_BUILD_DIR) $(MODULES_STAMPS_DIR)
+
+modules-binary-indep:
+	dh_testdir
+	$(MAKE) -f debian/rules.gen binary-indep
+
+modules-binary-arch:
+	dh_testdir
+	$(MAKE) -f debian/rules.gen binary-arch_$(MODULES_ARCH)
+
+MODULES_CONTROL_FILES += debian/changelog $(wildcard debian/templates/control.*) 
+MODULES_CONTROL_FILES += $(wildcard debian/*.linux-support)
+debian/control debian/rules.gen: $(MODULES_CONTROL_FILES)
+ifeq ($(wildcard debian/control.md5sum),)
+	$(MAKE) -f debian/rules debian/control-real
+else ifeq ($(MODULES_BINNMU),)
+	md5sum --check debian/control.md5sum --status || \
+		$(MAKE) -f debian/rules debian/control-real
+else
+	grep -v debian/changelog debian/control.md5sum | md5sum --check - --status || \
+		$(MAKE) -f debian/rules debian/control-real
+endif
+
+debian/control-real: $(MODULES_CONTROL_FILES)
+	$(MODULES_SUPPORT_DIR)/gencontrol.py \
+		/usr/src/linux-support-$(KERNELVERSION)/.. \
+		$(EXTRA_KERNELVERSIONS)
+	md5sum $^ > debian/control.md5sum
+	@echo
+	@echo This target is made to fail intentionally, to make sure
+	@echo that it is NEVER run during the automated build. Please
+	@echo ignore the following error, the debian/control file has
+	@echo been generated SUCCESSFULLY.
+	@echo
+	exit 1
+
+modules-setup: $(MODULES_SETUP_STAMP)
+$(MODULES_SETUP_STAMPS): debian/control debian/rules.gen $(MODULES_BUILD_DIR) $(MODULES_STAMPS_DIR)
+	dh_testdir
+	$(MAKE) -f debian/rules.gen setup_$(MODULES_ARCH)
+	touch $@
+
+modules-maintainerclean:
+	-rm debian/control debian/control.md5sum debian/rules.gen
+
+.PHONY: modules-build modules-clean modules-binary-indep modules-binary-arch modules-setup modules-maintainerclean

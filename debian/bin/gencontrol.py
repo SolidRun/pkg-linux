@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys
+import os, sys
 sys.path.append(sys.argv[1] + "/lib/python")
 
 from debian_linux.config import ConfigCoreDump
@@ -21,6 +21,10 @@ class Gencontrol(Base):
             'source_upstream': self.version.upstream,
             'major': self.version.linux_major,
             'abiname': self.abiname,
+            'linuxsupport_allversions':
+                ', '.join('linux-support-' + version
+                          for version
+                          in os.environ['ALL_KERNELVERSIONS'].split())
         }
 
         changelog_version = Changelog()[0].version
@@ -96,6 +100,14 @@ class Gencontrol(Base):
                 cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
             makefile.add('binary-arch_%s' % arch, ['binary-arch_%s_extra' % arch])
             makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
+
+        packages.extend(
+            self.process_packages(self.templates['control.support.all'],
+                                  self.vars))
+
+        cmds = ["$(MAKE) -f debian/rules.real install-support-all DH_OPTIONS='-plinux-support-all' GENCONTROL_ARGS='-v%s'" % self.package_version]
+        makefile.add('binary-support-all', cmds = cmds)
+        makefile.add('binary-indep', ['binary-support-all'])
 
     def process_real_image(self, entry, fields, vars):
         entry = self.process_package(entry, vars)
