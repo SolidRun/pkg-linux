@@ -1,3 +1,9 @@
+linux-latest-2.6 (21) UNRELEASED; urgency=low
+
+  * Update to 2.6.30-2.
+
+ -- Bastian Blank <waldi@debian.org>  Thu, 24 Sep 2009 20:45:57 +0200
+
 linux-latest-2.6 (20) unstable; urgency=low
 
   * Move into kernel section.
