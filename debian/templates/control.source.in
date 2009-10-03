@@ -2,6 +2,6 @@ Source: linux-latest-@major@
 Section: kernel
 Priority: optional
 Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
-Uploaders: Bastian Blank <waldi@debian.org>, Frederik Schüler <fs@debian.org>
+Uploaders: Bastian Blank <waldi@debian.org>, Frederik Schüler <fs@debian.org>, Ben Hutchings <ben@decadent.org.uk>
 Standards-Version: 3.7.3
 Build-Depends: debhelper (>> 7)

@@ -1,8 +1,12 @@
-linux-latest-2.6 (21) UNRELEASED; urgency=low
+linux-latest-2.6 (21) unstable; urgency=low
 
+  [ Bastian Blank ]
   * Update to 2.6.30-2.
 
- -- Bastian Blank <waldi@debian.org>  Thu, 24 Sep 2009 20:45:57 +0200
+  [ Ben Hutchings ]
+  * Add myself to uploaders.
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Sat, 03 Oct 2009 17:43:55 +0100
 
 linux-latest-2.6 (20) unstable; urgency=low
 
