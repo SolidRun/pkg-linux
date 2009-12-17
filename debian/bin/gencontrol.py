@@ -33,7 +33,11 @@ class Gencontrol(Base):
 
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         config_base = self.config.merge('base', arch, featureset, flavour)
+        config_description = self.config.merge('description', arch, featureset, flavour)
         config_image = self.config.merge('image', arch, featureset, flavour)
+
+        vars['class'] = config_description['hardware']
+        vars['longclass'] = config_description.get('hardware-long') or vars['class']
 
         templates = []
 
@@ -46,12 +50,12 @@ class Gencontrol(Base):
 
         image_fields = {'Description': PackageDescription()}
 
-        desc_parts = self.config.get_merge('image', arch, featureset, flavour, 'desc-parts')
+        desc_parts = self.config.get_merge('description', arch, featureset, flavour, 'parts')
         if desc_parts:
             desc = image_fields['Description']
             for part in desc_parts[::-1]:
-                desc.append(config_image['desc-long-part-' + part])
-                desc.append_short(config_image.get('desc-short-part-' + part, ''))
+                desc.append(config_description['part-long-' + part])
+                desc.append_short(config_description.get('part-short-' + part, ''))
 
         packages_dummy = []
 
