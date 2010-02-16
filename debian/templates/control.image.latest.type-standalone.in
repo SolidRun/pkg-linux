@@ -1,13 +1,13 @@
 Package: linux-image@localversion@
 Depends: linux-image-@upstreamversion@@abiname@@localversion@
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
-Description: Linux image on @class@
- This package depends on the latest binary image for Linux kernel on
- @longclass@ machines.
+Description: Linux for @class@
+ This package depends on the latest Linux kernel and modules for use on
+ @longclass@.
 
 Package: linux-image-@major@@localversion@
 Depends: linux-image-@upstreamversion@@abiname@@localversion@
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
-Description: Linux @major@ image on @class@
- This package depends on the latest binary image for Linux kernel @major@
- on @longclass@ machines.
+Description: Linux @major@ for @class@
+ This package depends on the latest Linux kernel @major@ and modules
+ for use on @longclass@.
