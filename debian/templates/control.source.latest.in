@@ -1,0 +1,7 @@
+Package: linux-source-@major@
+Depends: linux-source-@upstreamversion@
+Provides: linux-source
+Description: Linux kernel source for Linux @major@
+ This package depends on packages containing the sources of the latest Linux
+ kernel @major@.
+

@@ -31,6 +31,12 @@ class Gencontrol(Base):
             ['linux-support-%s%s' % (self.version.linux_upstream, self.abiname)]
         )
 
+        latest_source = self.templates["control.source.latest"][0]
+        packages.append(self.process_package(latest_source, vars))
+
+        latest_doc = self.templates["control.doc.latest"][0]
+        packages.append(self.process_package(latest_doc, vars))
+
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         config_base = self.config.merge('base', arch, featureset, flavour)
         config_description = self.config.merge('description', arch, featureset, flavour)

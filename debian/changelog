@@ -1,3 +1,9 @@
+linux-latest-2.6 (26) UNRELEASED; urgency=low
+
+  * Create linux-doc-2.6 and linux-source-2.6 meta packages (Closes: 347284)
+
+ -- Joachim Breitner <nomeata@debian.org>  Tue, 16 Mar 2010 17:12:42 +0100
+
 linux-latest-2.6 (25) unstable; urgency=high
 
   * Update package description templates in line with linux-2.6.
