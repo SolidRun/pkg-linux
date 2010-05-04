@@ -1,6 +1,10 @@
 linux-latest-2.6 (26) UNRELEASED; urgency=low
 
+  [ Joachim Breitner ]
   * Create linux-doc-2.6 and linux-source-2.6 meta packages (Closes: 347284)
+
+  [ Ben Hutchings ]
+  * Update to 2.6.32-5.
 
  -- Joachim Breitner <nomeata@debian.org>  Tue, 16 Mar 2010 17:12:42 +0100
 
