@@ -1,4 +1,4 @@
-linux-latest-2.6 (26) UNRELEASED; urgency=low
+linux-latest-2.6 (26) unstable; urgency=low
 
   [ Joachim Breitner ]
   * Create linux-doc-2.6 and linux-source-2.6 meta packages (Closes: 347284)
@@ -8,7 +8,7 @@ linux-latest-2.6 (26) UNRELEASED; urgency=low
   * Update standards-version to 3.8.4; no changes required.
   * Explicitly describe all packages as meta-packages.
 
- -- Joachim Breitner <nomeata@debian.org>  Tue, 16 Mar 2010 17:12:42 +0100
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 04 May 2010 02:10:04 +0100
 
 linux-latest-2.6 (25) unstable; urgency=high
 
