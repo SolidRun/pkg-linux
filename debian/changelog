@@ -5,6 +5,7 @@ linux-latest-2.6 (26) UNRELEASED; urgency=low
 
   [ Ben Hutchings ]
   * Update to 2.6.32-5.
+  * Update standards-version to 3.8.4; no changes required.
 
  -- Joachim Breitner <nomeata@debian.org>  Tue, 16 Mar 2010 17:12:42 +0100
 
