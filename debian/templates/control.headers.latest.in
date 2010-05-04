@@ -1,7 +1,7 @@
 Package: linux-headers-@major@@localversion@
 Depends: linux-headers-@upstreamversion@@abiname@@localversion@, ${misc:Depends}
 Provides: linux-headers, linux-headers-@major@
-Description: Header files for Linux @major@@localversion@
+Description: Header files for Linux @major@@localversion@ (meta-package)
  This package depends on the architecture-specific header files for the latest
  Linux kernel @major@@localversion@.
 
