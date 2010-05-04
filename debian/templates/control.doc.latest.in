@@ -1,4 +1,5 @@
 Package: linux-doc-@major@
+Architecture: all
 Depends: linux-doc-@upstreamversion@, ${misc:Depends}
 Provides: linux-doc
 Description: Linux kernel specific documentation for version @major@ (meta-package)

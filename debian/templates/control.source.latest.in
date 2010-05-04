@@ -1,4 +1,5 @@
 Package: linux-source-@major@
+Architecture: all
 Depends: linux-source-@upstreamversion@, ${misc:Depends}
 Provides: linux-source
 Description: Linux kernel source for Linux @major@ (meta-package)
