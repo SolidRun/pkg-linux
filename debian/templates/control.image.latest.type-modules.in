@@ -1,5 +1,5 @@
 Package: linux-image@localversion@
-Depends: linux-image-@upstreamversion@@abiname@@localversion@, linux-modules-@major@@localversion@
+Depends: linux-image-@upstreamversion@@abiname@@localversion@, linux-modules-@major@@localversion@, ${misc:Depends}
 Description: Linux for @class@
  This package depends on the latest Linux kernel for use on @longclass@.
 
@@ -9,14 +9,14 @@ Description: Linux @major@ for @class@
  This package depends on the latest Linux kernel @major@ for use on @longclass@.
 
 Package: linux-modules@localversion@
-Depends: linux-modules-@upstreamversion@@abiname@@localversion@
+Depends: linux-modules-@upstreamversion@@abiname@@localversion@, ${misc:Depends}
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
 Description: Linux modules for @class@
  This package depends on the modules for the latest Linux kernel for use on
  @longclass@.
 
 Package: linux-modules-@major@@localversion@
-Depends: linux-modules-@upstreamversion@@abiname@@localversion@
+Depends: linux-modules-@upstreamversion@@abiname@@localversion@, ${misc:Depends}
 Provides: linux-latest-modules-@upstreamversion@@abiname@@localversion@
 Description: Linux @major@ modules for @class@
  This package depends on the modules for the latest Linux kernel @major@
