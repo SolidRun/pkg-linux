@@ -1,3 +1,9 @@
+linux-latest-2.6 (27) unstable; urgency=low
+
+  * Really build linux-doc-2.6 and linux-source-2.6 meta packages
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 04 May 2010 02:23:44 +0100
+
 linux-latest-2.6 (26) unstable; urgency=low
 
   [ Joachim Breitner ]

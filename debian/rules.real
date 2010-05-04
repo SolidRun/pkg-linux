@@ -8,7 +8,8 @@ export DEB_HOST_ARCH
 
 include debian/rules.defs
 
-binary-indep:
+binary-indep: install-doc
+binary-indep: install-source
 
 install-base:
 	dh_installchangelogs
@@ -23,5 +24,17 @@ install-base:
 install-dummy:
 	dh_testdir
 	dh_testroot
+	dh_prep
+	$(MAKE) -f debian/rules.real install-base
+
+install-doc: PACKAGE_NAME = linux-doc-2.6
+install-doc: DH_OPTIONS = -p$(PACKAGE_NAME)
+install-doc:
+	dh_prep
+	$(MAKE) -f debian/rules.real install-base
+
+install-source: PACKAGE_NAME = linux-source-2.6
+install-source: DH_OPTIONS = -p$(PACKAGE_NAME)
+install-source:
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
