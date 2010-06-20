@@ -1,3 +1,10 @@
+linux-latest-2.6 (28) UNRELEASED; urgency=low
+
+  * Move NEWS from linux-2.6, since apt-listchanges only shows it for
+    upgraded packages
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Sun, 20 Jun 2010 18:02:34 +0100
+
 linux-latest-2.6 (27) unstable; urgency=low
 
   * Really build linux-doc-2.6 and linux-source-2.6 meta packages
