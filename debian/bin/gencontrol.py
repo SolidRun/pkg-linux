@@ -37,6 +37,9 @@ class Gencontrol(Base):
         latest_doc = self.templates["control.doc.latest"][0]
         packages.append(self.process_package(latest_doc, vars))
 
+        latest_tools = self.templates["control.tools.latest"][0]
+        packages.append(self.process_package(latest_tools, vars))
+
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         config_base = self.config.merge('base', arch, featureset, flavour)
         config_description = self.config.merge('description', arch, featureset, flavour)

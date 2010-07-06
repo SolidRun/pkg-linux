@@ -1,0 +1,7 @@
+Package: linux-tools-@major@
+Architecture: all
+Depends: linux-tools-@upstreamversion@, ${misc:Depends}
+Provides: linux-tools
+Description: Performance analysis tools for Linux @major@ (meta-package)
+ This package depends on the package containing the 'perf' performance
+ analysis tools for the latest Linux kernel @major@.

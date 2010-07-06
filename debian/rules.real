@@ -10,6 +10,7 @@ include debian/rules.defs
 
 binary-indep: install-doc
 binary-indep: install-source
+binary-indep: install-tools
 
 install-base:
 	dh_installchangelogs
@@ -36,5 +37,11 @@ install-doc:
 install-source: PACKAGE_NAME = linux-source-2.6
 install-source: DH_OPTIONS = -p$(PACKAGE_NAME)
 install-source:
+	dh_prep
+	$(MAKE) -f debian/rules.real install-base
+
+install-tools: PACKAGE_NAME = linux-tools-2.6
+install-tools: DH_OPTIONS = -p$(PACKAGE_NAME)
+install-tools:
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
