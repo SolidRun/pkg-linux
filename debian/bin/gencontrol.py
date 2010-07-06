@@ -86,7 +86,10 @@ class Gencontrol(Base):
 
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
 
-        cmds_binary_arch = ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (' '.join(["-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
+        cmds_binary_arch = ["ln -sf linux-image.NEWS debian/%s.NEWS" % i['Package']
+                            for i in packages_dummy
+                            if i['Package'].startswith('linux-image-')]
+        cmds_binary_arch += ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (' '.join(["-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
         makefile.add('binary-arch_%s_%s_%s_real' % (arch, featureset, flavour), cmds = cmds_binary_arch)
 
     def do_extra(self, packages, makefile):
