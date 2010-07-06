@@ -3,6 +3,8 @@ linux-latest-2.6 (28) UNRELEASED; urgency=low
   * Move NEWS from linux-2.6, since apt-listchanges only shows it for
     upgraded packages
   * Add linux-tools-2.6 meta package
+  * Change versions for linux-doc-2.6 and linux-source-2.6 to match those
+    of the other meta packages
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 20 Jun 2010 18:02:34 +0100
 

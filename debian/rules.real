@@ -32,13 +32,13 @@ install-doc: PACKAGE_NAME = linux-doc-2.6
 install-doc: DH_OPTIONS = -p$(PACKAGE_NAME)
 install-doc:
 	dh_prep
-	$(MAKE) -f debian/rules.real install-base
+	$(MAKE) -f debian/rules.real install-base GENCONTROL_ARGS=$(patsubst -v%,-v1:%,$(GENCONTROL_ARGS))
 
 install-source: PACKAGE_NAME = linux-source-2.6
 install-source: DH_OPTIONS = -p$(PACKAGE_NAME)
 install-source:
 	dh_prep
-	$(MAKE) -f debian/rules.real install-base
+	$(MAKE) -f debian/rules.real install-base GENCONTROL_ARGS=$(patsubst -v%,-v1:%,$(GENCONTROL_ARGS))
 
 install-tools: PACKAGE_NAME = linux-tools-2.6
 install-tools: DH_OPTIONS = -p$(PACKAGE_NAME)
