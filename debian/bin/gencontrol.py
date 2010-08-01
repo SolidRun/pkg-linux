@@ -57,6 +57,8 @@ class Gencontrol(Base):
             templates.extend(self.templates["control.image.latest.type-modules"])
         else:
             templates.extend(self.templates["control.image.latest.type-standalone"])
+        if featureset == 'xen':
+            templates.extend(self.templates["control.xen-linux-system.latest"])
         if config_base.get('modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
