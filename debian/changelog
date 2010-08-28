@@ -2,7 +2,7 @@ linux-latest-2.6 (29) UNRELEASED; urgency=low
 
   * Add xen-linux-system-2.6-* meta-packages (Closes: #402414)
   * Add bug presubj message for image meta packages directing users to the
-    real image packages
+    real image packages (Closes: #549591)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 01 Aug 2010 23:24:48 +0100
 
