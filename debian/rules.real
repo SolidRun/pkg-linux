@@ -13,6 +13,7 @@ binary-indep: install-source
 binary-indep: install-tools
 
 install-base:
+	dh_bugfiles
 	dh_installchangelogs
 	dh_installdocs
 	dh_compress

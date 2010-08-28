@@ -94,6 +94,12 @@ class Gencontrol(Base):
         cmds_binary_arch += ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (' '.join(["-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
         makefile.add('binary-arch_%s_%s_%s_real' % (arch, featureset, flavour), cmds = cmds_binary_arch)
 
+        for i in packages_dummy:
+            if i['Package'].startswith('linux-image-'):
+                bug_presubj = self.substitute(
+                    self.templates["bug-presubj.image.latest"], vars)
+                file("debian/%s.bug-presubj" % i['Package'], 'w').write(bug_presubj)
+
     def do_extra(self, packages, makefile):
         templates_extra = self.templates["control.extra"]
 
