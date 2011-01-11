@@ -16,4 +16,5 @@ binary-arch-all: debian/control $(BUILD_DIR) $(STAMPS_DIR)
 
 maintainerclean:
 	-rm debian/control debian/control.md5sum debian/rules.gen
+	rm -f debian/*.bug-presubj
 
