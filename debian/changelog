@@ -1,3 +1,9 @@
+linux-latest-2.6 (33) unstable; urgency=low
+
+  * Update to 2.6.38-2
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 29 Mar 2011 13:15:43 +0100
+
 linux-latest-2.6 (32) unstable; urgency=low
 
   * Update to 2.6.38-1
