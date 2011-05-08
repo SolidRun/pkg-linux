@@ -44,6 +44,13 @@ class Gencontrol(Base):
         packages.append(self.process_package(latest_tools, vars))
 
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
+        if self.version.linux_modifier is None:
+            try:
+                vars['abiname'] = '-%s' % self.config['abi', arch]['abiname']
+            except KeyError:
+                vars['abiname'] = self.abiname
+            makeflags['ABINAME'] = vars['abiname']
+
         config_base = self.config.merge('base', arch, featureset, flavour)
         config_description = self.config.merge('description', arch, featureset, flavour)
         config_image = self.config.merge('image', arch, featureset, flavour)
