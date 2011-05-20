@@ -1,3 +1,9 @@
+linux-latest-2.6 (35) UNRELEASED; urgency=low
+
+  * Update to 2.6.39-1 
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Fri, 20 May 2011 05:42:03 +0100
+
 linux-latest-2.6 (34) unstable; urgency=low
 
   * [hppa] Update to 2.6.38-2a
