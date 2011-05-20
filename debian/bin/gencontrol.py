@@ -8,6 +8,8 @@ from debian_linux.debian import Changelog, PackageDescription, VersionLinux
 from debian_linux.gencontrol import Gencontrol as Base
 from debian_linux.utils import Templates
 
+import os.path, re
+
 class Gencontrol(Base):
     def __init__(self, config):
         super(Gencontrol, self).__init__(ConfigCoreDump(fp = file(config)), Templates(["debian/templates"]))
@@ -98,9 +100,9 @@ class Gencontrol(Base):
 
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
 
-        cmds_binary_arch = ["ln -sf linux-image.NEWS debian/%s.NEWS" % i['Package']
-                            for i in packages_dummy
-                            if i['Package'].startswith('linux-image-')]
+        cmds_binary_arch = []
+        for i in packages_dummy:
+            cmds_binary_arch += self.get_link_commands(i, ['NEWS'])
         cmds_binary_arch += ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (' '.join(["-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
         makefile.add('binary-arch_%s_%s_%s_real' % (arch, featureset, flavour), cmds = cmds_binary_arch)
 
@@ -130,6 +132,7 @@ class Gencontrol(Base):
                     version = '-v1:%s' % self.package_version
                 else:
                     version = '-v%s' % self.package_version
+                cmds += self.get_link_commands(i, ['config', 'templates'])
                 cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
             makefile.add('binary-arch_%s' % arch, ['binary-arch_%s_extra' % arch])
             makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
@@ -143,6 +146,27 @@ class Gencontrol(Base):
             elif value:
                 entry[key] = value
         return entry
+
+    @staticmethod
+    def get_link_commands(package, names):
+        cmds = []
+        for name in names:
+            match = re.match(r'^(linux-\w+)(-2.6)?(-.*)$', package['Package'])
+            if not match:
+                continue
+            if match.group(2):
+                source = 'debian/%s%s.%s' % (match.group(1), match.group(3),
+                                             name)
+            else:
+                source = None
+            if not (source and os.path.isfile(source)):
+                source = 'debian/%s.%s' % (match.group(1), name)
+            dest = 'debian/%s.%s' % (package['Package'], name)
+            if (os.path.isfile(source) and
+                (not os.path.isfile(dest) or os.path.islink(dest))):
+                cmds.append('ln -sf %s %s' %
+                            (os.path.relpath(source, 'debian'), dest))
+        return cmds
 
 if __name__ == '__main__':
     Gencontrol(sys.argv[1] + "/config.defines.dump")()
