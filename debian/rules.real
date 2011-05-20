@@ -14,6 +14,7 @@ binary-indep: install-tools
 
 install-base:
 	dh_bugfiles
+	dh_installdebconf
 	dh_installchangelogs
 	dh_installdocs
 	dh_compress
