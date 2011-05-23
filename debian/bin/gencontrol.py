@@ -132,7 +132,7 @@ class Gencontrol(Base):
                     version = '-v1:%s' % self.package_version
                 else:
                     version = '-v%s' % self.package_version
-                cmds += self.get_link_commands(i, ['config', 'templates'])
+                cmds += self.get_link_commands(i, ['config', 'postinst', 'templates'])
                 cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
             makefile.add('binary-arch_%s' % arch, ['binary-arch_%s_extra' % arch])
             makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
