@@ -1,8 +1,12 @@
-Package: linux-doc-@major@
+Package: linux-doc
 Architecture: all
 Depends: linux-doc-@upstreamversion@, ${misc:Depends}
-Provides: linux-doc
-Description: Linux kernel specific documentation for version @major@ (meta-package)
+Description: Linux kernel specific documentation (meta-package)
  This package depends on the package containing the documentation for the
- latest Linux kernel @major@.
+ latest Linux kernel.
 
+Package: linux-doc-2.6
+Architecture: all
+Depends: linux-doc, ${misc:Depends}
+Description: Linux kernel specific documentation (dummy package)
+ This is a dummy transitional package.  It can be safely removed.

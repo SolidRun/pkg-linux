@@ -21,7 +21,6 @@ class Gencontrol(Base):
             'upstreamversion': self.version.linux_upstream,
             'version': self.version.linux_version,
             'source_upstream': self.version.upstream,
-            'major': self.version.linux_major,
             'abiname': self.abiname,
         }
 
@@ -57,6 +56,7 @@ class Gencontrol(Base):
         config_description = self.config.merge('description', arch, featureset, flavour)
         config_image = self.config.merge('image', arch, featureset, flavour)
 
+        vars['flavour'] = vars['localversion'][1:]
         vars['class'] = config_description['hardware']
         vars['longclass'] = config_description.get('hardware-long') or vars['class']
 

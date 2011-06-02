@@ -1,6 +1,11 @@
-Package: xen-linux-system-@major@@localversion@
+Package: xen-linux-system@localversion@
 Depends: xen-linux-system-@upstreamversion@@abiname@@localversion@, ${misc:Depends}
-Provides: xen-linux-system, xen-linux-system-@major@
-Description: Xen system with Linux @major@ for @class@ (meta-package)
+Provides: xen-linux-system
+Description: Xen system with Linux for @class@ (meta-package)
  This package depends on the Xen hypervisor and the latest Linux kernel
- @major@@localversion@.
+ @flavour@ configuration.
+
+Package: xen-linux-system-2.6@localversion@
+Depends: xen-linux-system@localversion@, ${misc:Depends}
+Description: Xen system with Linux for @class@ (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
