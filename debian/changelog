@@ -1,6 +1,6 @@
 linux-latest-2.6 (36) experimental; urgency=low
 
-  * Update to 3.0.0-1
+  * Update to 3.0.0-rc1
     - Add linux-doc, linux-headers-<flavour>, linux-source and linux-tools
       packages
     - Change *-2.6-* to transitional packages
