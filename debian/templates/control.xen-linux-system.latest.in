@@ -4,8 +4,3 @@ Provides: xen-linux-system
 Description: Xen system with Linux for @class@ (meta-package)
  This package depends on the Xen hypervisor and the latest Linux kernel
  @flavour@ configuration.
-
-Package: xen-linux-system-2.6@localversion@
-Depends: xen-linux-system@localversion@, ${misc:Depends}
-Description: Xen system with Linux for @class@ (dummy package)
- This is a dummy transitional package.  It can be safely removed.
