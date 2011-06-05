@@ -87,8 +87,7 @@ class Gencontrol(Base):
         packages_dummy = []
 
         packages_dummy.append(self.process_real_image(templates[0], image_fields, vars))
-        packages_dummy.append(self.process_real_image(templates[1], image_fields, vars))
-        packages_dummy.extend(self.process_packages(templates[2:], vars))
+        packages_dummy.extend(self.process_packages(templates[1:], vars))
 
         for package in packages_dummy:
             name = package['Package']
