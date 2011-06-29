@@ -1,4 +1,4 @@
-linux-latest-2.6 (38) UNRELEASED; urgency=low
+linux-latest-2.6 (38) experimental; urgency=low
 
   * Correct xen-linux-system transitional package names
 
