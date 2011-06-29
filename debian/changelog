@@ -1,5 +1,6 @@
 linux-latest-2.6 (37) UNRELEASED; urgency=low
 
+  * Update to 3.0.0-rc5
   * Restore xen-linux-system-<flavour> packages
   * Remove common description text from linux-image-2.6-<flavour> packages
 
