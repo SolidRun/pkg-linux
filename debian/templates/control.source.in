@@ -1,4 +1,4 @@
-Source: linux-latest-@major@
+Source: linux-latest-2.6
 Section: kernel
 Priority: optional
 Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>

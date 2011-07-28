@@ -21,7 +21,6 @@ class Gencontrol(Base):
             'upstreamversion': self.version.linux_upstream,
             'version': self.version.linux_version,
             'source_upstream': self.version.upstream,
-            'major': self.version.linux_major,
             'abiname': self.abiname,
         }
 
@@ -36,14 +35,14 @@ class Gencontrol(Base):
             ['linux-support-%s%s' % (self.version.linux_upstream, self.abiname)]
         )
 
-        latest_source = self.templates["control.source.latest"][0]
-        packages.append(self.process_package(latest_source, vars))
+        latest_source = self.templates["control.source.latest"]
+        packages.extend(self.process_packages(latest_source, vars))
 
-        latest_doc = self.templates["control.doc.latest"][0]
-        packages.append(self.process_package(latest_doc, vars))
+        latest_doc = self.templates["control.doc.latest"]
+        packages.extend(self.process_packages(latest_doc, vars))
 
-        latest_tools = self.templates["control.tools.latest"][0]
-        packages.append(self.process_package(latest_tools, vars))
+        latest_tools = self.templates["control.tools.latest"]
+        packages.extend(self.process_packages(latest_tools, vars))
 
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         if self.version.linux_modifier is None:
@@ -57,6 +56,7 @@ class Gencontrol(Base):
         config_description = self.config.merge('description', arch, featureset, flavour)
         config_image = self.config.merge('image', arch, featureset, flavour)
 
+        vars['flavour'] = vars['localversion'][1:]
         vars['class'] = config_description['hardware']
         vars['longclass'] = config_description.get('hardware-long') or vars['class']
 
@@ -66,8 +66,6 @@ class Gencontrol(Base):
             templates.extend(self.templates["control.image.latest.type-modules"])
         else:
             templates.extend(self.templates["control.image.latest.type-standalone"])
-        if featureset == 'xen':
-            templates.extend(self.templates["control.xen-linux-system.latest"])
         if config_base.get('modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
@@ -83,11 +81,13 @@ class Gencontrol(Base):
                 desc.append(config_description['part-long-' + part])
                 desc.append_short(config_description.get('part-short-' + part, ''))
 
+            if 'xen' in desc_parts:
+                templates.extend(self.templates["control.xen-linux-system.latest"])
+
         packages_dummy = []
 
         packages_dummy.append(self.process_real_image(templates[0], image_fields, vars))
-        packages_dummy.append(self.process_real_image(templates[1], image_fields, vars))
-        packages_dummy.extend(self.process_packages(templates[2:], vars))
+        packages_dummy.extend(self.process_packages(templates[1:], vars))
 
         for package in packages_dummy:
             name = package['Package']

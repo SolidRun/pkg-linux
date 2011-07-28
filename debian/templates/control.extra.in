@@ -7,7 +7,7 @@ Description: Linux for modern PCs (dummy package)
 Package: linux-image-2.6-686
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
-Description: Linux 2.6 for modern PCs (dummy package)
+Description: Linux for modern PCs (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: linux-image-686-bigmem
@@ -19,5 +19,17 @@ Description: Linux for PCs with 4GB+ RAM (dummy package)
 Package: linux-image-2.6-686-bigmem
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
-Description: Linux 2.6 for PCs with 4GB+ RAM (dummy package)
+Description: Linux for PCs with 4GB+ RAM (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
+
+Package: xen-linux-system-2.6-xen-686
+Architecture: i386
+Depends: xen-linux-system-686-pae, ${misc:Depends}
+Description: Xen system with Linux for modern PCs (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
+
+Package: xen-linux-system-2.6-xen-amd64
+Architecture: amd64
+Depends: xen-linux-system-amd64, ${misc:Depends}
+Description: Xen system with Linux for 64-bit PCs (dummy package)
  This is a dummy transitional package.  It can be safely removed.
