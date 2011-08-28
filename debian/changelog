@@ -3,6 +3,7 @@ linux-latest-2.6 (40) UNRELEASED; urgency=low
   * Add debconf template translations:
     - Serbian cyrillic (Zlatan Todoric) (Closes: #635893)
     - German (Holger Wansing) (Closes: #637764)
+    - French (Debian French l10n team) (Closes: #636624)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 31 Jul 2011 19:19:21 +0200
 
