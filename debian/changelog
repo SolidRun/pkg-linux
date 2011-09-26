@@ -6,6 +6,7 @@ linux-latest-2.6 (40) UNRELEASED; urgency=low
     - French (Debian French l10n team) (Closes: #636624)
     - Swedish (Martin Bagge) (Closes: #640058)
     - Dutch (Jeroen Schot) (Closes: #640115)
+    - Catalan (Innocent De Marchi) (Closes: #642109)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 31 Jul 2011 19:19:21 +0200
 
