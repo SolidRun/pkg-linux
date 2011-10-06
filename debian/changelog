@@ -7,6 +7,7 @@ linux-latest-2.6 (40) UNRELEASED; urgency=low
     - Swedish (Martin Bagge) (Closes: #640058)
     - Dutch (Jeroen Schot) (Closes: #640115)
     - Catalan (Innocent De Marchi) (Closes: #642109)
+  * Update to 3.0.0-2
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 31 Jul 2011 19:19:21 +0200
 
