@@ -25,14 +25,14 @@ class Gencontrol(Base):
         }
 
         changelog_version = Changelog()[0].version
-        self.package_version = '%s+%s' % (self.version.upstream, changelog_version.complete)
+        self.package_version = '%s+%s' % (self.version.linux_version, changelog_version.complete)
 
     def do_main_setup(self, vars, makeflags, extra):
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
 
     def do_main_packages(self, packages, vars, makeflags, extra):
         packages['source']['Build-Depends'].extend(
-            ['linux-support-%s%s' % (self.version.linux_upstream, self.abiname)]
+            ['linux-support-%s' % self.abiname]
         )
 
         latest_source = self.templates["control.source.latest"]

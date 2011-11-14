@@ -1,5 +1,5 @@
 Package: xen-linux-system@localversion@
-Depends: xen-linux-system-@upstreamversion@@abiname@@localversion@, ${misc:Depends}
+Depends: xen-linux-system-@abiname@@localversion@, ${misc:Depends}
 Provides: xen-linux-system
 Description: Xen system with Linux for @class@ (meta-package)
  This package depends on the Xen hypervisor and the latest Linux kernel
