@@ -1,6 +1,6 @@
-# Translation of linux-latest-2.6 debconf template to Swedish
+# Translation of linux-latest debconf template to Swedish
 # Copyright (C) 2011 Martin Bagge <brother@bsnet.se>
-# This file is distributed under the same license as the linux-latest-2.6 package.
+# This file is distributed under the same license as the linux-latest package.
 #
 # Martin Bagge <brother@bsnet.se>, 2011
 msgid ""

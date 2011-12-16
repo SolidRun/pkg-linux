@@ -1,6 +1,6 @@
-# debconf templates for linux-latest-2.6; translation into Catalan.
+# debconf templates for linux-latest; translation into Catalan.
 # Copyright (C) 2011 Software in the Public Interest
-# This file is distributed under the same license as the linux-latest-2.6
+# This file is distributed under the same license as the linux-latest
 # package.
 # Innocent De Marchi <tangram.peces@gmail.com>, 2011
 #

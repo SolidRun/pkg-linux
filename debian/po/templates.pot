@@ -1,6 +1,6 @@
-# debconf templates for linux-latest-2.6; translation into LANGUAGE.
+# debconf templates for linux-latest; translation into LANGUAGE.
 # Copyright YEAR TRANSLATION COPYRIGHT HOLDER
-# This file is distributed under the same license as the linux-latest-2.6
+# This file is distributed under the same license as the linux-latest
 # package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #

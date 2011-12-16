@@ -1,6 +1,6 @@
-# Translation of linux-latest-2.6 debconf templates to French
+# Translation of linux-latest debconf templates to French
 # Copyright (C) 2011 Debian French l10n team <debian-l10n-french@lists.debian.org>
-# This file is distributed under the same license as the linux-latest-2.6 package.
+# This file is distributed under the same license as the linux-latest package.
 #
 # Translator:
 # Christian Perrier <bubulle@debian.org>, 2011.

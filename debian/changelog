@@ -1,5 +1,6 @@
-linux-latest-2.6 (2.6) UNRELEASED; urgency=low
+linux-latest (42) UNRELEASED; urgency=low
 
+  * Rename source package to linux-latest
   * Add debconf template translations:
     - Portugese (Miguel Figueiredo) (Closes: #651123)
 

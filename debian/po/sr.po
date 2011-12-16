@@ -1,6 +1,6 @@
-# debconf templates for linux-latest-2.6; translation into Serbian cyrillic.
+# debconf templates for linux-latest; translation into Serbian cyrillic.
 # Copyright 2011
-# This file is distributed under the same license as the linux-latest-2.6
+# This file is distributed under the same license as the linux-latest
 # package.
 # Zlatan Todoric <zlatan.todoric@gmail.com>, 2011.
 #
