@@ -5,6 +5,7 @@ linux-latest (42) UNRELEASED; urgency=low
     - Portugese (Miguel Figueiredo) (Closes: #651123)
     - Serbian latin (Zlatan Todoric) (Closes: #635895)
     - Russian (Yuri Kozlov) (Closes: #652431)
+    - Japanese (Nobuhiro Iwamatsu) (Closes: #655687)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Tue, 06 Dec 2011 04:37:33 +0000
 
