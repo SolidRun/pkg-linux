@@ -62,10 +62,7 @@ class Gencontrol(Base):
 
         templates = []
 
-        if config_image.get('type', None) == 'plain-xen':
-            templates.extend(self.templates["control.image.latest.type-modules"])
-        else:
-            templates.extend(self.templates["control.image.latest.type-standalone"])
+        templates.extend(self.templates["control.image.latest.type-standalone"])
         if config_base.get('modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
