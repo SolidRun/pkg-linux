@@ -8,7 +8,7 @@ from debian_linux.debian import Changelog, PackageDescription, VersionLinux
 from debian_linux.gencontrol import Gencontrol as Base
 from debian_linux.utils import Templates
 
-import os.path, re
+import os.path, re, codecs
 
 class Gencontrol(Base):
     def __init__(self, config):
@@ -25,14 +25,14 @@ class Gencontrol(Base):
         }
 
         changelog_version = Changelog()[0].version
-        self.package_version = '%s+%s' % (self.version.linux_version, changelog_version.complete)
+        self.package_version = u'%s+%s' % (self.version.linux_version, changelog_version.complete)
 
     def do_main_setup(self, vars, makeflags, extra):
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
 
     def do_main_packages(self, packages, vars, makeflags, extra):
         packages['source']['Build-Depends'].extend(
-            ['linux-support-%s' % self.abiname]
+            [u'linux-support-%s' % self.abiname]
         )
 
         latest_source = self.templates["control.source.latest"]
@@ -47,7 +47,7 @@ class Gencontrol(Base):
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         if self.version.linux_modifier is None:
             try:
-                vars['abiname'] = '-%s' % self.config['abi', arch]['abiname']
+                vars['abiname'] = u'-%s' % self.config['abi', arch]['abiname']
             except KeyError:
                 vars['abiname'] = self.abiname
             makeflags['ABINAME'] = vars['abiname']
@@ -78,7 +78,7 @@ class Gencontrol(Base):
                 desc.append(config_description['part-long-' + part])
                 desc.append_short(config_description.get('part-short-' + part, ''))
 
-            if 'xen' in desc_parts:
+            if u'xen' in desc_parts:
                 templates.extend(self.templates["control.xen-linux-system.latest"])
 
         packages_dummy = []
@@ -90,9 +90,9 @@ class Gencontrol(Base):
             name = package['Package']
             if packages.has_key(name):
                 package = packages.get(name)
-                package['Architecture'].append(arch)
+                package['Architecture'].add(unicode(arch))
             else:
-                package['Architecture'] = [arch]
+                package['Architecture'] = unicode(arch)
                 packages.append(package)
 
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
@@ -100,14 +100,14 @@ class Gencontrol(Base):
         cmds_binary_arch = []
         for i in packages_dummy:
             cmds_binary_arch += self.get_link_commands(i, ['NEWS'])
-        cmds_binary_arch += ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (' '.join(["-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
+        cmds_binary_arch += ["$(MAKE) -f debian/rules.real install-dummy DH_OPTIONS='%s' %s" % (u' '.join([u"-p%s" % i['Package'] for i in packages_dummy]), makeflags)]
         makefile.add('binary-arch_%s_%s_%s_real' % (arch, featureset, flavour), cmds = cmds_binary_arch)
 
         for i in packages_dummy:
-            if i['Package'].startswith('linux-image-'):
+            if i['Package'].startswith(u'linux-image-'):
                 bug_presubj = self.substitute(
                     self.templates["bug-presubj.image.latest"], vars)
-                file("debian/%s.bug-presubj" % i['Package'], 'w').write(bug_presubj)
+                codecs.open("debian/%s.bug-presubj" % i['Package'], 'w', 'utf-8').write(bug_presubj)
 
     def do_extra(self, packages, makefile):
         templates_extra = self.templates["control.extra"]
@@ -125,13 +125,13 @@ class Gencontrol(Base):
         for arch in archs:
             cmds = []
             for i in extra_arches[arch]:
-                if i.has_key('X-Version-Overwrite-Epoch'):
-                    version = '-v1:%s' % self.package_version
+                if i.has_key(u'X-Version-Overwrite-Epoch'):
+                    version = u'-v1:%s' % self.package_version
                 else:
-                    version = '-v%s' % self.package_version
+                    version = u'-v%s' % self.package_version
                 cmds += self.get_link_commands(i, ['config', 'postinst', 'templates'])
                 cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
-            makefile.add('binary-arch_%s' % arch, ['binary-arch_%s_extra' % arch])
+            makefile.add('binary-arch_%s' % arch, [u'binary-arch_%s_extra' % arch])
             makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
 
     def process_real_image(self, entry, fields, vars):
@@ -148,7 +148,7 @@ class Gencontrol(Base):
     def get_link_commands(package, names):
         cmds = []
         for name in names:
-            match = re.match(r'^(linux-\w+)(-2.6)?(-.*)$', package['Package'])
+            match = re.match(ur'^(linux-\w+)(-2.6)?(-.*)$', package['Package'])
             if not match:
                 continue
             if match.group(2):
