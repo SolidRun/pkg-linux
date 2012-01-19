@@ -1,4 +1,4 @@
-linux-latest (42) UNRELEASED; urgency=low
+linux-latest (42) unstable; urgency=low
 
   * Rename source package to linux-latest
   * Add debconf template translations:
@@ -8,7 +8,7 @@ linux-latest (42) UNRELEASED; urgency=low
     - Japanese (Nobuhiro Iwamatsu) (Closes: #655687)
   * Update to 3.2.0-1
 
- -- Ben Hutchings <ben@decadent.org.uk>  Tue, 06 Dec 2011 04:37:33 +0000
+ -- Ben Hutchings <ben@decadent.org.uk>  Thu, 19 Jan 2012 04:02:32 +0000
 
 linux-latest-2.6 (41) unstable; urgency=low
 
