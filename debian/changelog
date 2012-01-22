@@ -1,6 +1,8 @@
 linux-latest (43) UNRELEASED; urgency=low
 
   * Add Vcs-{Svn,Browser} fields
+  * Add debconf template translations:
+    - Danish (Joe Hansen) (Closes: #656642)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Thu, 19 Jan 2012 14:16:11 +0000
 
