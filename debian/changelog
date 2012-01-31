@@ -5,6 +5,8 @@ linux-latest (43) UNRELEASED; urgency=low
     - Danish (Joe Hansen) (Closes: #656642)
     - Spanish (Slime Siabef) (Closes: #654681)
     - Italian (Stefano Canepa) (Closes: #657386)
+  * [s390] Update the check for flavours without modules, removing the
+    useless linux-headers{,-2.6}-s390x-tape packages
 
  -- Ben Hutchings <ben@decadent.org.uk>  Thu, 19 Jan 2012 14:16:11 +0000
 

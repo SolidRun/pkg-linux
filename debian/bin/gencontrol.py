@@ -63,7 +63,8 @@ class Gencontrol(Base):
         templates = []
 
         templates.extend(self.templates["control.image.latest.type-standalone"])
-        if config_base.get('modules', True):
+        if self.config.get_merge('build', arch, featureset, flavour,
+                                 'modules', True):
             templates.extend(self.templates["control.headers.latest"])
 
         image_fields = {'Description': PackageDescription()}
