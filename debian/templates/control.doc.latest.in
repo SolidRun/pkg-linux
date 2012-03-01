@@ -6,6 +6,7 @@ Description: Linux kernel specific documentation (meta-package)
  latest Linux kernel.
 
 Package: linux-doc-2.6
+Section: oldlibs
 Architecture: all
 Depends: linux-doc, ${misc:Depends}
 Description: Linux kernel specific documentation (dummy package)

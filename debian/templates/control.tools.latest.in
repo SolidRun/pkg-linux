@@ -6,6 +6,7 @@ Description: Performance analysis tools for Linux (meta-package)
  analysis tools for the latest Linux kernel.
 
 Package: linux-tools-2.6
+Section: oldlibs
 Architecture: all
 Depends: linux-tools, ${misc:Depends}
 Description: Performance analysis tools for Linux (dummy package)

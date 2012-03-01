@@ -6,6 +6,7 @@ Description: Linux kernel source (meta-package)
  kernel.
 
 Package: linux-source-2.6
+Section: oldlibs
 Architecture: all
 Depends: linux-source, ${misc:Depends}
 Description: Linux kernel source (dummy package)

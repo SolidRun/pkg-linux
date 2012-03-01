@@ -1,34 +1,40 @@
 Package: linux-image-686
+Section: oldlibs
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
 Description: Linux for modern PCs (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: linux-image-2.6-686
+Section: oldlibs
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
 Description: Linux for modern PCs (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: linux-image-686-bigmem
+Section: oldlibs
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
 Description: Linux for PCs with 4GB+ RAM (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: linux-image-2.6-686-bigmem
+Section: oldlibs
 Architecture: i386
 Depends: linux-image-686-pae, ${misc:Depends}
 Description: Linux for PCs with 4GB+ RAM (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: xen-linux-system-2.6-xen-686
+Section: oldlibs
 Architecture: i386
 Depends: xen-linux-system-686-pae, ${misc:Depends}
 Description: Xen system with Linux for modern PCs (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
 Package: xen-linux-system-2.6-xen-amd64
+Section: oldlibs
 Architecture: amd64
 Depends: xen-linux-system-amd64, ${misc:Depends}
 Description: Xen system with Linux for 64-bit PCs (dummy package)
