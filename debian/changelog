@@ -1,7 +1,9 @@
 linux-latest (44) UNRELEASED; urgency=low
 
   [ Ben Hutchings ]
-  * Add Turkish debconf template translations (Mert Dirik) (Closes: #660119)
+  * Update debconf template translations:
+    - Add Polish (Michał Kułach) (Closes: #659571)
+    - Add Turkish (Mert Dirik) (Closes: #660119)
   * Update standards-version to 3.9.3:
     - Do not move packages to the 'metapackages' section, as that will
       cause APT not to auto-remove their dependencies
