@@ -9,6 +9,7 @@ linux-latest (44) UNRELEASED; urgency=low
       cause APT not to auto-remove their dependencies
   * Move transitional packages to the section 'oldlibs', so that APT
     will treat the replacement packages as manually installed
+  * Update to 3.2.0-2
 
  -- Ben Hutchings <ben@decadent.org.uk>  Fri, 17 Feb 2012 03:30:56 +0000
 
