@@ -4,9 +4,3 @@ Provides: linux-headers
 Description: Header files for Linux @flavour@ configuration (meta-package)
  This package depends on the architecture-specific header files for the latest
  Linux kernel @flavour@ configuration.
-
-Package: linux-headers-2.6@localversion@
-Section: oldlibs
-Depends: linux-headers@localversion@, ${misc:Depends}
-Description: Header files for Linux @flavour@ configuration (dummy package)
- This is a dummy transitional package.  It can be safely removed.

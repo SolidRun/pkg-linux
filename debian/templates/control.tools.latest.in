@@ -4,10 +4,3 @@ Depends: linux-tools-@upstreamversion@, ${misc:Depends}
 Description: Performance analysis tools for Linux (meta-package)
  This package depends on the package containing the 'perf' performance
  analysis tools for the latest Linux kernel.
-
-Package: linux-tools-2.6
-Section: oldlibs
-Architecture: all
-Depends: linux-tools, ${misc:Depends}
-Description: Performance analysis tools for Linux (dummy package)
- This is a dummy transitional package.  It can be safely removed.

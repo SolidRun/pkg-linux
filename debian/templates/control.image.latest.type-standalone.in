@@ -4,9 +4,3 @@ Provides: linux-latest-modules-@abiname@@localversion@
 Description: Linux for @class@ (meta-package)
  This package depends on the latest Linux kernel and modules for use on
  @longclass@.
-
-Package: linux-image-2.6@localversion@
-Section: oldlibs
-Depends: linux-image@localversion@, ${misc:Depends}
-Description: Linux for @class@ (dummy package)
- This is a dummy transitional package.  It can be safely removed.

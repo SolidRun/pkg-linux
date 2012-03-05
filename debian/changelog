@@ -10,6 +10,8 @@ linux-latest (44) UNRELEASED; urgency=low
   * Move transitional packages to the section 'oldlibs', so that APT
     will treat the replacement packages as manually installed
   * Update to 3.2.0-2
+  * Stop generating linux-{headers,image}-2.6-<flavour> transitional
+    packages for flavours added since Linux 3.0
 
  -- Ben Hutchings <ben@decadent.org.uk>  Fri, 17 Feb 2012 03:30:56 +0000
 

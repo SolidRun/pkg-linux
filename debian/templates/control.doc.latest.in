@@ -4,10 +4,3 @@ Depends: linux-doc-@upstreamversion@, ${misc:Depends}
 Description: Linux kernel specific documentation (meta-package)
  This package depends on the package containing the documentation for the
  latest Linux kernel.
-
-Package: linux-doc-2.6
-Section: oldlibs
-Architecture: all
-Depends: linux-doc, ${misc:Depends}
-Description: Linux kernel specific documentation (dummy package)
- This is a dummy transitional package.  It can be safely removed.
