@@ -10,28 +10,24 @@ DEB_BUILD_ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
 __BINNMU := $(shell dpkg-parsechangelog | sed -rne 's,^Version: .*\+b([0-9]+)$$,\1,p')
 
-BUILD_STAMP = $(STAMPS_DIR)/build-base
+build: build-arch build-indep
+build-arch:
+build-indep:
 
-build: debian/control $(BUILD_STAMP)
-$(BUILD_STAMP): $(BUILD_DIR) $(STAMPS_DIR)
-	dh_testdir
-	$(MAKE) -f debian/rules.gen build_$(DEB_HOST_ARCH)
-	touch $@
-
-$(BUILD_DIR) $(STAMPS_DIR):
+$(BUILD_DIR):
 	@[ -d $@ ] || mkdir $@
 
 clean: debian/control
 	dh_testdir
-	rm -rf $(BUILD_DIR) $(STAMPS_DIR)
+	rm -rf $(BUILD_DIR)
 	dh_clean
 	find debian -maxdepth 1 -type l -delete
 
-binary-indep:
+binary-indep: debian/control $(BUILD_DIR)
 	dh_testdir
 	$(MAKE) -f debian/rules.gen binary-indep
 
-binary-arch:
+binary-arch: debian/control $(BUILD_DIR)
 	dh_testdir
 	$(MAKE) -f debian/rules.gen binary-arch_$(DEB_HOST_ARCH)
 
@@ -64,7 +60,7 @@ ifdef DEBIAN_KERNEL_BUILD_ANY
 binary-arch: binary-arch-all
 endif
 
-binary-arch-all: debian/control $(BUILD_DIR) $(STAMPS_DIR)
+binary-arch-all: debian/control $(BUILD_DIR)
 	dh_testdir
 	$(MAKE) -f debian/rules.gen binary-arch
 
