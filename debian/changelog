@@ -1,6 +1,7 @@
 linux-latest (46) UNRELEASED; urgency=low
 
   * Set Priority: extra, as currently overridden in the archive
+    (Closes: #689846)
   * Add Czech debconf template translation (Michal Šimůnek) (Closes: #685501)
   * Update to 3.2.0-4 (Closes: #688222, #689864)
 
