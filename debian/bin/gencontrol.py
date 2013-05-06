@@ -149,7 +149,7 @@ class Gencontrol(Base):
     def get_link_commands(package, names):
         cmds = []
         for name in names:
-            match = re.match(ur'^(linux-\w+)(-2.6)?(-.*)$', package['Package'])
+            match = re.match(ur'^(linux-\w+)(-.*)$', package['Package'])
             if not match:
                 continue
             if match.group(2):

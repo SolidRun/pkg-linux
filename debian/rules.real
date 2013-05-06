@@ -11,9 +11,6 @@ include debian/rules.defs
 binary-indep: install-doc
 binary-indep: install-source
 binary-indep: install-tools
-binary-indep: install-doc-2.6
-binary-indep: install-source-2.6
-binary-indep: install-tools-2.6
 
 install-base:
 	dh_bugfiles
@@ -48,23 +45,5 @@ install-source:
 install-tools: PACKAGE_NAME = linux-tools
 install-tools: DH_OPTIONS = -p$(PACKAGE_NAME)
 install-tools:
-	dh_prep
-	$(MAKE) -f debian/rules.real install-base
-
-install-doc-2.6: PACKAGE_NAME = linux-doc-2.6
-install-doc-2.6: DH_OPTIONS = -p$(PACKAGE_NAME)
-install-doc-2.6:
-	dh_prep
-	$(MAKE) -f debian/rules.real install-base GENCONTROL_ARGS=$(patsubst -v%,-v1:%,$(GENCONTROL_ARGS))
-
-install-source-2.6: PACKAGE_NAME = linux-source-2.6
-install-source-2.6: DH_OPTIONS = -p$(PACKAGE_NAME)
-install-source-2.6:
-	dh_prep
-	$(MAKE) -f debian/rules.real install-base GENCONTROL_ARGS=$(patsubst -v%,-v1:%,$(GENCONTROL_ARGS))
-
-install-tools-2.6: PACKAGE_NAME = linux-tools-2.6
-install-tools-2.6: DH_OPTIONS = -p$(PACKAGE_NAME)
-install-tools-2.6:
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
