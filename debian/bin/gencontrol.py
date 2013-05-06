@@ -152,13 +152,7 @@ class Gencontrol(Base):
             match = re.match(ur'^(linux-\w+)(-.*)$', package['Package'])
             if not match:
                 continue
-            if match.group(2):
-                source = 'debian/%s%s.%s' % (match.group(1), match.group(3),
-                                             name)
-            else:
-                source = None
-            if not (source and os.path.isfile(source)):
-                source = 'debian/%s.%s' % (match.group(1), name)
+            source = 'debian/%s.%s' % (match.group(1), name)
             dest = 'debian/%s.%s' % (package['Package'], name)
             if (os.path.isfile(source) and
                 (not os.path.isfile(dest) or os.path.islink(dest))):
