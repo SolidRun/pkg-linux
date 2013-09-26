@@ -66,6 +66,9 @@ class Gencontrol(Base):
         if self.config.get_merge('build', arch, featureset, flavour,
                                  'modules', True):
             templates.extend(self.templates["control.headers.latest"])
+        if self.config.get_merge('build', arch, featureset, flavour,
+                                 'debug-info', False):
+            templates.extend(self.templates["control.image-dbg.latest"])
 
         image_fields = {'Description': PackageDescription()}
 
