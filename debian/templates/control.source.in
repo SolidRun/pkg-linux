@@ -1,6 +1,6 @@
 Source: linux-latest
 Section: kernel
-Priority: extra
+Priority: optional
 Maintainer: Debian Kernel Team <debian-kernel@lists.debian.org>
 Uploaders: Bastian Blank <waldi@debian.org>, Frederik Schüler <fs@debian.org>, Ben Hutchings <ben@decadent.org.uk>
 Standards-Version: 3.9.4
