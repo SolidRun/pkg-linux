@@ -64,8 +64,10 @@ binary-arch-all: debian/control $(BUILD_DIR)
 	dh_testdir
 	$(MAKE) -f debian/rules.gen binary-arch
 
-maintainerclean:
-	-rm debian/control debian/control.md5sum debian/rules.gen
-	rm -f debian/*.bug-presubj
+maintainerclean: clean
+	rm -f debian/control debian/control.md5sum debian/rules.gen debian/*.bug-presubj
+# dh_clean won't deal with binary packages that no longer exist after
+# removal of a flavour.
+	rm -rf $(filter-out %.config %.postinst %.templates %.NEWS, $(wildcard debian/linux-*))
 
 .PHONY: clean build binary-indep binary-arch binary
