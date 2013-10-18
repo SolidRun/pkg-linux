@@ -1,4 +1,4 @@
-linux-latest (53) UNRELEASED; urgency=low
+linux-latest (53) unstable; urgency=low
 
   * Add linux-image-<flavour>-dbg metapackages, providing the virtual
     package linux-latest-image-dbg
@@ -7,7 +7,7 @@ linux-latest (53) UNRELEASED; urgency=low
   * Update to 3.11-1
   * Stop providing virtual package linux-headers
 
- -- Ben Hutchings <ben@decadent.org.uk>  Thu, 26 Sep 2013 04:49:44 +0100
+ -- Ben Hutchings <ben@decadent.org.uk>  Sat, 19 Oct 2013 00:44:20 +0100
 
 linux-latest (52) unstable; urgency=low
 
