@@ -82,7 +82,7 @@ class Gencontrol(Base):
                 desc.append(config_description['part-long-' + part])
                 desc.append_short(config_description.get('part-short-' + part, ''))
 
-            if u'xen' in desc_parts:
+            if self.config.merge('xen', arch, featureset, flavour):
                 templates.extend(self.templates["control.xen-linux-system.latest"])
 
         packages_dummy = []
