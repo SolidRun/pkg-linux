@@ -1,3 +1,9 @@
+linux-latest (54) unstable; urgency=low
+
+  * Update to 3.11-2
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Wed, 13 Nov 2013 03:30:59 +0000
+
 linux-latest (53) unstable; urgency=low
 
   * Add linux-image-<flavour>-dbg metapackages, providing the virtual
