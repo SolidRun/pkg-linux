@@ -30,6 +30,10 @@ class Gencontrol(Base):
     def do_main_setup(self, vars, makeflags, extra):
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
 
+        # A line will be appended to this for each image-dbg package.
+        # Start with an empty file.
+        open('debian/source.lintian-overrides', 'w').close()
+
     def do_main_packages(self, packages, vars, makeflags, extra):
         packages['source']['Build-Depends'].extend(
             [u'linux-support-%s' % self.abiname]
@@ -62,6 +66,10 @@ class Gencontrol(Base):
 
         templates = []
 
+        def substitute_file(template, target, append=False):
+            with codecs.open(target, 'a' if append else 'w',
+                             'utf-8') as f:
+                f.write(self.substitute(self.templates[template], vars))
         templates.extend(self.templates["control.image.latest.type-standalone"])
         if self.config.get_merge('build', arch, featureset, flavour,
                                  'modules', True):
@@ -69,6 +77,12 @@ class Gencontrol(Base):
         if self.config.get_merge('build', arch, featureset, flavour,
                                  'debug-info', False):
             templates.extend(self.templates["control.image-dbg.latest"])
+            substitute_file('lintian-overrides.image-dbg',
+                            'debian/linux-image-%s-dbg.lintian-overrides' %
+                            vars['flavour'])
+            substitute_file('lintian-overrides.source',
+                            'debian/source.lintian-overrides',
+                            append=True)
 
         image_fields = {'Description': PackageDescription()}
 

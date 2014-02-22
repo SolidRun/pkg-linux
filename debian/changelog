@@ -1,3 +1,10 @@
+linux-latest (57) UNRELEASED; urgency=medium
+
+  * Suppress lintian warnings about linux-image-dbg metapackages not
+    looking like debug info packages
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Sat, 22 Feb 2014 22:30:52 +0000
+
 linux-latest (56) unstable; urgency=medium
 
   * Update to 3.13-1
