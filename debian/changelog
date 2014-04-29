@@ -1,11 +1,11 @@
-linux-latest (57) UNRELEASED; urgency=medium
+linux-latest (57) unstable; urgency=medium
 
   * Suppress lintian warnings about linux-image-dbg metapackages not
     looking like debug info packages
   * debian/control: Update Standards-Version to 3.9.5; no changes needed
   * Update to 3.14-1
 
- -- Ben Hutchings <ben@decadent.org.uk>  Sat, 22 Feb 2014 22:30:52 +0000
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 29 Apr 2014 02:48:57 +0100
 
 linux-latest (56) unstable; urgency=medium
 
