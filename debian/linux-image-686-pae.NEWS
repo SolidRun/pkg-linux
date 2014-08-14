@@ -1,4 +1,4 @@
-linux-image-686-pae (47) unstable; urgency=medium
+linux-latest (47) unstable; urgency=medium
 
   * The kernel image is now compressed using xz compression.  If you are
     running it under a virtualisation system such as Xen, that will
