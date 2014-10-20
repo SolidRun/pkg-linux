@@ -1,7 +1,9 @@
 SHELL  := bash -e
+ifdef ARCH
 override DEB_HOST_ARCH     := $(shell dpkg-architecture -a'$(ARCH)' -f -qDEB_HOST_ARCH)
 override DEB_HOST_GNU_TYPE := $(shell dpkg-architecture -a'$(ARCH)' -f -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_ARCH    := $(shell dpkg-architecture -a'$(ARCH)' -qDEB_BUILD_ARCH)
+endif
 
 export DH_OPTIONS
 export DEB_HOST_ARCH
