@@ -1,1 +1,14 @@
+Package: linux-image-486
+Section: oldlibs
+Architecture: i386
+Depends: linux-image-586, ${misc:Depends}
+Description: Linux for older PCs (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
+
+Package: linux-headers-486
+Section: oldlibs
+Architecture: i386
+Depends: linux-headers-586, ${misc:Depends}
+Description: Header files for Linux 486 configuration (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
 

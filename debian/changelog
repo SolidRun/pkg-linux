@@ -1,6 +1,7 @@
 linux-latest (63) unstable; urgency=medium
 
   * Update to 3.16.0-4
+    - Change linux-{image,headers}-486 to transitional packages
 
  -- Ben Hutchings <ben@decadent.org.uk>  Thu, 06 Nov 2014 20:46:28 +0000
 
