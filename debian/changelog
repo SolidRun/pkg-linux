@@ -2,6 +2,9 @@ linux-latest (64) UNRELEASED; urgency=medium
 
   * Update to 4.0.0-1
   * Stop generating linux-{headers,image}-486 transitional packages
+  * debian/control: Build-Depend on linux-headers-*-all, so that after an
+    ABI bump linux is auto-built before linux-latest on each architecture.
+    (Closes: #746618)
 
  -- Ben Hutchings <ben@decadent.org.uk>  Mon, 11 May 2015 04:34:02 +0100
 

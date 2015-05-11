@@ -36,7 +36,11 @@ class Gencontrol(Base):
 
     def do_main_packages(self, packages, vars, makeflags, extra):
         packages['source']['Build-Depends'].extend(
-            [u'linux-support-%s' % self.abiname]
+            [u'linux-support-%s' % self.abiname,
+             # We don't need this installed, but it ensures that after an
+             # ABI bump linux is auto-built before linux-latest on each
+             # architecture.
+             u'linux-headers-%s-all' % self.abiname]
         )
 
         latest_source = self.templates["control.source.latest"]
