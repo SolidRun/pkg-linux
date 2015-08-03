@@ -1,0 +1,7 @@
+Package: linux-tools
+Section: oldlibs
+Architecture: all
+Depends: linux-perf, ${misc:Depends}
+Description: Performance analysis tools for Linux (dummy package)
+ This is a dummy transitional package.  It can be safely removed.
+

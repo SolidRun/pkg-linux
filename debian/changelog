@@ -1,6 +1,8 @@
 linux-latest (66) UNRELEASED; urgency=medium
 
   * Update to 4.1.0-1
+  * Rename linux-tools to linux-perf, providing linux-tools as a
+    transitional package
 
  -- Ben Hutchings <ben@decadent.org.uk>  Mon, 03 Aug 2015 23:27:32 +0100
 
