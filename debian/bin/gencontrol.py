@@ -145,6 +145,12 @@ class Gencontrol(Base):
         archs = extra_arches.keys()
         archs.sort()
         for arch in archs:
+            if arch == 'all':
+                arch_var = ''
+                target = 'binary-indep'
+            else:
+                arch_var = "ARCH='%s'" % arch
+                target = 'binary-arch_%s' % arch
             cmds = []
             for i in extra_arches[arch]:
                 if i.has_key(u'X-Version-Overwrite-Epoch'):
@@ -152,9 +158,9 @@ class Gencontrol(Base):
                 else:
                     version = u'-v%s' % self.package_version
                 cmds += self.get_link_commands(i, ['config', 'postinst', 'templates'])
-                cmds.append("$(MAKE) -f debian/rules.real install-dummy ARCH='%s' DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch, i['Package'], version))
-            makefile.add('binary-arch_%s' % arch, [u'binary-arch_%s_extra' % arch])
-            makefile.add("binary-arch_%s_extra" % arch, cmds = cmds)
+                cmds.append("$(MAKE) -f debian/rules.real install-dummy %s DH_OPTIONS='-p%s' GENCONTROL_ARGS='%s'" % (arch_var, i['Package'], version))
+            makefile.add(target, [target + '_extra'])
+            makefile.add(target + '_extra', cmds = cmds)
 
     def process_real_image(self, entry, fields, vars):
         entry = self.process_package(entry, vars)

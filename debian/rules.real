@@ -12,7 +12,7 @@ include debian/rules.defs
 
 binary-indep: install-doc
 binary-indep: install-source
-binary-indep: install-tools
+binary-indep: install-perf
 
 install-base:
 	dh_bugfiles
@@ -45,8 +45,8 @@ install-source:
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
 
-install-tools: PACKAGE_NAME = linux-tools
-install-tools: DH_OPTIONS = -p$(PACKAGE_NAME)
-install-tools:
+install-perf: PACKAGE_NAME = linux-perf
+install-perf: DH_OPTIONS = -p$(PACKAGE_NAME)
+install-perf:
 	dh_prep
 	$(MAKE) -f debian/rules.real install-base
