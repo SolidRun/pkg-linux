@@ -1,3 +1,10 @@
+linux-latest (67) UNRELEASED; urgency=medium
+
+  * Adjust for migration to git:
+    - Add .gitignore file
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 11 Aug 2015 19:16:12 +0200
+
 linux-latest (66) unstable; urgency=medium
 
   * Update to 4.1.0-1

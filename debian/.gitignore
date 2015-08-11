@@ -1,0 +1,14 @@
+/*.debhelper*
+/*.substvars
+/build/
+/control*
+/files
+/linux-doc/
+/linux-headers-*
+/linux-image-*
+/linux-source/
+/linux-tools/
+/rules.gen
+/source.lintian-overrides
+/stamps/
+/xen-linux-system-*/
