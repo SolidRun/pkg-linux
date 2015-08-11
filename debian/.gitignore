@@ -6,6 +6,7 @@
 /linux-doc/
 /linux-headers-*
 /linux-image-*
+/linux-perf/
 /linux-source/
 /linux-tools/
 /rules.gen
