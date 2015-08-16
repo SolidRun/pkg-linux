@@ -1,4 +1,4 @@
-linux-latest (67) UNRELEASED; urgency=medium
+linux-latest (67) unstable; urgency=medium
 
   * Adjust for migration to git:
     - Add .gitignore file
@@ -8,7 +8,7 @@ linux-latest (67) UNRELEASED; urgency=medium
   * Change source format to 3.0 (native) so that .git directory is excluded
     by default
 
- -- Ben Hutchings <ben@decadent.org.uk>  Tue, 11 Aug 2015 19:16:12 +0200
+ -- Ben Hutchings <ben@decadent.org.uk>  Sun, 16 Aug 2015 16:43:58 +0200
 
 linux-latest (66) unstable; urgency=medium
 
