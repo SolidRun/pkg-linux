@@ -5,6 +5,8 @@ linux-latest (67) UNRELEASED; urgency=medium
     - debian/control: Update Vcs-* fields
   * .gitignore: Ignore linux-perf build directory
   * Update to 4.1.0-2
+  * Change source format to 3.0 (native) so that .git directory is excluded
+    by default
 
  -- Ben Hutchings <ben@decadent.org.uk>  Tue, 11 Aug 2015 19:16:12 +0200
 
