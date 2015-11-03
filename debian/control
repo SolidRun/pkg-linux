@@ -1,37 +1,31 @@
-Source: kernel-3.14.y-fslc-imx6-sr
+Source: kernel-3.10.y-marvell-clearfog
 Section: kernel
 Priority: optional
 Maintainer: unknown <unknown>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop
 Standards-Version: 3.9.3
-Homepage: https://github.com/linux4kix/linux-linaro-stable-mx6
-Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-cubox-i.git
-Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-cubox-i
+Homepage: https://github.com/MarvellEmbeddedProcessors/linux-armada38x/tree/linux-3.10.70-15t1-clearfog
+Vcs-Git: https://github.com/MarvellEmbeddedProcessors/linux-armada38x.git
+Vcs-Browser: https://github.com/MarvellEmbeddedProcessors/linux-armada38x/tree/linux-3.10.70-15t1-clearfog
 
-Package: kernel-3.14.y-fslc-imx6-sr
+Package: kernel-3.10.y-marvell-clearfog
 Architecture: any-arm
-Provides: linux-image, linux-modules-${binary:Version}-cubox-i, galcore-5.0.11.25762
+Provides: linux-image, linux-modules-${binary:Version}-marvell-clearfog
 Depends: ${misc:Depends}
-Conflicts: kernel-cubox-i
-Replaces: kernel-cubox-i
-Description: Downstream kernel for Cubox-i
- This package provides a downstream kernel optimized for i.MX6
- Cubox-i and Hummingboard devices
+Description: Marvell kernel for Clearfog
+ This package provides the Marvell kernel for
+ the SolidRun Clearfog board
 
-Package: kernel-headers-3.14.y-fslc-imx6-sr
+Package: kernel-headers-3.10.y-marvell-clearfog
 Architecture: any-arm
 Provides: linux-headers
 Depends: ${misc:Depends}
-Conflicts: kernel-headers-cubox-i
-Replaces: kernel-headers-cubox-i
 Description: kernel development files
  This package provides the required development files to build
  modules for this kernel.
 
-Package: kernel-3.14.y-fslc-imx6-sr-dev
+Package: kernel-3.10.y-marvell-clearfog-dev
 Architecture: any-arm
-Conflicts: kernel-cubox-i-dev
-Replaces: kernel-cubox-i-dev
 Provides: imx-kernel-api
 Description: kernel API development files
  This packages provides the required development files to

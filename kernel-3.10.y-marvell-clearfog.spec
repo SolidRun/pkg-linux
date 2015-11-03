@@ -1,5 +1,5 @@
 #
-# spec file for package kernel-3.14.y-fslc-imx6-sr
+# spec file for package kernel-3.10.y-marvell-clearfog
 #
 # Copyright (c) 2014-2015 Josua Mayer <josua.mayer97@gmail.com>
 #
@@ -17,38 +17,35 @@
 
 #BuildArch: armv7l armv7hl
 
-%define baseversion 3.14.54
-%define localversion -fslc-imx6-sr
+%define baseversion 3.10.70
+%define localversion -marvell-clearfog
 
-Name: kernel-3.14.y-fslc-imx6-sr
-Summary: 3.14 LTS Kernel for Freescale i.MX6 devices
+Name: kernel-3.10.y-marvell-clearfog
+Summary: 3.10 LTS Kernel by Marvell for the SolidRun Clearfog board
 Url: https://github.com/SolidRun/linux-fslc/tree/3.14-1.0.x-mx6-sr
-Version: 3.14.54
-Release: 2
+Version: %{baseversion}
+Release: 1
 License: GPL-2.0
 Group: System/Kernel
-Source: kernel-3.14.y-fslc-imx6-sr_3.14.54pkg2.tar.gz
+Source: kernel-3.10.y-marvell-clearfog_3.10.70pkg1.tar.gz
 
 BuildRequires: bc lzop
 BuildRequires: module-init-tools
 
 Provides: kernel = %{version}-%{release}
 Provides: kernel-uname-r = %{baseversion}%{localversion}
-Requires: dtb-3.14.y-fslc-imx6-sr = %{version}
-
-# helper for binary userspace
-Provides: galcore = 5.0.11.25762
+Requires: dtb-3.10.y-marvell-clearfog = %{version}
 
 %description
-This package provides the community-maintained 3.14 LTS Kernel for Freescale i.MX6 devices.
+This package provides the community-maintained 3.14 LTS Kernel for SolidRun Clearfog
 
-%package -n dtb-3.14.y-fslc-imx6-sr
+%package -n dtb-3.10.y-marvell-clearfog
 Summary: DeviceTree Binaries
 Group: System/Boot
 Obsoletes: dtb-imx6
 Conflicts: dtb-imx6
-%description -n dtb-3.14.y-fslc-imx6-sr
-This package contains the DeviceTree binaries for Freescale i.MX6 devices.
+%description -n dtb-3.10.y-marvell-clearfog
+This package contains the DeviceTree binaries for SolidRun Clearfog
 
 %package devel
 Summary: Kernel development files
@@ -64,13 +61,13 @@ Group: Development/Languages/C and C++
 This package provides the public kernel headers, to build userspace applications against this specific kernel.
 
 %prep
-%setup -q -n kernel-3.14.y-fslc-imx6-sr-3.14.54pkg2
+%setup -q -n kernel-3.10.y-marvell-clearfog-3.10.70pkg1
 
 # build in subdirectory, out-of-tree
 mkdir build
 
 # merge defautl defconfig with provided one
-cd build; ../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/imx_v7_cbi_hb_defconfig ../defconfig; cd ..
+cd build; ../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/mvebu_extra_defconfig ../defconfig; cd ..
 
 # set LOCALVERSION
 cd build; ../linux/scripts/config --set-str LOCALVERSION %{localversion}; cd ..
@@ -111,9 +108,7 @@ rm -rf %{buildroot}/lib/firmware
 
 # DeviceTree
 install -v -m755 -d %{buildroot}/boot/dtb
-install -v -m644 arch/arm/boot/dts/*-cubox-i.dtb %{buildroot}/boot/dtb/
-install -v -m644 arch/arm/boot/dts/*-hummingboard.dtb %{buildroot}/boot/dtb/
-install -v -m644 arch/arm/boot/dts/*-hummingboard2.dtb %{buildroot}/boot/dtb/
+install -v -m644 arch/arm/boot/dts/armada-388-clearfog.dtb %{buildroot}/boot/dtb/
 
 # initrd placeholder for ghost file
 touch %{buildroot}/boot/initrd-%{baseversion}%{localversion}
@@ -144,7 +139,7 @@ fi
 if [ "$1" -gt  "1" ]; then
 	# This means the package is beeing updated
 	# the version may have changed and the boot file name with it
-	# check if current symlinks point to -cubox-i
+	# check if current symlinks point to LOCALVERSION
 	# if they do, force an update on them
 
 	# decision will be based on zImage only
