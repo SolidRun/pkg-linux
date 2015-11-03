@@ -186,7 +186,7 @@ fi
 /lib/modules/%{baseversion}%{localversion}
 %ghost /boot/initrd-%{baseversion}%{localversion}
 
-%files -n dtb-3.14.y-fslc-imx6-sr
+%files -n dtb-3.10.y-marvell-clearfog
 %defattr(-,root,root)
 /boot/dtb
 
