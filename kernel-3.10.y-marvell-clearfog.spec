@@ -81,8 +81,9 @@ make -C linux O="$PWD/build" olddefconfig
 %build
 cd build
 
-# HACK: create missing build folder
+# HACK: create missing build folders
 mkdir -p arch/arm/mach-mvebu/linux_oss
+mkdir -p drivers/net/ethernet/mvebu_net/{phy,prestera/kerneldrv/2_6}
 
 # build all
 %{__make} %{?_smp_mflags} zImage modules dtbs
