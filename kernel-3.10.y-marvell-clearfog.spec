@@ -66,8 +66,11 @@ This package provides the public kernel headers, to build userspace applications
 # build in subdirectory, out-of-tree
 mkdir build
 
-# merge defautl defconfig with provided one
-cd build; ../linux/scripts/kconfig/merge_config.sh -m /dev/null ../defconfig; cd ..
+# merge default defconfig with provided one
+cd build
+../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/mvebu_defconfig ../linux/arch/arm/configs/mvebu_extra_defconfig
+../linux/scripts/kconfig/merge_config.sh -m .config ../defconfig
+cd ..
 
 # set LOCALVERSION
 cd build; ../linux/scripts/config --set-str LOCALVERSION %{localversion}; cd ..
