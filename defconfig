@@ -1,2 +1,20 @@
+# compile error workaround
 CRYPTO_CRC32C=y
 LIBCRC32C=y
+
+# ext4 support
+EXT4_FS=y
+EXT4_DEBUG=n
+EXT4_FS_POSIX_ACL=n
+EXT4_FS_SECURITY=n
+FS_MBCACHE=y
+JBD2=y
+JBD2_DEBUG=n
+
+# devtmpfs
+DEVTMPFS=y
+DEVTMPFS_MOUNT=n
+
+# unix domain sockets
+UNIX=y
+UNIX_DIAG=n

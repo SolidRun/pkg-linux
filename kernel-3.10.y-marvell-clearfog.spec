@@ -62,6 +62,9 @@ This package provides the public kernel headers, to build userspace applications
 
 %prep
 %setup -q -n kernel-3.10.y-marvell-clearfog-3.10.70pkg1
+cd linux
+patch -p1 < ../hackfix.patch
+cd ..
 
 # build in subdirectory, out-of-tree
 mkdir build

@@ -1,0 +1,16 @@
+diff --git a/drivers/net/ethernet/mvebu_net/neta/net_dev/mv_netdev.c b/drivers/net/ethernet/mvebu_net/neta/net_dev/mv_netdev.c
+index 7813785..ec3429f 100644
+--- a/drivers/net/ethernet/mvebu_net/neta/net_dev/mv_netdev.c
++++ b/drivers/net/ethernet/mvebu_net/neta/net_dev/mv_netdev.c
+@@ -3295,6 +3295,11 @@ static int mv_eth_port_link_speed_fc(int port, MV_ETH_PORT_SPEED port_speed, int
+ {
+ 	struct eth_port *pp = mv_eth_port_by_id(port);
+ 
++	if(!pp) {
++		printk(KERN_ERR "mv_eth_port_by_id failed\n");
++		return -EFAULT;
++	}
++
+ 	if (en_force) {
+ 		if (mvNetaSpeedDuplexSet(port, port_speed, MV_ETH_DUPLEX_FULL)) {
+ 			printk(KERN_ERR "mvEthSpeedDuplexSet failed\n");
