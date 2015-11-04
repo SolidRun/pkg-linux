@@ -61,6 +61,9 @@ override_dh_auto_install:
 	rmdir $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include
 	find $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) -name "*.cmd" -delete
 
+	# HACK: make sure firmware folder exists, even if its empty
+	mkdir -p $(KDESTDIR)/lib/firmware
+
 	# move installed firmware into a kernelbuild-specific subfolder
 	mv $(KDESTDIR)/lib/firmware $(KDESTDIR)/lib/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	mkdir -p $(KDESTDIR)/lib/firmware
