@@ -26,7 +26,6 @@ Description: kernel development files
 
 Package: kernel-3.10.y-marvell-clearfog-dev
 Architecture: any-arm
-Provides: imx-kernel-api
 Description: kernel API development files
  This packages provides the required development files to
  utilize this kernel`s public API.
