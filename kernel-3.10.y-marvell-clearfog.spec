@@ -78,6 +78,9 @@ make -C linux O="$PWD/build" olddefconfig
 %build
 cd build
 
+# HACK: create missing build folder
+mkdir -p arch/arm/mach-mvebu/linux_oss
+
 # build all
 %{__make} %{?_smp_mflags} zImage modules dtbs
 

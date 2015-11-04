@@ -33,6 +33,8 @@ override_dh_auto_configure:
 	make -C linux O="$(CURDIR)/build" olddefconfig
 
 override_dh_auto_build:
+	# HACK: create missing build folder
+	mkdir -p build/arch/arm/mach-mvebu/linux_oss
 	dh_auto_build -- dtbs zImage modules
 
 override_dh_auto_install:
