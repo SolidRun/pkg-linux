@@ -71,8 +71,7 @@ mkdir build
 
 # merge default defconfig with provided one
 cd build
-../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/mvebu_defconfig ../linux/arch/arm/configs/mvebu_extra_defconfig
-../linux/scripts/kconfig/merge_config.sh -m .config ../defconfig
+../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/mvebu_defconfig ../linux/arch/arm/configs/mvebu_extra_defconfig ../defconfig
 cd ..
 
 # set LOCALVERSION
@@ -86,7 +85,7 @@ cd build
 
 # HACK: create missing build folders
 mkdir -p arch/arm/mach-mvebu/linux_oss
-mkdir -p drivers/net/ethernet/mvebu_net/{phy,prestera/kerneldrv/2_6}
+mkdir -p drivers/net/ethernet/mvebu_net/{common,phy,prestera/kerneldrv/2_6}
 
 # build all
 %{__make} %{?_smp_mflags} zImage modules dtbs
