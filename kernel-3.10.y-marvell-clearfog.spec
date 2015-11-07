@@ -86,6 +86,7 @@ cd build
 # HACK: create missing build folders
 mkdir -p arch/arm/mach-mvebu/linux_oss
 mkdir -p drivers/net/ethernet/mvebu_net/{common,phy,prestera/kerneldrv/2_6}
+mkdir -p drivers/crypto/mvebu_cesa/hal/AES
 
 # build all
 %{__make} %{?_smp_mflags} zImage modules dtbs

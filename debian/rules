@@ -39,6 +39,7 @@ override_dh_auto_build:
 	mkdir -p build/drivers/net/ethernet/mvebu_net/common
 	mkdir -p build/drivers/net/ethernet/mvebu_net/phy
 	mkdir -p build/drivers/net/ethernet/mvebu_net/prestera/kerneldrv/2_6
+	mkdir -p build/drivers/crypto/mvebu_cesa/hal/AES
 	dh_auto_build -- dtbs zImage modules
 
 override_dh_auto_install:
