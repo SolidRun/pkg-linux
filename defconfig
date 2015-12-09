@@ -19,6 +19,9 @@ CONFIG_DEVTMPFS_MOUNT=y
 CONFIG_UNIX=y
 CONFIG_UNIX_DIAG=y
 
+# add missing pci-e pieces
+CONFIG_PCI_MSI=y
+
 # merge OpenEmbedded defconfig
 CONFIG_ASYNC_TX_DMA=y
 CONFIG_BONDING=y
