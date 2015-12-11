@@ -1,3 +1,9 @@
+kernel-3.10.y-marvell-clearfog (3.10.70pkg3) stable; urgency=low
+
+  * repair kernel-headers package so that modules can once more be built
+
+ -- Josua Mayer <josua@linux.site>  Fri, 11 Dec 2015 13:10:41 +0100
+
 kernel-3.10.y-marvell-clearfog (3.10.70pkg2) stable; urgency=medium
 
   * repair symlinks /lib/modules/<uname -r>/source,build
