@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux.git
-	branch = master
+	url = https://github.com/SolidRun/linux-stable.git
+	branch = v4.4-rc6-sr-clearfog

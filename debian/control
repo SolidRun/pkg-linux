@@ -8,14 +8,14 @@ Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
-Package: linux-image-NAME
+Package: linux-image-4.4.y-clearfog
 Architecture: any-arm
 Provides: linux-image
 Depends: ${misc:Depends}
 Description: LONGNAME kernel
  This package provides the mainline kernel
 
-Package: linux-headers-NAME
+Package: linux-headers-4.4.y-clearfog
 Architecture: any-arm
 Provides: linux-headers
 Depends: ${misc:Depends}
@@ -23,7 +23,7 @@ Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-NAME-dev
+Package: linux-4.4.y-clearfog-dev
 Architecture: any-arm
 Description: kernel API development files
  This packages provides the required development files to
