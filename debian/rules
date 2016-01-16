@@ -9,9 +9,9 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
-KDESTDIR=$(CURDIR)/debian/linux-image-NAME
-HDESTDIR=$(CURDIR)/debian/linux-headers-NAME
-DDESTDIR=$(CURDIR)/debian/linux-NAME-dev
+KDESTDIR=$(CURDIR)/debian/linux-image-4.4.y-clearfog
+HDESTDIR=$(CURDIR)/debian/linux-headers-4.4.y-clearfog
+DDESTDIR=$(CURDIR)/debian/linux-4.4.y-clearfog-dev
 
 # kernel version information
 BASEVERSION=4.4.0-rc6
