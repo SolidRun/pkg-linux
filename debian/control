@@ -12,8 +12,9 @@ Package: linux-image-4.4.y-clearfog
 Architecture: any-arm
 Provides: linux-image
 Depends: ${misc:Depends}
-Description: LONGNAME kernel
- This package provides the mainline kernel
+Description: 4.4 LTS kernel for SolidRun Clearfog
+ This package provides the 4.4 LTS kernel built and optimized for the
+ SolidRun's clearfog board.
 
 Package: linux-headers-4.4.y-clearfog
 Architecture: any-arm
