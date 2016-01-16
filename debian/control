@@ -1,4 +1,4 @@
-Source: linux
+Source: linux-4.4.y-clearfog
 Section: kernel
 Priority: optional
 Maintainer: unknown <unknown>

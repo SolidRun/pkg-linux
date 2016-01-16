@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: linux
+Upstream-Name: linux-4.4.y-clearfog
 Source: <url://example.com>
 
 Files: *
