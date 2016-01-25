@@ -2,7 +2,11 @@ Source: linux-4.4.y-clearfog
 Section: kernel
 Priority: optional
 Maintainer: unknown <unknown>
-Build-Depends: debhelper (>= 8.0.0), bc, lzop
+Build-Depends:
+ debhelper (>= 8.0.0),
+ bc,
+ lzop,
+ libssl-dev,
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
