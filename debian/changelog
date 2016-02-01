@@ -1,6 +1,6 @@
 linux-4.4.y-clearfog (4.4.0~6+1) unstable; urgency=medium
 
-  * full-blown allmodconfig build
+  * enabled a few selected drivers
 
  -- unknown <debian@linux>  Mon, 25 Jan 2016 17:10:58 +0100
 
