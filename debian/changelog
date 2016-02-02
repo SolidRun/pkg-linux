@@ -1,8 +1,10 @@
-kernel-3.14.y-fslc-imx6-sr (3.14.54pkg5) UNRELEASED; urgency=low
+kernel-3.14.y-fslc-imx6-sr (3.14.60pkg1) stable; urgency=medium
 
-  * enable spidev driver
+  * make spidev builtin
+  * add latest LTS patches and security updates
+  * some changes to HB DeviceTree
 
- -- Josua Mayer <josua@linux.site>  Mon, 28 Dec 2015 00:56:03 +0000
+ -- Josua Mayer <josua@linux.site>  Tue, 02 Feb 2016 16:43:02 +0100
 
 kernel-3.14.y-fslc-imx6-sr (3.14.54pkg4) stable; urgency=low
 
