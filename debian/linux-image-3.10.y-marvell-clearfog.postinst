@@ -34,6 +34,13 @@ case "$1" in
 		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
 		echo "If desired, please update the symlinks zImage, initrd and dtb in /boot."
 	fi
+
+	# show warning when updating from pre-dtb-folder version
+	if [ -e /boot.script ] && grep "/boot/[^/]*.dtb" /boot.script 1>/dev/null 2>/dev/null; then
+		echo "WARNING: Your boot script does not use the new location for DTBs."
+		echo "This means your system will not be able to boot linux-image-$KERNEL_LOCALVERSION!"
+		echo "To boot this kernel, please update any occurence of /boot/<name>.dtb to /boot/dtb/<name>.dtb."
+	fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
