@@ -34,6 +34,14 @@ case "$1" in
 		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
 		echo "If desired, please update the symlinks zImage, initrd and dtb in /boot."
 	fi
+
+	# show warning when updating from pre-dtb-folder version
+	if [ -e /boot/uEnv.txt ] && ! grep "loadfdt" /boot/uEnv.txt 1>/dev/null 2>/dev/null; then
+		echo "WARNING: Your uEnv.txt is not set up for the new location of DTBs"
+		echo "This means your system will not be able to boot linux-image-$KERNEL_LOCALVERSION!"
+		echo "To boot this kernel, please add the following override for loadfdt to uEnv.txt:"
+		echo 'loadfdt=load mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${file_prefix}dtb/${fdt_file}'
+	fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
