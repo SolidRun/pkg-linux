@@ -1,5 +1,5 @@
 #
-# spec file for package kernel-3.10.y-marvell-clearfog
+# spec file for package kernel-3.14.y-fslc-imx6-sr
 #
 # Copyright (c) 2014-2015 Josua Mayer <josua.mayer97@gmail.com>
 #
@@ -17,35 +17,38 @@
 
 #BuildArch: armv7l armv7hl
 
-%define baseversion 3.10.70
-%define localversion -marvell-clearfog
+%define baseversion 3.14.54
+%define localversion -fslc-imx6-sr
 
-Name: kernel-3.10.y-marvell-clearfog
-Summary: 3.10 LTS Kernel by Marvell for the SolidRun Clearfog board
+Name: kernel-3.14.y-fslc-imx6-sr
+Summary: 3.14 LTS Kernel for Freescale i.MX6 devices
 Url: https://github.com/SolidRun/linux-fslc/tree/3.14-1.0.x-mx6-sr
-Version: %{baseversion}
-Release: 1
+Version: 3.14.54
+Release: 4
 License: GPL-2.0
 Group: System/Kernel
-Source: kernel-3.10.y-marvell-clearfog_3.10.70pkg1.tar.gz
+Source: kernel-3.14.y-fslc-imx6-sr_3.14.54pkg3.tar.gz
 
 BuildRequires: bc lzop
 BuildRequires: module-init-tools
 
 Provides: kernel = %{version}-%{release}
 Provides: kernel-uname-r = %{baseversion}%{localversion}
-Requires: dtb-3.10.y-marvell-clearfog = %{version}
+Requires: dtb-3.14.y-fslc-imx6-sr = %{version}
+
+# helper for binary userspace
+Provides: galcore = 5.0.11.25762
 
 %description
-This package provides the community-maintained 3.14 LTS Kernel for SolidRun Clearfog
+This package provides the community-maintained 3.14 LTS Kernel for Freescale i.MX6 devices.
 
-%package -n dtb-3.10.y-marvell-clearfog
+%package -n dtb-3.14.y-fslc-imx6-sr
 Summary: DeviceTree Binaries
 Group: System/Boot
 Obsoletes: dtb-imx6
 Conflicts: dtb-imx6
-%description -n dtb-3.10.y-marvell-clearfog
-This package contains the DeviceTree binaries for SolidRun Clearfog
+%description -n dtb-3.14.y-fslc-imx6-sr
+This package contains the DeviceTree binaries for Freescale i.MX6 devices.
 
 %package devel
 Summary: Kernel development files
@@ -61,18 +64,13 @@ Group: Development/Languages/C and C++
 This package provides the public kernel headers, to build userspace applications against this specific kernel.
 
 %prep
-%setup -q -n kernel-3.10.y-marvell-clearfog-3.10.70pkg1
-cd linux
-patch -p1 < ../hackfix.patch
-cd ..
+%setup -q -n kernel-3.14.y-fslc-imx6-sr-3.14.54pkg3
 
 # build in subdirectory, out-of-tree
 mkdir build
 
-# merge default defconfig with provided one
-cd build
-../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/mvebu_defconfig ../linux/arch/arm/configs/mvebu_extra_defconfig ../defconfig
-cd ..
+# merge defautl defconfig with provided one
+cd build; ../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/imx_v7_cbi_hb_defconfig ../defconfig; cd ..
 
 # set LOCALVERSION
 cd build; ../linux/scripts/config --set-str LOCALVERSION %{localversion}; cd ..
@@ -82,11 +80,6 @@ make -C linux O="$PWD/build" olddefconfig
 
 %build
 cd build
-
-# HACK: create missing build folders
-mkdir -p arch/arm/mach-mvebu/linux_oss
-mkdir -p drivers/net/ethernet/mvebu_net/{common,phy,prestera/kerneldrv/2_6}
-mkdir -p drivers/crypto/mvebu_cesa/hal/AES
 
 # build all
 %{__make} %{?_smp_mflags} zImage modules dtbs
@@ -118,7 +111,9 @@ rm -rf %{buildroot}/lib/firmware
 
 # DeviceTree
 install -v -m755 -d %{buildroot}/boot/dtb
-install -v -m644 arch/arm/boot/dts/armada-388-clearfog.dtb %{buildroot}/boot/dtb/
+install -v -m644 arch/arm/boot/dts/*-cubox-i.dtb %{buildroot}/boot/dtb/
+install -v -m644 arch/arm/boot/dts/*-hummingboard.dtb %{buildroot}/boot/dtb/
+install -v -m644 arch/arm/boot/dts/*-hummingboard2.dtb %{buildroot}/boot/dtb/
 
 # initrd placeholder for ghost file
 touch %{buildroot}/boot/initrd-%{baseversion}%{localversion}
@@ -149,7 +144,7 @@ fi
 if [ "$1" -gt  "1" ]; then
 	# This means the package is beeing updated
 	# the version may have changed and the boot file name with it
-	# check if current symlinks point to LOCALVERSION
+	# check if current symlinks point to -cubox-i
 	# if they do, force an update on them
 
 	# decision will be based on zImage only
@@ -196,7 +191,7 @@ fi
 /lib/modules/%{baseversion}%{localversion}
 %ghost /boot/initrd-%{baseversion}%{localversion}
 
-%files -n dtb-3.10.y-marvell-clearfog
+%files -n dtb-3.14.y-fslc-imx6-sr
 %defattr(-,root,root)
 /boot/dtb
 

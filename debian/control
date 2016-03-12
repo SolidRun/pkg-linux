@@ -1,4 +1,4 @@
-Source: kernel-3.10.y-marvell-clearfog
+Source: linux-3.10.y-marvell-clearfog
 Section: kernel
 Priority: optional
 Maintainer: unknown <unknown>
@@ -8,23 +8,23 @@ Homepage: https://github.com/MarvellEmbeddedProcessors/linux-armada38x/tree/linu
 Vcs-Git: https://github.com/MarvellEmbeddedProcessors/linux-armada38x.git
 Vcs-Browser: https://github.com/MarvellEmbeddedProcessors/linux-armada38x/tree/linux-3.10.70-15t1-clearfog
 
-Package: kernel-3.10.y-marvell-clearfog
+Package: linux-image-3.10.y-marvell-clearfog
 Architecture: any-arm
-Provides: linux-image, linux-modules-${binary:Version}-marvell-clearfog
+Provides: linux-image
 Depends: ${misc:Depends}
 Description: Marvell kernel for Clearfog
  This package provides the Marvell kernel for
  the SolidRun Clearfog board
 
-Package: kernel-headers-3.10.y-marvell-clearfog
+Package: linux-headers-3.10.y-marvell-clearfog
 Architecture: any-arm
 Provides: linux-headers
 Depends: ${misc:Depends}
 Description: kernel development files
- This package provides the required development files to build
+ This package provides the required development files to build	
  modules for this kernel.
 
-Package: kernel-3.10.y-marvell-clearfog-dev
+Package: linux-3.10.y-marvell-clearfog-dev
 Architecture: any-arm
 Description: kernel API development files
  This packages provides the required development files to

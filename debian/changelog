@@ -1,3 +1,9 @@
+linux-3.10.y-marvell-clearfog (3.10.70pkg4) UNRELEASED; urgency=low
+
+  * renamed to linux-image-*
+
+ -- Josua Mayer <josua@linux.site>  Sat, 12 Mar 2016 17:58:06 +0100
+
 kernel-3.10.y-marvell-clearfog (3.10.70pkg3) stable; urgency=low
 
   * repair kernel-headers package so that modules can once more be built
