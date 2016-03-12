@@ -17,6 +17,9 @@ Package: linux-image-4.4.y-clearfog
 Architecture: any-arm
 Provides: linux-image
 Depends: ${misc:Depends}
+Breaks:
+ kernel-3.10.y-marvell-clearfog (<= 3.10.70pkg3),
+ kernel-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
 Description: 4.4 LTS kernel for SolidRun Clearfog
  This package provides the 4.4 LTS kernel built and optimized for the
  SolidRun's clearfog board.
