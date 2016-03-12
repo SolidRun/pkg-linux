@@ -12,6 +12,9 @@ Package: linux-image-3.14.y-fslc-imx6-sr
 Architecture: any-arm
 Provides: linux-image
 Depends: ${misc:Depends}
+Breaks:
+ kernel-3.10.y-marvell-clearfog (<= 3.10.70pkg3),
+ kernel-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
 Description: Downstream kernel for Cubox-i
  This package provides a downstream kernel optimized for i.MX6
  Cubox-i and Hummingboard devices
