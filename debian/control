@@ -16,7 +16,7 @@ Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 Package: linux-image-4.4.y-clearfog
 Architecture: any-arm
 Provides: linux-image
-Depends: ${misc:Depends}
+Depends: ${misc:Depends}, initramfs-tools
 Breaks:
  kernel-3.10.y-marvell-clearfog (<= 3.10.70pkg3),
  kernel-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
