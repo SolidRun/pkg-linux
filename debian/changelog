@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.60pkg2) UNRELEASED; urgency=low
+
+  * renamed to linux-image-*
+
+ -- Josua Mayer <josua@linux.site>  Sat, 12 Mar 2016 18:33:30 +0100
+
 kernel-3.14.y-fslc-imx6-sr (3.14.60pkg1) stable; urgency=medium
 
   * make spidev builtin
