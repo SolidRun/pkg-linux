@@ -32,3 +32,23 @@ Architecture: any-arm
 Description: kernel API development files
  This packages provides the required development files to
  utilize this kernel`s public API.
+
+# dummy transition packages
+
+Package: kernel-3.14.y-fslc-imx6-sr
+Architecture: all
+Depends: ${misc:Depends}, linux-image-3.14.y-fslc-imx6-sr
+Description: transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: kernel-headers-3.14.y-fslc-imx6-sr
+Architecture: all
+Depends: ${misc:Depends}, linux-headers-3.14.y-fslc-imx6-sr
+Description: transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: kernel-3.14.y-fslc-imx6-sr-dev
+Architecture: all
+Depends: ${misc:Depends}, linux-3.14.y-fslc-imx6-sr-dev
+Description: transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
