@@ -1,8 +1,9 @@
-linux-3.10.y-marvell-clearfog (3.10.70pkg4) UNRELEASED; urgency=low
+linux-3.10.y-marvell-clearfog (3.10.70pkg5) stable; urgency=medium
 
   * renamed to linux-image-*
+  * install DTBs in subfolder
 
- -- Josua Mayer <josua@linux.site>  Sat, 12 Mar 2016 17:58:06 +0100
+ -- Josua Mayer <josua@linux.site>  Sat, 12 Mar 2016 18:16:38 +0100
 
 kernel-3.10.y-marvell-clearfog (3.10.70pkg3) stable; urgency=low
 
