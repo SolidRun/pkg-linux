@@ -37,7 +37,7 @@ Description: kernel API development files
 
 Package: kernel-3.10.y-marvell-clearfog
 Architecture: all
-Depends: ${misc:Depends}, linux-image-3.10.y-marvell-clearfog
+Depends: ${misc:Depends}, linux-image-3.10.y-marvell-clearfog, dtb-subfolder-compat (>= 1.0)
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
 

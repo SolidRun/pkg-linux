@@ -37,9 +37,13 @@ case "$1" in
 
 	# show warning when updating from pre-dtb-folder version
 	if [ -e /boot.script ] && grep "/boot/[^/]*.dtb" /boot.script 1>/dev/null 2>/dev/null; then
-		echo "WARNING: Your boot script does not use the new location for DTBs."
-		echo "This means your system will not be able to boot linux-image-$KERNEL_LOCALVERSION!"
-		echo "To boot this kernel, please update any occurence of /boot/<name>.dtb to /boot/dtb/<name>.dtb."
+		echo "WARNING: Your boot.scr is not set up for the new location of DTBs."
+		echo "Your system will still be able to boot as long as dtb-subfolder-compat"
+		echo "and the transitional kernel-3.10.y-marvell-clearfog are installed."
+		echo "To get rid of this warning, please update your boot.scr as follows:"
+		echo "1. replace all occurences of /boot/<name>.dtb in /boot.script with /boot/dtb/<name>.dtb"
+		echo "2. regenerate /boot.scr: mkimage -A arm -O linux -T script -C none -a 0 -e 0 -d /boot.script /boot.scr"
+		echo
 	fi
     ;;
 
