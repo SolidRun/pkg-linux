@@ -15,19 +15,19 @@
 # Please submit bugfixes or comments via http://www.solid-run.com/community/
 #
 
-#BuildArch: armv7l armv7hl
+BuildArch: armv7l armv7hl
 
-%define baseversion 3.14.54
+%define baseversion 3.14.60
 %define localversion -fslc-imx6-sr
 
 Name: kernel-3.14.y-fslc-imx6-sr
 Summary: 3.14 LTS Kernel for Freescale i.MX6 devices
 Url: https://github.com/SolidRun/linux-fslc/tree/3.14-1.0.x-mx6-sr
-Version: 3.14.54
-Release: 4
+Version: %baseversion
+Release: 2
 License: GPL-2.0
 Group: System/Kernel
-Source: kernel-3.14.y-fslc-imx6-sr_3.14.54pkg3.tar.gz
+Source: linux-3.14.y-fslc-imx6-sr-git.tar.gz
 
 BuildRequires: bc lzop
 BuildRequires: module-init-tools
@@ -64,16 +64,18 @@ Group: Development/Languages/C and C++
 This package provides the public kernel headers, to build userspace applications against this specific kernel.
 
 %prep
-%setup -q -n kernel-3.14.y-fslc-imx6-sr-3.14.54pkg3
+%setup -q -n linux-3.14.y-fslc-imx6-sr-git
 
 # build in subdirectory, out-of-tree
 mkdir build
 
-# merge defautl defconfig with provided one
-cd build; ../linux/scripts/kconfig/merge_config.sh -m ../linux/arch/arm/configs/imx_v7_cbi_hb_defconfig ../defconfig; cd ..
+# merge defautl defconfig with provided kconfig snippets
+find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m ./linux/arch/arm/configs/imx_v7_cbi_hb_defconfig
+
 
 # set LOCALVERSION
-cd build; ../linux/scripts/config --set-str LOCALVERSION %{localversion}; cd ..
+./linux/scripts/config --file build/.config --set-str LOCALVERSION %{localversion}
+./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
 
 # initialize build tree
 make -C linux O="$PWD/build" olddefconfig
@@ -82,7 +84,7 @@ make -C linux O="$PWD/build" olddefconfig
 cd build
 
 # build all
-%{__make} %{?_smp_mflags} zImage modules dtbs
+%{__make} %{?_smp_mflags} dtbs zImage modules
 
 # compress vmlinux
 gzip -n -k -9 vmlinux
@@ -119,7 +121,7 @@ install -v -m644 arch/arm/boot/dts/*-hummingboard2.dtb %{buildroot}/boot/dtb/
 touch %{buildroot}/boot/initrd-%{baseversion}%{localversion}
 
 # devel files
-sh ../install_devel_files.sh arm %{buildroot}/usr/src/kernel-%{baseversion}%{localversion}
+sh ../install_devel_files.sh arm ../linux ./ %{buildroot}/usr/src/kernel-%{baseversion}%{localversion}
 
 # source and build symlinks
 ln -sfv /usr/src/kernel-%{baseversion}%{localversion} %{buildroot}/lib/modules/%{baseversion}%{localversion}/source
