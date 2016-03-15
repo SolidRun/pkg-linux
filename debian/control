@@ -38,7 +38,7 @@ Description: kernel API development files
 
 Package: kernel-3.14.y-fslc-imx6-sr
 Architecture: all
-Depends: ${misc:Depends}, linux-image-3.14.y-fslc-imx6-sr
+Depends: ${misc:Depends}, linux-image-3.14.y-fslc-imx6-sr, dtb-subfolder-compat (>= 1.0)
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
 

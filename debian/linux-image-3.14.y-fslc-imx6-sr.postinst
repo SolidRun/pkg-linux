@@ -37,10 +37,12 @@ case "$1" in
 
 	# show warning when updating from pre-dtb-folder version
 	if [ -e /boot/uEnv.txt ] && ! grep "loadfdt" /boot/uEnv.txt 1>/dev/null 2>/dev/null; then
-		echo "WARNING: Your uEnv.txt is not set up for the new location of DTBs"
-		echo "This means your system will not be able to boot linux-image-$KERNEL_LOCALVERSION!"
-		echo "To boot this kernel, please add the following override for loadfdt to uEnv.txt:"
+		echo "WARNING: Your uEnv.txt is not set up for the new location of DTBs."
+		echo "Your system will still be able to boot as long as dtb-subfolder-compat"
+		echo "and the transitional kernel-3.14.y-fslc-imx6-sr are installed."
+		echo "To get rid of this warning, please add the following override for loadfdt to your uEnv.txt:"
 		echo 'loadfdt=load mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${file_prefix}dtb/${fdt_file}'
+		echo
 	fi
     ;;
 
