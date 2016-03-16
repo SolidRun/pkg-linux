@@ -23,6 +23,7 @@ Package: linux-headers-3.14.y-fslc-imx6-sr
 Architecture: any-arm
 Provides: linux-headers
 Depends: ${misc:Depends}
+Breaks: kernel-headers-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
 Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
@@ -30,6 +31,8 @@ Description: kernel development files
 Package: linux-3.14.y-fslc-imx6-sr-dev
 Architecture: any-arm
 Provides: imx-kernel-api
+Depends: ${misc:Depends}
+Breaks: kernel-3.14.y-fslc-imx6-sr-dev (<= 3.14.60pkg1)
 Description: kernel API development files
  This packages provides the required development files to
  utilize this kernel`s public API.
