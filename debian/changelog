@@ -1,4 +1,4 @@
-linux-3.10.y-marvell-clearfog (3.10.70pkg6) UNRELEASED; urgency=low
+linux-3.10.y-marvell-clearfog (3.10.70pkg6) stable; urgency=medium
 
   * merge mvebu_lsp_defconfig
   * enable driver for switch
