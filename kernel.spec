@@ -15,7 +15,7 @@
 # Please submit bugfixes or comments via http://www.solid-run.com/community/
 #
 
-BuildArch: armv7l armv7hl
+ExclusiveArch: armv7l armv7hl
 
 %define baseversion 3.14.60
 %define localversion -fslc-imx6-sr
