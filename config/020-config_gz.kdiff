@@ -1,0 +1,3 @@
+ BUILD_BIN2C n -> y
+ IKCONFIG n -> y
++IKCONFIG_PROC y

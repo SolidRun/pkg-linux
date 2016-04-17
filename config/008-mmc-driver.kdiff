@@ -1,9 +1,0 @@
- MMC_BLOCK m -> y
- MMC_DEBUG y -> n
- MMC_DW_EXYNOS m -> n
- MMC_DW_K3 m -> n
- MMC_DW_PCI m -> n
- MMC_DW_PLTFM m -> n
- MMC_SDHCI_OF_ARASAN m -> n
- MMC_SDHCI_OF_AT91 m -> n
- MMC_TEST m -> n

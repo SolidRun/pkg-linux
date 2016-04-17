@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/SolidRun/linux-stable.git
-	branch = v4.4-rc6-sr-clearfog
+	url = https://github.com/UnicronNL/vyos-kernel-clearfog.git
+	branch = current

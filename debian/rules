@@ -14,7 +14,7 @@ HDESTDIR=$(CURDIR)/debian/linux-headers-4.4.y-clearfog
 DDESTDIR=$(CURDIR)/debian/linux-4.4.y-clearfog-dev
 
 # kernel version information
-BASEVERSION=4.4.0-rc6
+BASEVERSION=4.4.7
 LOCALVERSION=-clearfog
 SCMVERSION=$(shell test -e .git && echo +)
 

@@ -1,0 +1,2 @@
+ KERNEL_GZIP y -> n
+ KERNEL_XZ n -> y
