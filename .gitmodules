@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/UnicronNL/vyos-kernel-clearfog.git
-	branch = current
+	url = git@bitbucket.org:clearfog/linux-marvell.git
+	branch = linux-4.4.8-clearfog

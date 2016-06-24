@@ -1,3 +1,9 @@
+linux-4.4.y-clearfog (4.4.8+1) unreleased; urgency=high
+
+  * updtae to 4.4.8 Marvell fork
+
+ -- Josua Mayer <josua@cubox>  Fri, 24 Jun 2016 12:26:58 +0000
+
 linux-4.4.y-clearfog (4.4.7) unstable; urgency=medium
 
   * update to 4.4.7 vyOS fork
