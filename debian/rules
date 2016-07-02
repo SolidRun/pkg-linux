@@ -33,10 +33,10 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	mkdir build
-	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m ./linux/arch/arm/configs/mvebu_v7_defconfig
-	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
-	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
-	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- olddefconfig
+	cat config/*.conf linux/arch/arm/configs/mvebu_v7_defconfig > build/seed.conf
+	./linux/scripts/config --file build/seed.conf --set-str LOCALVERSION $(LOCALVERSION)
+	./linux/scripts/config --file build/seed.conf --disable LOCALVERSION_AUTO
+	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- KCONFIG_ALLCONFIG=seed.conf allmodconfig
 
 override_dh_auto_build:
 	dh_auto_build -- ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
