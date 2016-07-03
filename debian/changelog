@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.60pkg3) stable; urgency=low
+
+  * enable CAN drivers
+
+ -- Josua Mayer <josua@linux.site>  Sun, 03 Jul 2016 20:29:08 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.60pkg2) stable; urgency=low
 
   * renamed to linux-image-*
