@@ -81,6 +81,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	# only strip linux-image package
-	# (the headers contain binaries oft eh hot system in scripts folder, they break strip when cross-compiling)
 	dh_strip --package=linux-image-NAME
+	# headers contain binary utilities not built for the target cpu
+	dh_strip --package=linux-headers-NAME -a $(DEB_BUILD_ARCH)
+	# no need to strip -dev package, it is header-only
