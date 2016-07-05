@@ -1,8 +1,8 @@
-linux-4.4.y-clearfog (4.4.8+2) unreleased; urgency=high
+linux-4.4.y-clearfog (4.4.8+3) UNRELEASED; urgency=high
 
   * update to 4.4.8 Marvell fork
 
- -- Josua Mayer <josua@cubox>  Fri, 24 Jun 2016 12:26:58 +0000
+ -- Josua Mayer <josua@linux-k8dt>  Tue, 05 Jul 2016 20:15:31 +0200
 
 linux-4.4.y-clearfog (4.4.7) unstable; urgency=medium
 
