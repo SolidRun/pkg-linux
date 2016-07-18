@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = git@bitbucket.org:clearfog/linux-marvell.git
-	branch = linux-4.4.8-clearfog
+	url = https://github.com/SolidRun/linux-stable.git
+	branch = linux-4.4.y-clearfog

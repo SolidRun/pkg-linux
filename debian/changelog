@@ -1,14 +1,20 @@
-linux-4.4.y-clearfog (4.4.8+3) UNRELEASED; urgency=high
+linux-4.4.y-clearfog (4.4.15) stable; urgency=low
+
+  * switch to SolidRun stable channel
+
+ -- Josua Mayer <josua@linux>  Mon, 18 Jul 2016 11:24:35 +0200
+
+linux-4.4.y-clearfog (4.4.8+3) unstable; urgency=high
 
   * update to 4.4.8 Marvell fork
 
- -- Josua Mayer <josua@linux-k8dt>  Tue, 05 Jul 2016 20:15:31 +0200
+ -- Josua Mayer <josua@linux>  Tue, 05 Jul 2016 20:15:31 +0200
 
 linux-4.4.y-clearfog (4.4.7) unstable; urgency=medium
 
   * update to 4.4.7 vyOS fork
 
- -- Josua Mayer <josua@linux-k8dt>  Sun, 17 Apr 2016 22:10:04 +0200
+ -- Josua Mayer <josua@linux>  Sun, 17 Apr 2016 22:10:04 +0200
 
 linux-4.4.y-clearfog (4.4.0~6+2) unstable; urgency=medium
 
