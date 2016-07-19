@@ -30,6 +30,7 @@ override_dh_auto_clean:
 	rm -rf build
 	# also make sure source-tree is really clean
 	cd linux; make mrproper
+	rm -f linux/localversion
 
 override_dh_auto_configure:
 	mkdir build
