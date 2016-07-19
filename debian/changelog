@@ -1,4 +1,10 @@
-linux-4.4.y-clearfog (4.4.15+1) stable; urgency=high
+linux-4.4.y-clearfog (4.4.15+2) stable; urgency=high
+
+  * dont compress modules
+
+ -- Josua Mayer <josua@linux>  Tue, 19 Jul 2016 22:41:16 +0200
+
+linux-4.4.y-clearfog (4.4.15+1) stable; urgency=medium
 
   * remove Marvell version string from LOCALVERSION
 
