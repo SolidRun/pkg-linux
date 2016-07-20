@@ -1,3 +1,9 @@
+linux-4.4.y-clearfog (4.4.15+3) stable; urgency=high
+
+  * disable built-in wireless regulatory database
+
+ -- Josua Mayer <josua@linux>  Wed, 20 Jul 2016 23:26:48 +0200
+
 linux-4.4.y-clearfog (4.4.15+2) stable; urgency=high
 
   * dont compress modules
