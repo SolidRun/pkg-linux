@@ -3,6 +3,7 @@ linux-latest (75) UNRELEASED; urgency=medium
   * Update to 4.7.0-1
   * Rename and move debug symbol meta-packages to the debug archive
   * debian/control: Set priority of transitional packages to extra
+  * debian/control: Update Standards-Version to 3.9.8; no changes needed
 
  -- Ben Hutchings <ben@decadent.org.uk>  Wed, 31 Aug 2016 01:35:01 +0100
 
