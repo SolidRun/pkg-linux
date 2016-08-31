@@ -75,9 +75,7 @@ class Gencontrol(Base):
                              'utf-8') as f:
                 f.write(self.substitute(self.templates[template], vars))
         templates.extend(self.templates["control.image.latest.type-standalone"])
-        if self.config.get_merge('build', arch, featureset, flavour,
-                                 'modules', True):
-            templates.extend(self.templates["control.headers.latest"])
+        templates.extend(self.templates["control.headers.latest"])
         if self.config.get_merge('build', arch, featureset, flavour,
                                  'debug-info', False):
             templates.extend(self.templates["control.image-dbg.latest"])
