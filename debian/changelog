@@ -1,3 +1,9 @@
+linux-latest (75) UNRELEASED; urgency=medium
+
+  * Update to 4.7.0-1
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Wed, 31 Aug 2016 01:35:01 +0100
+
 linux-latest (74) unstable; urgency=medium
 
   * Update to 4.6.0-1
