@@ -1,3 +1,9 @@
+linux-4.4.y-clearfog (4.4.15+4) stable; urgency=high
+
+  * bump version
+
+ -- Josua Mayer <josua@linux>  Mon, 05 Sep 2016 17:29:16 +0200
+
 linux-4.4.y-clearfog (4.4.15+3) stable; urgency=high
 
   * disable built-in wireless regulatory database
