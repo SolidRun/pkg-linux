@@ -1,4 +1,4 @@
-linux-latest (76) UNRELEASED; urgency=medium
+linux-latest (76) unstable; urgency=medium
 
   * Update to 4.8.0-1
   * linux-image-{686-pae,amd64}: Delete old NEWS
@@ -6,7 +6,7 @@ linux-latest (76) UNRELEASED; urgency=medium
     (Closes: #839632)
   * linux-image: Add NEWS for security hardening config changes for Linux 4.8
 
- -- Ben Hutchings <ben@decadent.org.uk>  Sat, 29 Oct 2016 01:51:27 +0100
+ -- Ben Hutchings <ben@decadent.org.uk>  Sat, 29 Oct 2016 02:26:39 +0100
 
 linux-latest (75) unstable; urgency=medium
 
