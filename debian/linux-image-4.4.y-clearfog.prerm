@@ -15,7 +15,7 @@ set -e
 #          <conflicting-package> <version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
-KERNEL_LOCALVERSION=4.4.15-clearfog
+KERNEL_LOCALVERSION=4.4.28-clearfog
 
 case $1 in
     deconfigure)
