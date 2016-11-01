@@ -82,6 +82,9 @@ override_dh_auto_install:
 	mkdir -p $(KDESTDIR)/lib/firmware
 	mv $(KDESTDIR)/lib/firmware-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(KDESTDIR)/lib/firmware/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
+	# install compatibility symlink for old dtb filename
+	ln -sv armada-388-clearfog-pro.dtb "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/armada-388-clearfog.dtb"
+
 override_dh_auto_test:
 	# don't test
 
