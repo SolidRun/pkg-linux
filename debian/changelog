@@ -1,3 +1,9 @@
+linux-4.4.y-clearfog (4.4.28+2) stable; urgency=medium
+
+  * allow access to /dev/mem
+
+ -- Josua Mayer <josua@linux>  Tue, 01 Nov 2016 17:51:47 +0100
+
 linux-4.4.y-clearfog (4.4.28+1) stable; urgency=medium
 
   * disable PCIEASPM
