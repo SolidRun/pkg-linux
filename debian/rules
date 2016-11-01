@@ -16,6 +16,9 @@ KDESTDIR=$(CURDIR)/debian/linux-image-4.4.y-clearfog
 HDESTDIR=$(CURDIR)/debian/linux-headers-4.4.y-clearfog
 DDESTDIR=$(CURDIR)/debian/linux-4.4.y-clearfog-dev
 
+# extract value of debhelper parallel option
+PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
+
 # kernel version information
 BASEVERSION=4.4.28
 LOCALVERSION=-clearfog
@@ -40,7 +43,7 @@ override_dh_auto_configure:
 	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- KCONFIG_ALLCONFIG=seed.conf allmodconfig
 
 override_dh_auto_build:
-	dh_auto_build -- ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
+	make -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
 
 override_dh_auto_install:
 	# install kernel image
