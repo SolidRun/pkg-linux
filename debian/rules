@@ -12,6 +12,9 @@ export DH_VERBOSE=1
 # include system information
 include /usr/share/dpkg/architecture.mk
 
+# extract value of debhelper parallel option
+PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
+
 KDESTDIR=$(CURDIR)/debian/linux-image-NAME
 HDESTDIR=$(CURDIR)/debian/linux-headers-NAME
 DDESTDIR=$(CURDIR)/debian/linux-NAME-dev
@@ -38,7 +41,7 @@ override_dh_auto_configure:
 	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- olddefconfig
 
 override_dh_auto_build:
-	dh_auto_build -- ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
+	make -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(DEB_TARGET_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
 
 override_dh_auto_install:
 	# install kernel image
