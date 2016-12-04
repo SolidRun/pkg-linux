@@ -1,10 +1,10 @@
-linux-latest (77) UNRELEASED; urgency=medium
+linux-latest (77) unstable; urgency=medium
 
   * Update to 4.8.0-2
   * Use debhelper compatibility level 9
   * Re-introduce xen-linux-system packages, accidentally dropped in version 75
 
- -- Ben Hutchings <ben@decadent.org.uk>  Sun, 04 Dec 2016 05:15:27 +0000
+ -- Ben Hutchings <ben@decadent.org.uk>  Sun, 04 Dec 2016 05:29:57 +0000
 
 linux-latest (76) unstable; urgency=medium
 
