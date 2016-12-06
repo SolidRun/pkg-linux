@@ -5,8 +5,10 @@ linux-latest (76) unstable; urgency=medium
     Some changes may cause legitimate applications to fail, and can be
     reverted by run-time configuration:
     - On 64-bit PCs (amd64), the old 'virtual syscall' interface is
-      disabled.  This breaks (e)glibc 2.13 and earlier.  To re-enable it,
-      set the kernel parameter: vsyscall=emulate
+      disabled.  This breaks chroot environments and containers that
+      use (e)glibc 2.13 and earlier, including those based on Debian 7
+      or RHEL/CentOS 6.  To re-enable it, set the kernel parameter:
+      vsyscall=emulate
     - On most architectures, the /dev/mem device can no longer be used to
       access devices that also have a kernel driver.  This breaks dosemu
       and some old user-space graphics drivers.  To allow this, set the
