@@ -54,3 +54,10 @@ Depends: linux-headers-marvell, ${misc:Depends}
 Description: Header files for Linux orion5x configuration (dummy package)
  This is a dummy transitional package.  It can be safely removed.
 
+Package: xen-linux-system-amd64
+Section: oldlibs
+Priority: extra
+Architecture: amd64
+Depends: xen-system-amd64, linux-image-amd64, ${misc:Depends}
+Description: Xen system with Linux for 64-bit PCs (dummy package)
+ This is a dummy transitional package.  It can be safely removed.

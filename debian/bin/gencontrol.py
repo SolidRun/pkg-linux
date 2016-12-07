@@ -99,10 +99,6 @@ class Gencontrol(Base):
                 desc.append(config_description['part-long-' + part])
                 desc.append_short(config_description.get('part-short-' + part, ''))
 
-            if self.config.merge('xen', arch, featureset, flavour):
-                makeflags['XEN'] = True
-                templates.extend(self.templates["control.xen-linux-system.latest"])
-
         packages_flavour = []
 
         packages_flavour.append(self.process_real_image(templates[0], image_fields, vars))
