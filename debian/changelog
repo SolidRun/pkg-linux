@@ -1,3 +1,10 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg1) UNRELEASED; urgency=medium
+
+  * Non-maintainer upload.
+  * add support for SoM rev. 1.5
+
+ -- Josua Mayer <josua@vps.jm0.eu>  Wed, 14 Dec 2016 05:17:22 -0500
+
 linux-3.14.y-fslc-imx6-sr (3.14.60pkg3) stable; urgency=low
 
   * enable CAN drivers
