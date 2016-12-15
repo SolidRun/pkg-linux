@@ -20,16 +20,22 @@ set -e
 KERNEL_LOCALVERSION=3.14.79-fslc-imx6-sr
 
 case "$1" in
-    configure)
-	# create an initrd
-	update-initramfs -k $KERNEL_LOCALVERSION -c 2>/dev/null || true
+	configure)
+	# create/update the initrd
+	# if one exists already, update it
+	if [ -e /boot/initrd.img-$KERNEL_LOCALVERSION ]; then
+		update-initramfs -k $KERNEL_LOCALVERSION -u 2>/dev/null || true
+	else
+	# otherwise, create it
+		update-initramfs -k $KERNEL_LOCALVERSION -c 2>/dev/null || true
+	fi
 
 	# set this kernel as boot kernel if none other is set or exists
 	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
 	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
 		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		ln -sfv dtb-$KERNEL_LOCALVERSION /boot/dtb
+		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
 	else
 		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
 		echo "If desired, please update the symlinks zImage, initrd and dtb in /boot."
@@ -46,10 +52,20 @@ case "$1" in
 	fi
     ;;
 
-    abort-upgrade|abort-remove|abort-deconfigure)
-    ;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+	# This is a curious case! prerm has already been executed, but postinst of any new version probably hasn't
+	# do the minimum work required to get a consistent system:
+	# recreate boot symlinks for this current version
+	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
+	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
+		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
+		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
+		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
+	fi
+	# ignore ramdisk (not strictly required, I hope)
+	;;
 
-    *)
+	*)
 	echo "postinst called with unknown argument \"$1\"" >&2
 	exit 1
     ;;
