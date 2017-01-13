@@ -1,6 +1,8 @@
 linux-latest (78) UNRELEASED; urgency=medium
 
   * debian/rules: Use dpkg-parsechangelog -S option to select fields
+  * linux-image: Delete NEWS for version 76 about vsyscall changes, now
+    reverted
 
  -- Ben Hutchings <ben@decadent.org.uk>  Tue, 06 Dec 2016 23:54:10 +0000
 
