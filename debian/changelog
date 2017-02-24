@@ -1,3 +1,9 @@
+linux-3.10.y-marvell-clearfog (3.10.70pkg7) stable; urgency=medium
+
+  * update
+
+ -- Josua Mayer <josua@linux.site>  Fri, 24 Feb 2017 20:43:06 +0100
+
 linux-3.10.y-marvell-clearfog (3.10.70pkg6) stable; urgency=medium
 
   * merge mvebu_lsp_defconfig

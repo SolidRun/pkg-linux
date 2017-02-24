@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/MarvellEmbeddedProcessors/linux-armada38x.git
-	branch = linux-3.10.70-15t1-clearfog
+	url = https://github.com/SolidRun/linux-marvell.git
+	branch = linux-3.10.y-clearfog
