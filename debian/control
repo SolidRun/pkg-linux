@@ -11,7 +11,7 @@ Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 Package: linux-image-3.14.y-fslc-imx6-sr
 Architecture: any-arm
 Provides: linux-image, galcore-5.0.11.25762
-Depends: ${misc:Depends}, initramfs-tools
+Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Breaks:
  kernel-3.10.y-marvell-clearfog (<= 3.10.70pkg3),
  kernel-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
