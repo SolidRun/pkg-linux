@@ -27,6 +27,9 @@ case "$1" in
 		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
 		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
+	elif ( [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb)" = "dtb-$KERNEL_LOCALVERSION" ]); then
+		# all good
+		:
 	else
 		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
 		echo "If desired, please update the symlinks zImage, initrd and dtb in /boot."
