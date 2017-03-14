@@ -12,12 +12,12 @@ export DH_VERBOSE=1
 # include system information
 include /usr/share/dpkg/architecture.mk
 
+# extract value of debhelper parallel option
+PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
+
 KDESTDIR=$(CURDIR)/debian/linux-image-4.4.y-clearfog
 HDESTDIR=$(CURDIR)/debian/linux-headers-4.4.y-clearfog
 DDESTDIR=$(CURDIR)/debian/linux-4.4.y-clearfog-dev
-
-# extract value of debhelper parallel option
-PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
 # kernel version information
 BASEVERSION=4.4.28
