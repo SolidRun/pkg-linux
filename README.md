@@ -19,3 +19,8 @@
     `cd deb-pkg_kernel-xyz; git submodule update --init`
 3.  build deb:  
     `cd deb-pkg_kernel-xyz; dpkg-buildpackage -a armhf -b`
+
+## Maintainer-Scripts Documentation:
+# kernel package initrd postinst logic:
+1.  manage unversioned symlinks (zImage, initrd)
+2.  call system-wide hooks in /etc/kernel/*.d/*
