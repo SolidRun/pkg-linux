@@ -2,84 +2,84 @@ linux-4.4.y-clearfog (4.4.28+3) stable; urgency=medium
 
   * workaround update-initramfs problems
 
- -- Josua Mayer <josua@linux>  Mon, 20 Mar 2017 15:56:49 +0100
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 20 Mar 2017 15:56:49 +0100
 
 linux-4.4.y-clearfog (4.4.28+2) stable; urgency=medium
 
   * allow access to /dev/mem
 
- -- Josua Mayer <josua@linux>  Tue, 01 Nov 2016 17:51:47 +0100
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 01 Nov 2016 17:51:47 +0100
 
 linux-4.4.y-clearfog (4.4.28+1) stable; urgency=medium
 
   * disable PCIEASPM
   * disable all graphics drivers
 
- -- Josua Mayer <josua@linux>  Tue, 01 Nov 2016 15:25:37 +0100
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 01 Nov 2016 15:25:37 +0100
 
 linux-4.4.y-clearfog (4.4.28) testing; urgency=medium
 
   * update to testing branch
 
- -- Josua Mayer <josua@linux>  Sun, 30 Oct 2016 13:35:33 +0000
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 30 Oct 2016 13:35:33 +0000
 
 linux-4.4.y-clearfog (4.4.15+4) stable; urgency=high
 
   * bump version
 
- -- Josua Mayer <josua@linux>  Mon, 05 Sep 2016 17:29:16 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 05 Sep 2016 17:29:16 +0200
 
 linux-4.4.y-clearfog (4.4.15+3) stable; urgency=high
 
   * disable built-in wireless regulatory database
 
- -- Josua Mayer <josua@linux>  Wed, 20 Jul 2016 23:26:48 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 20 Jul 2016 23:26:48 +0200
 
 linux-4.4.y-clearfog (4.4.15+2) stable; urgency=high
 
   * dont compress modules
 
- -- Josua Mayer <josua@linux>  Tue, 19 Jul 2016 22:41:16 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 19 Jul 2016 22:41:16 +0200
 
 linux-4.4.y-clearfog (4.4.15+1) stable; urgency=medium
 
   * remove Marvell version string from LOCALVERSION
 
- -- Josua Mayer <josua@linux>  Tue, 19 Jul 2016 10:23:38 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 19 Jul 2016 10:23:38 +0200
 
 linux-4.4.y-clearfog (4.4.15) stable; urgency=low
 
   * switch to SolidRun stable channel
 
- -- Josua Mayer <josua@linux>  Mon, 18 Jul 2016 11:24:35 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 18 Jul 2016 11:24:35 +0200
 
 linux-4.4.y-clearfog (4.4.8+3) unstable; urgency=high
 
   * update to 4.4.8 Marvell fork
 
- -- Josua Mayer <josua@linux>  Tue, 05 Jul 2016 20:15:31 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 05 Jul 2016 20:15:31 +0200
 
 linux-4.4.y-clearfog (4.4.7) unstable; urgency=medium
 
   * update to 4.4.7 vyOS fork
 
- -- Josua Mayer <josua@linux>  Sun, 17 Apr 2016 22:10:04 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 17 Apr 2016 22:10:04 +0200
 
 linux-4.4.y-clearfog (4.4.0~6+2) unstable; urgency=medium
 
   * install DTBs in subfolder
   * enable iomem hwrng driver
 
- -- Josua Mayer <josua@linux>  Tue, 02 Feb 2016 00:26:05 +0100
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 02 Feb 2016 00:26:05 +0100
 
 linux-4.4.y-clearfog (4.4.0~6+1) unstable; urgency=medium
 
   * enabled a few selected drivers
 
- -- unknown <debian@linux>  Mon, 25 Jan 2016 17:10:58 +0100
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 25 Jan 2016 17:10:58 +0100
 
 linux-4.4.y-clearfog (4.4.0~6) unstable; urgency=low
 
   * Initial release
 
- -- unknown <unknown>  Sat, 25 Oct 2014 22:43:37 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sat, 25 Oct 2014 22:43:37 +0200
