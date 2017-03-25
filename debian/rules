@@ -12,6 +12,12 @@ export DH_VERBOSE=1
 # include system information
 include /usr/share/dpkg/architecture.mk
 
+# set CROSS_COMPILE only when cross-compiling
+CROSS_COMPILE=
+ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
+	CROSS_COMPILE=$(CROSS_COMPILE)
+endif
+
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
@@ -38,10 +44,10 @@ override_dh_auto_configure:
 	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m /dev/null
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
-	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)- olddefconfig
+	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
 
 override_dh_auto_build:
-	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)- LOCALVERSION= dtbs zImage modules
+	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs zImage modules
 
 override_dh_auto_install:
 	# install kernel image
@@ -55,7 +61,7 @@ override_dh_auto_install:
 	find build/arch/arm/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
 	# install modules
-	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)- INSTALL_MOD_PATH=$(KDESTDIR) modules_install
+	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/source
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/build
 
@@ -68,7 +74,7 @@ override_dh_auto_install:
 	ln -sfv /usr/src/linux-headers-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(HDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/build
 
 	# install the public API headers
-	make -C build ARCH=arm CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)- INSTALL_HDR_PATH=$(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) headers_install
+	make -C build ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_HDR_PATH=$(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) headers_install
 	mv $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include/* $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/
 	rmdir $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include
 	find $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) -name "*.cmd" -delete
