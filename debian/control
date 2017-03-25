@@ -1,7 +1,7 @@
 Source: linux-3.14.y-fslc-imx6-sr
 Section: kernel
 Priority: optional
-Maintainer: unknown <unknown>
+Maintainer: Josua Mayer <josua.mayer97@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
@@ -34,7 +34,7 @@ Provides: imx-kernel-api
 Depends: ${misc:Depends}
 Breaks: kernel-3.14.y-fslc-imx6-sr-dev (<= 3.14.60pkg1)
 Description: kernel API development files
- This packages provides the required development files to
+ This package provides the required development files to
  utilize this kernel`s public API.
 
 # dummy transition packages

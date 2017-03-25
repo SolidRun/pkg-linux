@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: linux-3.14.y-fslc-imx6
-Source: <url://example.com>
+Source: https://github.com/SolidRun/linux-fslc/tree/3.14-1.0.x-mx6-sr
 
 Files: *
 Copyright: Copyright (C) 1991-2014 Linus Torvalds
@@ -9,18 +9,21 @@ License: GPL-2.0
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License version 2 as
  published by the Free Software Foundation.
- 
+ .
  This package is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+ .
  You should have received a copy of the GNU General Public License
  along with this package; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ .
+ On Debian systems, the complete text of the GNU General                                                                                                                           
+ Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
 
 Files: debian/*
-Copyright: 2014-2016 Josua Mayer <privacy@not.given>
+Copyright: 2014-2017 Josua Mayer <josua.mayer97@gmail.com>
 License: MIT
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
