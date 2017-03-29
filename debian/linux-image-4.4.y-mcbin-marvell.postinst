@@ -22,17 +22,17 @@ KERNEL_LOCALVERSION=4.4.0
 case "$1" in
 	configure)
 	# set this kernel as boot kernel if none other is set or exists
-	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
+	if ( [ ! -e "/boot/Image" ] || ( [ -h "/boot/Image" ] && [ ! -e "/boot/$(readlink /boot/Image)" ] ) ) \
 	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
-		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
+		ln -sfv Image-$KERNEL_LOCALVERSION /boot/Image
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
 		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
-	elif ( [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb)" = "dtb-$KERNEL_LOCALVERSION" ]); then
+	elif ( [ "$(readlink /boot/Image)" = "Image-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb)" = "dtb-$KERNEL_LOCALVERSION" ]); then
 		# all good
 		:
 	else
 		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
-		echo "If desired, please update the symlinks zImage, initrd and dtb in /boot."
+		echo "If desired, please update the symlinks Image, initrd and dtb in /boot."
 	fi
 	;;
 
@@ -40,9 +40,9 @@ case "$1" in
 	# This is a curious case! prerm has already been executed, but postinst of any new version probably hasn't
 	# do the minimum work required to get a consistent system:
 	# recreate boot symlinks for this current version
-	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
+	if ( [ ! -e "/boot/Image" ] || ( [ -h "/boot/Image" ] && [ ! -e "/boot/$(readlink /boot/Image)" ] ) ) \
 	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
-		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
+		ln -sfv Image-$KERNEL_LOCALVERSION /boot/Image
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
 		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
 	fi

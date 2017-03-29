@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux.git
-	branch = master
+	url = https://github.com/MarvellEmbeddedProcessors/linux-marvell.git
+	branch = linux-4.4.8-armada-17.02-macchiatobin

@@ -1,3 +1,9 @@
+linux (4.4.8) stable; urgency=medium
+
+  * Marvell release 4.4.8-armada-17.02-macchiatobin
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 29 Mar 2017 11:40:51 -0400
+
 linux (4.4.0) unstable; urgency=low
 
   * Initial release

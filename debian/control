@@ -8,23 +8,23 @@ Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
-Package: linux-image-NAME
-Architecture: any-arm
+Package: linux-image-4.4.y-mcbin-marvell
+Architecture: any-arm64
 Provides: linux-image
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
-Description: LONGNAME kernel
- This package provides the mainline kernel
+Description: Marvell 4.4.y macchiatobin kernel
+ This package provides the stable Marvell kernel for the SolidRun Armada 8040 Community Board.
 
-Package: linux-headers-NAME
-Architecture: any-arm
+Package: linux-headers-4.4.y-mcbin-marvell
+Architecture: any-arm64
 Provides: linux-headers
 Depends: ${misc:Depends}
 Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-NAME-dev
-Architecture: any-arm
+Package: linux-4.4.y-mcbin-marvell-dev
+Architecture: any-arm64
 Description: kernel API development files
  This package provides the required development files to
  utilize this kernel`s public API.

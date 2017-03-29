@@ -20,8 +20,8 @@ KERNEL_LOCALVERSION=4.4.0
 case $1 in
     deconfigure)
 	# if there is a boot symlink to this kernel, remove it
-	if [ -h /boot/zImage ] && [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/zImage
+	if [ -h /boot/Image ] && [ "$(readlink /boot/Image)" = "Image-$KERNEL_LOCALVERSION" ]; then
+		rm -f /boot/Image
 	fi
 	# same for initrd
 	if [ -h /boot/initrd ] && [ "$(readlink /boot/initrd)" = "initrd.img-$KERNEL_LOCALVERSION" ]; then

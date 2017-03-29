@@ -21,13 +21,13 @@ endif
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
-KDESTDIR=$(CURDIR)/debian/linux-image-NAME
-HDESTDIR=$(CURDIR)/debian/linux-headers-NAME
-DDESTDIR=$(CURDIR)/debian/linux-NAME-dev
+KDESTDIR=$(CURDIR)/debian/linux-image-4.4.y-mcbin-marvell
+HDESTDIR=$(CURDIR)/debian/linux-headers-4.4.y-mcbin-marvell
+DDESTDIR=$(CURDIR)/debian/linux-4.4.y-mcbin-marvell4.4.y-mcbin-marvell-dev
 
 # kernel version information
-BASEVERSION=4.4.0
-LOCALVERSION=-NAME
+BASEVERSION=4.4.8
+LOCALVERSION=-mcbin-marvell
 SCMVERSION=
 
 %:
@@ -38,30 +38,31 @@ override_dh_auto_clean:
 	rm -rf build
 	# also make sure source-tree is really clean
 	cd linux; make mrproper
+	rm -f linux/localversion
 
 override_dh_auto_configure:
 	mkdir build
 	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m /dev/null
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
-	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
+	make -C linux O="$(CURDIR)/build" ARCH=arm64 CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
 
 override_dh_auto_build:
-	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs zImage modules
+	make -C build -j$(PARALLEL) ARCH=arm64 CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs Image modules
 
 override_dh_auto_install:
 	# install kernel image
 	mkdir -vp "$(KDESTDIR)/boot"
-	install -v -m755 build/arch/arm/boot/zImage $(KDESTDIR)/boot/zImage-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	install -v -m755 build/arch/arm64/boot/Image $(KDESTDIR)/boot/Image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/System.map $(KDESTDIR)/boot/System.map-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/.config $(KDESTDIR)/boot/config-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
 	# install DTBs
 	mkdir -vp "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
-	find build/arch/arm/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
+	find build/arch/arm64/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
 	# install modules
-	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
+	make -C build -j$(PARALLEL) ARCH=arm64 CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/source
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/build
 
@@ -74,7 +75,7 @@ override_dh_auto_install:
 	ln -sfv /usr/src/linux-headers-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(HDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/build
 
 	# install the public API headers
-	make -C build ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_HDR_PATH=$(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) headers_install
+	make -C build ARCH=arm64 CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_HDR_PATH=$(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) headers_install
 	mv $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include/* $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/
 	rmdir $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include
 	find $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) -name "*.cmd" -delete
@@ -90,7 +91,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	dh_strip --package=linux-image-NAME
+	dh_strip --package=linux-image-4.4.y-mcbin-marvell
 	# headers contain binary utilities built for the build host cpu
-	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-NAME
+	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.4.y-mcbin-marvell
 	# no need to strip -dev package, it is header-only
