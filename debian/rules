@@ -15,7 +15,7 @@ include /usr/share/dpkg/architecture.mk
 # set CROSS_COMPILE only when cross-compiling
 CROSS_COMPILE=
 ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
-	CROSS_COMPILE=$(CROSS_COMPILE)
+	CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)-
 endif
 
 # extract value of debhelper parallel option
