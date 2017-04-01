@@ -1,7 +1,7 @@
 Source: linux-3.10.y-marvell-clearfog
 Section: kernel
 Priority: optional
-Maintainer: unknown <unknown>
+Maintainer: Josua Mayer <josua.mayer97@gmail.com>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop
 Standards-Version: 3.9.3
 Homepage: https://github.com/MarvellEmbeddedProcessors/linux-armada38x/tree/linux-3.10.70-15t1-clearfog
