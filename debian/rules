@@ -12,11 +12,8 @@ export DH_VERBOSE=1
 # include system information
 include /usr/share/dpkg/architecture.mk
 
-# set CROSS_COMPILE only when cross-compiling
-CROSS_COMPILE=
-ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
-	CROSS_COMPILE=$(CROSS_COMPILE)
-endif
+# always set CROSS_COMPILE
+CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)-
 
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
@@ -46,7 +43,7 @@ override_dh_auto_configure:
 	cat config/*.conf linux/arch/arm/configs/mvebu_v7_defconfig > build/seed.conf
 	./linux/scripts/config --file build/seed.conf --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/seed.conf --disable LOCALVERSION_AUTO
-	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE)- KCONFIG_ALLCONFIG=seed.conf allmodconfig
+	make -C linux O="$(CURDIR)/build" ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) KCONFIG_ALLCONFIG=seed.conf allmodconfig
 
 override_dh_auto_build:
 	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs zImage modules
