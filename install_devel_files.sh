@@ -31,8 +31,8 @@ TMPDIR="$PWD"
 
 # snippet copied from kernel tree /scripts/package/builddeb
 (cd "$SRCDIR"; find . -name Makefile\* -o -name Kconfig\* -o -name \*.pl > "$TMPDIR/hdrsrcfiles")
-(cd "$SRCDIR"; find arch/$KARCH/include include scripts -type f -name ".tmp*" -o -print >> "$TMPDIR/hdrsrcfiles")
-(cd "$BUILDDIR"; find arch/$KARCH/include .config Module.symvers include scripts -type f -name ".tmp*" -o -print >> "$TMPDIR/hdrobjfiles")
+(cd "$SRCDIR"; find arch/$KARCH/include include scripts -type f >> "$TMPDIR/hdrsrcfiles")
+(cd "$BUILDDIR"; find arch/$KARCH/include .config Module.symvers include scripts -type f >> "$TMPDIR/hdrobjfiles")
 
 mkdir -p "$DESTDIR"
 (cd "$SRCDIR"; tar -c -f - -T "$TMPDIR/hdrsrcfiles") | (cd "$DESTDIR"; tar -xf -)
