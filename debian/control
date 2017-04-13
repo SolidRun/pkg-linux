@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
 Package: linux-image-3.14.y-fslc-imx6-sr
-Architecture: any-arm
+Architecture: armel armhf
 Provides: linux-image, galcore-5.0.11.25762
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Breaks:
@@ -20,7 +20,7 @@ Description: Downstream kernel for Cubox-i
  Cubox-i and Hummingboard devices
 
 Package: linux-headers-3.14.y-fslc-imx6-sr
-Architecture: any-arm
+Architecture: armel armhf
 Provides: linux-headers
 Depends: ${misc:Depends}
 Breaks: kernel-headers-3.14.y-fslc-imx6-sr (<= 3.14.60pkg1)
@@ -29,7 +29,7 @@ Description: kernel development files
  modules for this kernel.
 
 Package: linux-3.14.y-fslc-imx6-sr-dev
-Architecture: any-arm
+Architecture: armel armhf
 Provides: imx-kernel-api
 Depends: ${misc:Depends}
 Breaks: kernel-3.14.y-fslc-imx6-sr-dev (<= 3.14.60pkg1)
@@ -40,19 +40,19 @@ Description: kernel API development files
 # dummy transition packages
 
 Package: kernel-3.14.y-fslc-imx6-sr
-Architecture: all
+Architecture: armel armhf
 Depends: ${misc:Depends}, linux-image-3.14.y-fslc-imx6-sr, dtb-subfolder-compat (>= 1.0)
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
 
 Package: kernel-headers-3.14.y-fslc-imx6-sr
-Architecture: all
+Architecture: armel armhf
 Depends: ${misc:Depends}, linux-headers-3.14.y-fslc-imx6-sr
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
 
 Package: kernel-3.14.y-fslc-imx6-sr-dev
-Architecture: all
+Architecture: armel armhf
 Depends: ${misc:Depends}, linux-3.14.y-fslc-imx6-sr-dev
 Description: transitional dummy package
  This is a transitional dummy package. It can safely be removed.
