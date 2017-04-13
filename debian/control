@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
 Package: linux-image-4.4.y-clearfog
-Architecture: any-arm
+Architecture: armel armhf
 Provides: linux-image
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Breaks:
@@ -20,7 +20,7 @@ Description: 4.4 LTS kernel for SolidRun Clearfog
  SolidRun's clearfog board.
 
 Package: linux-headers-4.4.y-clearfog
-Architecture: any-arm
+Architecture: armel armhf
 Provides: linux-headers
 Depends: ${misc:Depends}
 Description: kernel development files
@@ -28,7 +28,7 @@ Description: kernel development files
  modules for this kernel.
 
 Package: linux-4.4.y-clearfog-dev
-Architecture: any-arm
+Architecture: armel armhf
 Description: kernel API development files
  This package provides the required development files to
  utilize this kernel`s public API.
