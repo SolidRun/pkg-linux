@@ -36,11 +36,13 @@ SCMVERSION=
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -rf build
+	cd linux; patch -p1 -R < ../0001-kbuild-add-fno-PIE.patch || true
 	# also make sure source-tree is really clean
 	cd linux; make mrproper
 	rm -f linux/localversion
 
 override_dh_auto_configure:
+	cd linux; patch -p1 < ../0001-kbuild-add-fno-PIE.patch || true
 	mkdir build
 	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m /dev/null
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
