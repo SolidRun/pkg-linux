@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg5) stable; urgency=low
+
+  * recognize new uEnv variable bootloader-knows-about-dtb-subfolder
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 19 Jul 2017 16:32:50 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg4) stable; urgency=medium
 
   * add support for SoM rev. 1.5
