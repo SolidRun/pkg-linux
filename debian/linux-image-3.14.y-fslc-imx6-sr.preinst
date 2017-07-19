@@ -12,7 +12,7 @@ set -e
 #        * <old-preinst> `abort-upgrade' <new-version>                                                                                                                             
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
-KERNEL_LOCALVERSION=4.4.0
+KERNEL_LOCALVERSION=3.14.79-fslc-imx6-sr
 
 case "$1" in
     install|upgrade)
