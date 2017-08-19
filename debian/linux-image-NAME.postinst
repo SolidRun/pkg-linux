@@ -23,11 +23,16 @@ case "$1" in
 	configure)
 	# set this kernel as boot kernel if none other is set or exists
 	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
-	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
+	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
 		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
-	elif ( [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb)" = "dtb-$KERNEL_LOCALVERSION" ]); then
+		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
+
+		# also install old (pre-flash-kernel) /boot/dtb symlink
+		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
+			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
+		fi
+	elif ( [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb-dir)" = "dtbs/$KERNEL_LOCALVERSION" ]); then
 		# all good
 		:
 	else
@@ -41,10 +46,15 @@ case "$1" in
 	# do the minimum work required to get a consistent system:
 	# recreate boot symlinks for this current version
 	if ( [ ! -e "/boot/zImage" ] || ( [ -h "/boot/zImage" ] && [ ! -e "/boot/$(readlink /boot/zImage)" ] ) ) \
-	|| ( [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ) ); then
+	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
 		ln -sfv zImage-$KERNEL_LOCALVERSION /boot/zImage
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb && ln -sv dtb-$KERNEL_LOCALVERSION /boot/dtb
+		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
+
+		# also install old (pre-flash-kernel) /boot/dtb symlink
+		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
+			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
+		fi
 	fi
 	# ignore ramdisk (not strictly required, I hope)
 	;;
