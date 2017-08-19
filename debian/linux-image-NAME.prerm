@@ -18,7 +18,7 @@ set -e
 KERNEL_LOCALVERSION=4.4.0
 
 case $1 in
-    deconfigure)
+    remove|deconfigure)
 	# if there is a boot symlink to this kernel, remove it
 	if [ -h /boot/zImage ] && [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ]; then
 		rm -f /boot/zImage
@@ -36,7 +36,7 @@ case $1 in
 		rm -f /boot/dtb
 	fi
     ;;
-    remove|upgrade|failed-upgrade)
+    upgrade|failed-upgrade)
     ;;
     *)
 	echo "prerm called with unknown argument \`$1'" >&2
