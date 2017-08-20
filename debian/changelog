@@ -1,3 +1,10 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg6) stable; urgency=medium
+
+  * move DTBs to /boot/dtbs/<KVER>
+  * rename dtb-symlink to /boot/dtb-dir
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 20 Jul 2017 15:41:00 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg5) stable; urgency=low
 
   * recognize new uEnv variable bootloader-knows-about-dtb-subfolder
