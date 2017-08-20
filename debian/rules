@@ -15,7 +15,7 @@ include /usr/share/dpkg/architecture.mk
 # set CROSS_COMPILE only when cross-compiling
 CROSS_COMPILE=
 ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
-	CROSS_COMPILE=$(CROSS_COMPILE)
+	CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)-
 endif
 
 # extract value of debhelper parallel option
@@ -57,8 +57,8 @@ override_dh_auto_install:
 	install -v -m644 build/.config $(KDESTDIR)/boot/config-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
 	# install DTBs
-	mkdir -vp "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
-	find build/arch/arm/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtb-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
+	mkdir -vp "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
+	find build/arch/arm/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
 	# install modules
 	make -C build -j$(PARALLEL) ARCH=arm CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install

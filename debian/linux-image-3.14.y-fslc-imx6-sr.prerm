@@ -18,7 +18,7 @@ set -e
 KERNEL_LOCALVERSION=3.14.79-fslc-imx6-sr
 
 case $1 in
-    deconfigure)
+    remove|deconfigure)
 	# if there is a boot symlink to this kernel, remove it
 	if [ -h /boot/zImage ] && [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ]; then
 		rm -f /boot/zImage
@@ -28,11 +28,15 @@ case $1 in
 		rm -f /boot/initrd
 	fi
 	# same for DTBs
-	if [ -h /boot/dtb ] && [ "$(readlink /boot/dtb)" = "dtb-$KERNEL_LOCALVERSION" ]; then
+	if [ -h /boot/dtb-dir ] && [ "$(readlink /boot/dtb-dir)" = "dtbs/$KERNEL_LOCALVERSION" ]; then
+		rm -f /boot/dtb-dir
+	fi
+	# same for old dtb symlink
+	if [ -h /boot/dtb ] && [ "$(readlink /boot/dtb)" = "dtbs/$KERNEL_LOCALVERSION" ]; then
 		rm -f /boot/dtb
 	fi
     ;;
-    remove|upgrade|failed-upgrade)
+    upgrade|failed-upgrade)
     ;;
     *)
 	echo "prerm called with unknown argument \`$1'" >&2
