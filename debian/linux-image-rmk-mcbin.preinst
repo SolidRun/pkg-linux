@@ -12,8 +12,8 @@ set -e
 #        * <old-preinst> `abort-upgrade' <new-version>                                                                                                                             
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
-KERNEL_LOCALVERSION=4.4.0
-KERNEL_IMAGE=zImage
+KERNEL_LOCALVERSION=4.12.0-rc1-rmk-mcbin
+KERNEL_IMAGE=Image
 
 case "$1" in
     install|upgrade)

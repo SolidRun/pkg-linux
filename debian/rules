@@ -21,16 +21,17 @@ endif
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
-KDESTDIR=$(CURDIR)/debian/linux-image-NAME
-HDESTDIR=$(CURDIR)/debian/linux-headers-NAME
-DDESTDIR=$(CURDIR)/debian/linux-NAME-dev
+KDESTDIR=$(CURDIR)/debian/linux-image-rmk-mcbin
+HDESTDIR=$(CURDIR)/debian/linux-headers-rmk-mcbin
+DDESTDIR=$(CURDIR)/debian/linux-rmk-mcbin-dev
 
 # kernel version information
-BASEVERSION=4.4.0
-LOCALVERSION=-NAME
+BASEVERSION=4.12.0-rc1
+LOCALVERSION=-rmk-mcbin
 SCMVERSION=
-ARCH=arm
-IMAGE=zImage
+ARCH=arm64
+IMAGE=Image
+
 
 %:
 	dh $@ --parallel --sourcedirectory=linux --builddirectory=build
@@ -43,7 +44,7 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	mkdir build
-	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m /dev/null
+	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m linux/arch/arm64/configs/defconfig
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
 	make -C linux O="$(CURDIR)/build" ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
@@ -92,7 +93,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	dh_strip --package=linux-image-NAME
+	dh_strip --package=linux-image-rmk-mcbin
 	# headers contain binary utilities built for the build host cpu
-	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-NAME
+	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-rmk-mcbin
 	# no need to strip -dev package, it is header-only
