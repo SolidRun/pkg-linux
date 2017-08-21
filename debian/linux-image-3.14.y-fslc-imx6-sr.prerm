@@ -16,12 +16,13 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 KERNEL_LOCALVERSION=3.14.79-fslc-imx6-sr
+KERNEL_IMAGE=zImage
 
 case $1 in
     remove|deconfigure)
 	# if there is a boot symlink to this kernel, remove it
-	if [ -h /boot/zImage ] && [ "$(readlink /boot/zImage)" = "zImage-$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/zImage
+	if [ -h /boot/$KERNEL_IMAGE ] && [ "$(readlink /boot/$KERNEL_IMAGE)" = "$KERNEL_IMAGE-$KERNEL_LOCALVERSION" ]; then
+		rm -f /boot/$KERNEL_IMAGE
 	fi
 	# same for initrd
 	if [ -h /boot/initrd ] && [ "$(readlink /boot/initrd)" = "initrd.img-$KERNEL_LOCALVERSION" ]; then
