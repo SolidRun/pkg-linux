@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux.git
-	branch = master
+	url = http://ftp.arm.linux.org.uk/pub/linux/arm/kernel/git-cur/linux-arm.git
+	branch = mcbin
