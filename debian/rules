@@ -30,6 +30,7 @@ BASEVERSION=4.4.0
 LOCALVERSION=-NAME
 SCMVERSION=
 ARCH=arm
+IMAGE=zImage
 
 %:
 	dh $@ --parallel --sourcedirectory=linux --builddirectory=build
@@ -48,12 +49,12 @@ override_dh_auto_configure:
 	make -C linux O="$(CURDIR)/build" ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
 
 override_dh_auto_build:
-	make -C build -j$(PARALLEL) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs zImage modules
+	make -C build -j$(PARALLEL) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) LOCALVERSION= dtbs $(IMAGE) modules
 
 override_dh_auto_install:
 	# install kernel image
 	mkdir -vp "$(KDESTDIR)/boot"
-	install -v -m755 build/arch/$(ARCH)/boot/zImage $(KDESTDIR)/boot/zImage-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	install -v -m755 build/arch/$(ARCH)/boot/$(IMAGE) $(KDESTDIR)/boot/$(IMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/System.map $(KDESTDIR)/boot/System.map-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/.config $(KDESTDIR)/boot/config-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
