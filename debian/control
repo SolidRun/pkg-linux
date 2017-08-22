@@ -2,7 +2,7 @@ Source: linux
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua.mayer97@gmail.com>
-Build-Depends: debhelper (>= 8.0.0), bc, lzop
+Build-Depends: debhelper (>= 8.0.0), bc, lzop, linux-libc-dev
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
