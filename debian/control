@@ -2,7 +2,7 @@ Source: linux-3.14.y-fslc-imx6-sr
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua.mayer97@gmail.com>
-Build-Depends: debhelper (>= 8.0.0), dpkg-dev (>= 1.16.1~), bc, lzop, python
+Build-Depends: debhelper (>= 8.0.0), dpkg-dev (>= 1.16.1~), bc, lzop, linux-libc-dev, python
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
