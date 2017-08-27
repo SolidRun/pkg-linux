@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg8) stable; urgency=medium
+
+  * bugfix for timeout problem in serdev
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 27 Aug 2017 16:43:00 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg7) stable; urgency=medium
 
   * backport proper Bluetooth support for SoM rev. 1.5
