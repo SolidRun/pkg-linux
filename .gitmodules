@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux-stable.git
-	branch = linux-4.9.y
+	url = https://github.com/mxOBS/linux.git
+	branch = linux-4.9.y-clearfog
