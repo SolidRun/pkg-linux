@@ -3,7 +3,7 @@ Upstream-Name: linux
 Source: http://www.kernel.org/
 
 Files: *
-Copyright: Copyright (C) 1991-2014 Linus Torvalds
+Copyright: Copyright (C) 1991-2017 Linus Torvalds
            and many others
 License: GPL-2.0
  This package is free software; you can redistribute it and/or modify

@@ -1,5 +1,5 @@
-linux (4.4.0) unstable; urgency=low
+linux (4.9.45) unstable; urgency=low
 
   * Initial release
 
- -- Josua Mayer <josua.mayer97@gmail.com>  Sat, 25 Oct 2014 22:43:37 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 28 Aug 2017 17:08:56 +0200

@@ -26,7 +26,7 @@ HDESTDIR=$(CURDIR)/debian/linux-headers-NAME
 DDESTDIR=$(CURDIR)/debian/linux-NAME-dev
 
 # kernel version information
-BASEVERSION=4.4.0
+BASEVERSION=4.9.45
 LOCALVERSION=-NAME
 SCMVERSION=
 ARCH=arm
