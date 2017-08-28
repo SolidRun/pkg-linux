@@ -18,7 +18,7 @@ Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 +				   phy-c45.o phy-core.o
  libphy-$(CONFIG_SWPHY)		+= swphy.o
  
- obj-$(CONFIG_MDIO_BOARDINFO)	+= mdio-boardinfo.o
+ obj-$(CONFIG_PHYLIB)		+= libphy.o
 --- /dev/null
 +++ b/drivers/net/phy/phy-c45.c
 @@ -0,0 +1,234 @@
@@ -258,7 +258,7 @@ Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 +EXPORT_SYMBOL_GPL(genphy_c45_read_pma);
 --- a/drivers/net/phy/phy_device.c
 +++ b/drivers/net/phy/phy_device.c
-@@ -1452,27 +1452,19 @@ EXPORT_SYMBOL(genphy_read_status);
+@@ -1446,27 +1446,19 @@
  
  static int gen10g_read_status(struct phy_device *phydev)
  {
@@ -295,7 +295,7 @@ Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
  }
 --- a/include/linux/phy.h
 +++ b/include/linux/phy.h
-@@ -810,6 +810,8 @@ static inline const char *phydev_name(co
+@@ -798,6 +798,8 @@
  void phy_attached_print(struct phy_device *phydev, const char *fmt, ...)
  	__printf(2, 3);
  void phy_attached_info(struct phy_device *phydev);
@@ -304,10 +304,10 @@ Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
  int genphy_config_init(struct phy_device *phydev);
  int genphy_setup_forced(struct phy_device *phydev);
  int genphy_restart_aneg(struct phy_device *phydev);
-@@ -820,6 +822,16 @@ int genphy_read_status(struct phy_device
- int genphy_suspend(struct phy_device *phydev);
- int genphy_resume(struct phy_device *phydev);
- int genphy_soft_reset(struct phy_device *phydev);
+@@ -812,6 +814,16 @@
+ {
+ 	return 0;
+ }
 +
 +/* Clause 45 PHY */
 +int genphy_c45_restart_aneg(struct phy_device *phydev);
