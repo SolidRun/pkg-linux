@@ -15,7 +15,7 @@ set -e
 #          <conflicting-package> <version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
-KERNEL_LOCALVERSION=4.9.45
+KERNEL_LOCALVERSION=4.9.45-clearfog
 KERNEL_IMAGE=zImage
 
 case $1 in
