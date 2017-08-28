@@ -1,0 +1,31 @@
+From fee39a1532b5a71d8da0ece3944fb7cc34499b87 Mon Sep 17 00:00:00 2001
+From: Jon Nettleton <jon@solid-run.com>
+Date: Mon, 14 Aug 2017 06:29:13 +0200
+Subject: [PATCH] sfp: set phylink to 1000baseX for bx10 and px modules
+
+These modules do not have a PHY and should be configured to run
+in 1000baseX mode.
+
+Signed-off-by: Jon Nettleton <jon@solid-run.com>
+---
+ drivers/net/phy/sfp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 41dcb309523c..93c9521befa9 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -833,7 +833,9 @@ static int sfp_sm_mod_probe(struct sfp *sfp)
+ 			phylink_set(support, 10000baseER_Full);
+ 		if (sfp->id.base.e1000_base_sx ||
+ 		    sfp->id.base.e1000_base_lx ||
+-		    sfp->id.base.e1000_base_cx)
++		    sfp->id.base.e1000_base_cx ||
++		    sfp->id.base.e_base_bx10 ||
++		    sfp->id.base.e_base_px);
+ 			phylink_set(support, 1000baseX_Full);
+ 		if (sfp->id.base.e1000_base_t) {
+ 			phylink_set(support, 1000baseT_Half);
+-- 
+2.11.1
+

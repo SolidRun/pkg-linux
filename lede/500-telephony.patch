@@ -1,0 +1,295 @@
+diff -Nru linux-4.4.61.orig/arch/arm/boot/dts/armada-388-clearfog.dts linux-4.4.61/arch/arm/boot/dts/armada-388-clearfog.dts
+--- linux-4.4.61.orig/arch/arm/boot/dts/armada-388-clearfog.dts	2017-04-18 17:20:29.401827306 +0300
++++ linux-4.4.61/arch/arm/boot/dts/armada-388-clearfog.dts	2017-04-18 17:25:28.113834708 +0300
+@@ -232,7 +232,7 @@
+ 					marvell,function = "sd0";
+ 				};
+ 				clearfog_spi1_cs_pins: spi1-cs-pins {
+-					marvell,pins = "mpp55";
++					marvell,pins = "mpp59";
+ 					marvell,function = "spi1";
+ 				};
+ 				mikro_pins: mikro-pins {
+@@ -252,6 +252,10 @@
+ 					marvell,pins = "mpp34";
+ 					marvell,function = "gpio";
+ 				};
++				tdm_spi1_cs_pins: tdm-spi1-cs-pins {
++					marvell,pins = "mpp55";
++					marvell,function = "spi1";
++				};
+ 			};
+ 
+ 			sata@a8000 {
+@@ -264,6 +268,13 @@
+ 				status = "okay";
+ 			};
+ 
++			tdm@b0000 {
++				pinctrl-0 = <&tdm_pins>;
++				pinctrl-names = "default";
++				pclk-freq-mhz = <8>;
++				status = "okay";
++			};
++
+ 			sdhci@d8000 {
+ 				bus-width = <4>;
+ 				cd-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
+diff -Nru linux-4.4.61.orig/arch/arm/boot/dts/armada-38x.dtsi linux-4.4.61/arch/arm/boot/dts/armada-38x.dtsi
+--- linux-4.4.61.orig/arch/arm/boot/dts/armada-38x.dtsi	2017-04-18 17:20:29.357827305 +0300
++++ linux-4.4.61/arch/arm/boot/dts/armada-38x.dtsi	2017-04-18 17:20:53.457827902 +0300
+@@ -324,6 +324,12 @@
+ 					marvell,pins = "mpp44";
+ 					marvell,function = "sata3";
+ 				};
++
++				tdm_pins: tdm_pins {
++					marvell,pins = "mpp48", "mpp49", "mpp50",
++						       "mpp51", "mpp52", "mpp53";
++					marvell,function = "tdm";
++				};
+ 			};
+ 
+ 			gpio0: gpio@18100 {
+@@ -556,6 +562,16 @@
+ 				status = "disabled";
+ 			};
+ 
++			tdm@b0000 {
++				compatible = "marvell,armada-380-tdm";
++				reg = <0xb0000 0x5000>, <0x18400 0xc>, <0x18730 0x4>;
++				reg-names = "tdm_regs", "pll_regs", "dco_div";
++				interrupts = <0 27 0x4>;
++				clocks = <&gateclk 25>;
++				clock-names = "gateclk";
++				status = "disabled";
++			};
++
+ 			coredivclk: clock@e4250 {
+ 				compatible = "marvell,armada-380-corediv-clock";
+ 				reg = <0xe4250 0xc>;
+diff -Nru linux-4.4.61.orig/drivers/Kconfig linux-4.4.61/drivers/Kconfig
+--- linux-4.4.61.orig/drivers/Kconfig	2017-04-12 13:38:50.000000000 +0300
++++ linux-4.4.61/drivers/Kconfig	2017-04-18 17:20:53.461827902 +0300
+@@ -172,6 +172,8 @@
+ 
+ source "drivers/reset/Kconfig"
+ 
++source "drivers/telephony/Kconfig"
++
+ source "drivers/fmc/Kconfig"
+ 
+ source "drivers/phy/Kconfig"
+diff -Nru linux-4.4.61.orig/drivers/spi/spi.c linux-4.4.61/drivers/spi/spi.c
+--- linux-4.4.61.orig/drivers/spi/spi.c	2017-04-18 17:20:28.953827295 +0300
++++ linux-4.4.61/drivers/spi/spi.c	2017-04-18 17:20:53.561827904 +0300
+@@ -1471,6 +1471,8 @@
+ 		spi->mode |= SPI_3WIRE;
+ 	if (of_find_property(nc, "spi-lsb-first", NULL))
+ 		spi->mode |= SPI_LSB_FIRST;
++	if (of_find_property(nc, "spi-1byte-cs", NULL))
++		spi->mode |= SPI_1BYTE_CS;
+ 
+ 	/* Device DUAL/QUAD mode */
+ 	if (!of_property_read_u32(nc, "spi-tx-bus-width", &value)) {
+diff -Nru linux-4.4.61.orig/drivers/spi/spi-orion.c linux-4.4.61/drivers/spi/spi-orion.c
+--- linux-4.4.61.orig/drivers/spi/spi-orion.c	2017-04-12 13:38:50.000000000 +0300
++++ linux-4.4.61/drivers/spi/spi-orion.c	2017-04-18 17:20:53.533827904 +0300
+@@ -304,7 +304,15 @@
+ 	struct orion_spi *orion_spi;
+ 
+ 	orion_spi = spi_master_get_devdata(spi->master);
+-
++#if 1
++	orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG,
++					  0x1 | ORION_SPI_CS_MASK);
++//	printk ("%d : Control register 0x%x\n",__LINE__, readl(spi_reg(orion_spi, ORION_SPI_IF_CTRL_REG)));
++	if (enable)
++		orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG,
++			0x1 | ORION_SPI_CS(spi->chip_select)/*(orion_spi->cur_spi->chip_select << 2)*/);
++//	printk ("%d : Control register 0x%x\n",__LINE__, readl(spi_reg(orion_spi, ORION_SPI_IF_CTRL_REG)));
++#else
+ 	orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, ORION_SPI_CS_MASK);
+ 	orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG,
+ 				ORION_SPI_CS(spi->chip_select));
+@@ -314,6 +322,7 @@
+ 		orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
+ 	else
+ 		orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
++#endif
+ }
+ 
+ static inline int orion_spi_wait_till_ready(struct orion_spi *orion_spi)
+@@ -336,8 +345,15 @@
+ {
+ 	void __iomem *tx_reg, *rx_reg, *int_reg;
+ 	struct orion_spi *orion_spi;
++	bool cs_single_byte;
++
++	cs_single_byte = spi->mode & SPI_1BYTE_CS;
+ 
+ 	orion_spi = spi_master_get_devdata(spi->master);
++
++	if (cs_single_byte)
++		orion_spi_set_cs(spi, 1);
++
+ 	tx_reg = spi_reg(orion_spi, ORION_SPI_DATA_OUT_REG);
+ 	rx_reg = spi_reg(orion_spi, ORION_SPI_DATA_IN_REG);
+ 	int_reg = spi_reg(orion_spi, ORION_SPI_INT_CAUSE_REG);
+@@ -351,6 +367,11 @@
+ 		writel(0, tx_reg);
+ 
+ 	if (orion_spi_wait_till_ready(orion_spi) < 0) {
++		if (cs_single_byte) {
++			orion_spi_set_cs(spi, 0);
++			/* Satisfy some SLIC devices requirements */
++			udelay(4);
++		}
+ 		dev_err(&spi->dev, "TXS timed out\n");
+ 		return -1;
+ 	}
+@@ -358,6 +379,12 @@
+ 	if (rx_buf && *rx_buf)
+ 		*(*rx_buf)++ = readl(rx_reg);
+ 
++	if (cs_single_byte) {
++		orion_spi_set_cs(spi, 0);
++		/* Satisfy some SLIC devices requirements */
++		udelay(4);
++	}
++
+ 	return 1;
+ }
+ 
+@@ -392,6 +419,7 @@
+ 	return 1;
+ }
+ 
++#if 0
+ static unsigned int
+ orion_spi_write_read(struct spi_device *spi, struct spi_transfer *xfer)
+ {
+@@ -424,13 +452,49 @@
+ out:
+ 	return xfer->len - count;
+ }
++#else
++static unsigned int
++orion_spi_write_read(struct spi_device *spi, struct spi_transfer *xfer)
++{
++	struct orion_spi *orion_spi;
++	unsigned int count;
++	int word_len;
++
++	orion_spi = spi_master_get_devdata(spi->master);
++	word_len = spi->bits_per_word;
++	count = xfer->len;
+ 
++	if (word_len == 8) {
++		const u8 *tx = xfer->tx_buf;
++		u8 *rx = xfer->rx_buf;
++
++		do {
++			if (orion_spi_write_read_8bit(spi, &tx, &rx) < 0)
++				goto out;
++			count--;
++		} while (count);
++	} else if (word_len == 16) {
++		const u16 *tx = xfer->tx_buf;
++		u16 *rx = xfer->rx_buf;
++
++		do {
++	printk ("Rabeeh - DEBUG ME - got into TRANSFER ONE 16bit\n");
++
++			if (orion_spi_write_read_16bit(spi, &tx, &rx) < 0)
++				goto out;
++			count -= 2;
++		} while (count);
++	}
++
++out:
++	return xfer->len - count;
++}
++#endif
+ static int orion_spi_transfer_one(struct spi_master *master,
+ 					struct spi_device *spi,
+ 					struct spi_transfer *t)
+ {
+ 	int status = 0;
+-
+ 	status = orion_spi_setup_transfer(spi, t);
+ 	if (status < 0)
+ 		return status;
+@@ -547,7 +611,7 @@
+ 	}
+ 
+ 	/* we support only mode 0, and no options */
+-	master->mode_bits = SPI_CPHA | SPI_CPOL;
++	master->mode_bits = SPI_CPHA | SPI_CPOL | SPI_1BYTE_CS;
+ 	master->set_cs = orion_spi_set_cs;
+ 	master->transfer_one = orion_spi_transfer_one;
+ 	master->num_chipselect = ORION_NUM_CHIPSELECTS;
+diff -Nru linux-4.4.61.orig/include/linux/miscdevice.h linux-4.4.61/include/linux/miscdevice.h
+--- linux-4.4.61.orig/include/linux/miscdevice.h	2017-04-12 13:38:50.000000000 +0300
++++ linux-4.4.61/include/linux/miscdevice.h	2017-04-18 17:20:53.601827905 +0300
+@@ -19,6 +19,8 @@
+ #define APOLLO_MOUSE_MINOR	7	/* unused */
+ #define PC110PAD_MINOR		9	/* unused */
+ /*#define ADB_MOUSE_MINOR	10	FIXME OBSOLETE */
++#define SLICDEV_MINOR		73	/* Marvell SLIC control device */
++#define TALDEV_MINOR		74	/* Marvell TAL device */
+ #define WATCHDOG_MINOR		130	/* Watchdog timer     */
+ #define TEMP_MINOR		131	/* Temperature Sensor */
+ #define RTC_MINOR		135
+diff -Nru linux-4.4.61.orig/include/linux/spi/spi.h linux-4.4.61/include/linux/spi/spi.h
+--- linux-4.4.61.orig/include/linux/spi/spi.h	2017-04-18 17:20:28.929827294 +0300
++++ linux-4.4.61/include/linux/spi/spi.h	2017-04-18 17:20:53.637827906 +0300
+@@ -154,6 +154,8 @@
+ #define	SPI_TX_QUAD	0x200			/* transmit with 4 wires */
+ #define	SPI_RX_DUAL	0x400			/* receive with 2 wires */
+ #define	SPI_RX_QUAD	0x800			/* receive with 4 wires */
++#define SPI_1BYTE_CS	0x1000			/* Switch CS every byte */
++
+ 	int			irq;
+ 	void			*controller_state;
+ 	void			*controller_data;
+--- linux-4.9.20/drivers/Makefile	2017-05-21 18:59:36.580633514 +0300
++++ linux-4.9.20.copy/drivers/Makefile	2017-05-21 19:25:16.296671672 +0300
+@@ -174,3 +174,4 @@
+ obj-$(CONFIG_ANDROID)		+= android/
+ obj-$(CONFIG_NVMEM)		+= nvmem/
+ obj-$(CONFIG_FPGA)		+= fpga/
++obj-$(CONFIG_PHONE)		+= telephony/
+--- linux-4.9.20/arch/arm/boot/dts/armada-388-clearfog.dts	2017-05-21 19:28:06.100675880 +0300
++++ linux-4.9.20.copy/arch/arm/boot/dts/armada-388-clearfog.dts	2017-05-21 19:33:13.072683487 +0300
+@@ -427,12 +427,13 @@
+ 	 * We don't seem to have the W25Q32 on the
+ 	 * A1 Rev 2.0 boards, so disable SPI.
+ 	 * CS0: W25Q32 (doesn't appear to be present)
+-	 * CS1:
++	 * CS1: TDM module
+ 	 * CS2: mikrobus
+ 	 */
+ 	pinctrl-0 = <&spi1_pins
+ 		     &clearfog_spi1_cs_pins
+-		     &mikro_spi_pins>;
++		     &mikro_spi_pins
++		     &tdm_spi1_cs_pins>;
+ 	pinctrl-names = "default";
+ 	status = "okay";
+ 
+@@ -444,4 +445,14 @@
+ 		spi-max-frequency = <3000000>;
+ 		status = "disabled";
+ 	};
++	slic@0 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "mv_slic";
++		reg = <1>; /* Chip select 1 */
++		spi-max-frequency = <3000000>;
++		spi-1byte-cs;
++		spi-cpol;
++		spi-cpha;
++	};
+ };

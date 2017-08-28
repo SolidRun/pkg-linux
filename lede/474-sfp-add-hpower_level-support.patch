@@ -1,0 +1,219 @@
+From ebdf5099be346ebcc18be569ade95274b10b05f6 Mon Sep 17 00:00:00 2001
+From: Jon Nettleton <jon@solid-run.com>
+Date: Wed, 9 Aug 2017 22:55:11 +0200
+Subject: [PATCH] sfp: add hpower_level support
+
+This adds the initial bits to support sfp modules that require
+a power-level greater than 1.
+
+Signed-off-by: Jon Nettleton <jon@solid-run.com>
+---
+ arch/arm/boot/dts/armada-388-clearfog.dts |  1 +
+ drivers/net/phy/sfp.c                      | 93 +++++++++++++++++++++++++-----
+ 2 files changed, 79 insertions(+), 15 deletions(-)
+
+diff --git a/arch/arm/boot/dts/armada-388-clearfog.dts b/arch/arm/boot/dts/armada-388-clearfog.dts
+index ffa3957bcd98..6d198c2bfbae 100644
+--- a/arch/arm/boot/dts/armada-388-clearfog.dts
++++ b/arch/arm/boot/dts/armada-388-clearfog.dts
+@@ -126,6 +126,7 @@
+ 		sfp,ethernet = <&eth2>;
+ 		tx-disable-gpio = <&expander0 14 GPIO_ACTIVE_HIGH>;
+ 		tx-fault-gpio = <&expander0 13 GPIO_ACTIVE_HIGH>;
++		power-level = /bits/ 8 <3>;
+ 	};
+ };
+ 
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index b2a1e55c9bb9..41dcb309523c 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -87,6 +87,7 @@ static const enum gpiod_flags gpio_flags[] = {
+  * access the I2C EEPROM.  However, Avago modules require 300ms.
+  */
+ #define T_PROBE_INIT	msecs_to_jiffies(300)
++#define T_HPOWER_LEVEL	msecs_to_jiffies(300)
+ #define T_PROBE_RETRY	msecs_to_jiffies(100)
+ 
+ /*
+@@ -109,10 +110,12 @@ struct sfp {
+ 	struct net_device *ndev;
+ 	struct phylink *phylink;
+ 	struct phy_device *mod_phy;
++	u8 hpower_level;
+ 
+ 	unsigned int (*get_state)(struct sfp *);
+ 	void (*set_state)(struct sfp *, unsigned int);
+ 	int (*read)(struct sfp *, bool, u8, void *, size_t);
++	int (*write)(struct sfp *, bool, u8, void *, size_t);
+ 
+ 	struct gpio_desc *gpio[GPIO_MAX];
+ 
+@@ -167,8 +170,8 @@ static void sfp_gpio_set_state(struct sfp *sfp, unsigned int state)
+ 	}
+ }
+ 
+-static int sfp__i2c_read(struct i2c_adapter *i2c, u8 bus_addr, u8 dev_addr,
+-	void *buf, size_t len)
++static int sfp__i2c_transfer(struct i2c_adapter *i2c, u8 bus_addr, u8 dev_addr,
++	void *buf, size_t len, bool read)
+ {
+ 	struct i2c_msg msgs[2];
+ 	int ret;
+@@ -178,7 +181,7 @@ static int sfp__i2c_read(struct i2c_adapter *i2c, u8 bus_addr, u8 dev_addr,
+ 	msgs[0].len = 1;
+ 	msgs[0].buf = &dev_addr;
+ 	msgs[1].addr = bus_addr;
+-	msgs[1].flags = I2C_M_RD;
++	msgs[1].flags = read ? I2C_M_RD : 0;
+ 	msgs[1].len = len;
+ 	msgs[1].buf = buf;
+ 
+@@ -192,7 +195,13 @@ static int sfp__i2c_read(struct i2c_adapter *i2c, u8 bus_addr, u8 dev_addr,
+ static int sfp_i2c_read(struct sfp *sfp, bool a2, u8 addr, void *buf,
+ 	size_t len)
+ {
+-	return sfp__i2c_read(sfp->i2c, a2 ? 0x51 : 0x50, addr, buf, len);
++	return sfp__i2c_transfer(sfp->i2c, a2 ? 0x51 : 0x50, addr, buf, len, true);
++}
++
++static int sfp_i2c_write(struct sfp *sfp, bool a2, u8 addr, void *buf,
++	size_t len)
++{
++	return sfp__i2c_transfer(sfp->i2c, a2 ? 0x51 : 0x50, addr, buf, len, false);
+ }
+ 
+ static int sfp_i2c_configure(struct sfp *sfp, struct i2c_adapter *i2c)
+@@ -205,6 +214,7 @@ static int sfp_i2c_configure(struct sfp *sfp, struct i2c_adapter *i2c)
+ 
+ 	sfp->i2c = i2c;
+ 	sfp->read = sfp_i2c_read;
++	sfp->write = sfp_i2c_write;
+ 
+ 	i2c_mii = mdio_i2c_alloc(sfp->dev, i2c);
+ 	if (IS_ERR(i2c_mii))
+@@ -241,6 +251,11 @@ static int sfp_read(struct sfp *sfp, bool a2, u8 addr, void *buf, size_t len)
+ 	return sfp->read(sfp, a2, addr, buf, len);
+ }
+ 
++static int sfp_write(struct sfp *sfp, bool a2, u8 addr, void *buf, size_t len)
++{
++	return sfp->write(sfp, a2, addr, buf, len);
++}
++
+ static unsigned int sfp_check(void *buf, size_t len)
+ {
+ 	u8 *p, check;
+@@ -608,6 +623,48 @@ static void sfp_sm_mod_init(struct sfp *sfp)
+ 		sfp_sm_next(sfp, SFP_S_TX_DISABLE, 0);
+ }
+ 
++static int sfp_sm_mod_hpower(struct sfp *sfp)
++{
++	u8 val;
++	int err;
++
++	if (sfp->id.ext.options & SFP_OPTIONS_HIGH_POWER_LEVEL &&
++	    sfp->hpower_level < 3) {
++		dev_err(sfp->dev, "Host does not support Power level 3 required by the module\n");
++		err = -EINVAL;
++		goto err;
++	}
++
++	if (sfp->id.ext.options & SFP_OPTIONS_POWER_DECL &&
++	    sfp->hpower_level < 2) {
++		dev_err(sfp->dev, "Host does not support Power level 2 required by the module\n");
++		err = -EINVAL;
++		goto err;
++	}
++
++	if (!(sfp->id.ext.options & SFP_OPTIONS_HIGH_POWER_LEVEL) &&
++	    !(sfp->id.ext.options & SFP_OPTIONS_POWER_DECL))
++		return 0;
++
++	err = sfp_read(sfp, true, 118, &val, sizeof(val));
++	if (err < 0) {
++		dev_err(sfp->dev, "failed to read EEPROM: %d\n", err);
++		err = -EAGAIN;
++		goto err;
++	}
++
++	val |= BIT(0);
++
++	err = sfp_write(sfp, true, 118, &val, sizeof(val));
++
++	if (err == 0) {
++		dev_info(sfp->dev, "signaled module to switch to high power mode\n");
++		return T_HPOWER_LEVEL;
++	}
++err:
++	return err;
++}
++
+ static int sfp_sm_mod_probe(struct sfp *sfp)
+ {
+ 	/* SFP module inserted - read I2C data */
+@@ -619,16 +676,16 @@ static int sfp_sm_mod_probe(struct sfp *sfp)
+ 	char rev[5];
+ 	char options[80];
+ 	u8 check;
+-	int err;
++	int ret;
+ 
+-	err = sfp_read(sfp, false, 0, &id, sizeof(id));
+-	if (err < 0) {
+-		dev_err(sfp->dev, "failed to read EEPROM: %d\n", err);
++	ret = sfp_read(sfp, false, 0, &id, sizeof(id));
++	if (ret < 0) {
++		dev_err(sfp->dev, "failed to read EEPROM: %d\n", ret);
+ 		return -EAGAIN;
+ 	}
+ 
+-	if (err != sizeof(id)) {
+-		dev_err(sfp->dev, "EEPROM short read: %d\n", err);
++	if (ret != sizeof(id)) {
++		dev_err(sfp->dev, "EEPROM short read: %d\n", ret);
+ 		return -EAGAIN;
+ 	}
+ 
+@@ -845,7 +902,7 @@ static int sfp_sm_mod_probe(struct sfp *sfp)
+ 		phylink_set_link(sfp->phylink, mode, port, support);
+ 	}
+ 
+-	return 0;
++	return sfp_sm_mod_hpower(sfp);
+ }
+ 
+ static void sfp_sm_mod_remove(struct sfp *sfp)
+@@ -882,11 +939,11 @@ static void sfp_sm_event(struct sfp *sfp, unsigned int event)
+ 		if (event == SFP_E_REMOVE) {
+ 			sfp_sm_ins_next(sfp, SFP_MOD_EMPTY, 0);
+ 		} else if (event == SFP_E_TIMEOUT) {
+-			int err = sfp_sm_mod_probe(sfp);
++			int val = sfp_sm_mod_probe(sfp);
+ 
+-			if (err == 0)
+-				sfp_sm_ins_next(sfp, SFP_MOD_PRESENT, 0);
+-			else if (err == -EAGAIN)
++			if (val >= 0)
++				sfp_sm_ins_next(sfp, SFP_MOD_PRESENT, val);
++			else if (val == -EAGAIN)
+ 				sfp_sm_set_timer(sfp, T_PROBE_RETRY);
+ 			else
+ 				sfp_sm_ins_next(sfp, SFP_MOD_ERROR, 0);
+@@ -1222,6 +1279,12 @@ static int sfp_probe(struct platform_device *pdev)
+ 		sfp->get_state = sfp_gpio_get_state;
+ 		sfp->set_state = sfp_gpio_set_state;
+ 
++		of_property_read_u8(node, "power-level", &sfp->hpower_level);
++		if (!sfp->hpower_level)
++			sfp->hpower_level = 1;
++
++		dev_info(sfp->dev, "Host supports power level %d\n", sfp->hpower_level);
++
+ 		np = of_parse_phandle(node, "sfp,ethernet", 0);
+ 		if (!np) {
+ 			dev_err(sfp->dev, "missing sfp,ethernet property\n");
+-- 
+2.11.1
+

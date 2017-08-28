@@ -1,0 +1,11 @@
+diff -Nru linux-4.9.30.orig/arch/arm/boot/dts/Makefile linux-4.9.30/arch/arm/boot/dts/Makefile
+--- linux-4.9.30.orig/arch/arm/boot/dts/Makefile	2017-06-11 17:48:20.765492257 +0300
++++ linux-4.9.30/arch/arm/boot/dts/Makefile	2017-06-11 17:46:40.821489780 +0300
+@@ -926,6 +926,7 @@
+ 	armada-388-clearfog.dtb \
+ 	armada-388-clearfog-pro.dtb \
+ 	armada-388-clearfog-base.dtb \
++	armada-385-naeba.dtb \
+ 	armada-388-db.dtb \
+ 	armada-388-gp.dtb \
+ 	armada-388-rd.dtb

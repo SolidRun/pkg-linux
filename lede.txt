@@ -1,0 +1,9 @@
+# quiltrc:
+QUILT_PATCHES=<path-to-package>/lede
+QUILT_NO_DIFF_INDEX=1
+QUILT_NO_DIFF_TIMESTAMPS=1
+QUILT_REFRESH_ARGS="-p ab"
+QUILT_DIFF_ARGS="--color=auto" # If you want some color when using `quilt diff`.
+
+cd linux
+quilt push -a
