@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg9) stable; urgency=medium
+
+  * bugfixes in tty
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 29 Aug 2017 11:48:59 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg8) stable; urgency=medium
 
   * bugfix for timeout problem in serdev
