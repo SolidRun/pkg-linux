@@ -63,7 +63,7 @@ override_dh_auto_install:
 	find build/arch/$(ARCH)/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
 	# install modules
-	make -C build -j$(PARALLEL) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
+	make -C build -j$(PARALLEL) INSTALL_MOD_STRIP=1 ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/source
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/build
 
