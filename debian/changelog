@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg10~1) stable; urgency=medium
+
+  * CVE: Blueborne
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 13 Sep 2017 10:49:28 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg9) stable; urgency=medium
 
   * bugfixes in tty
