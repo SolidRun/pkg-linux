@@ -1,3 +1,9 @@
+linux (4.9.45sr1) unstable; urgency=low
+
+  * added DTB variants for eMMC
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sat, 30 Sep 2017 16:33:37 +0200
+
 linux (4.9.45) unstable; urgency=low
 
   * Initial release
