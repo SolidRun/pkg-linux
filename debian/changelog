@@ -1,9 +1,9 @@
-linux-latest (86) UNRELEASED; urgency=medium
+linux-latest (86) unstable; urgency=medium
 
   * Add myself to Uploaders
   * Update to 4.13.0-1
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Tue, 03 Oct 2017 06:22:41 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Tue, 03 Oct 2017 07:02:40 +0200
 
 linux-latest (85) unstable; urgency=medium
 
