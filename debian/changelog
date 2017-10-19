@@ -1,3 +1,9 @@
+linux (4.9.52) stable; urgency=medium
+
+  * update
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Thu, 19 Oct 2017 15:32:25 +0200
+
 linux (4.9.45sr2) stable; urgency=medium
 
   * enable config options from lede 

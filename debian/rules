@@ -26,7 +26,7 @@ HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-clearfog
 DDESTDIR=$(CURDIR)/debian/linux-4.9.y-clearfog-dev
 
 # kernel version information
-BASEVERSION=4.9.45
+BASEVERSION=4.9.52
 LOCALVERSION=-clearfog
 SCMVERSION=
 ARCH=arm
