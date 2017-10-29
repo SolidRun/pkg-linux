@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg11~1) stable; urgency=medium
+
+  * CVE: broadpwn
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Fri, 20 Oct 2017 10:09:50 +0200
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg10~1) stable; urgency=medium
 
   * CVE: Blueborne
