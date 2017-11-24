@@ -29,6 +29,7 @@ class Gencontrol(Base):
 
     def do_main_setup(self, vars, makeflags, extra):
         makeflags['GENCONTROL_ARGS'] = '-v%s' % self.package_version
+        makeflags['VERSION'] = self.version.linux_version
 
         # A line will be appended to this for each image-dbg package.
         # Start with an empty file.
