@@ -1,3 +1,9 @@
+linux-latest (88) UNRELEASED; urgency=medium
+
+  * Update to 4.14.0-2
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Sun, 24 Dec 2017 14:45:54 +0100
+
 linux-latest (87) unstable; urgency=medium
 
   * linux-image: Add back-dated NEWS for vsyscall change in Linux 4.10
