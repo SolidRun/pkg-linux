@@ -1,5 +1,5 @@
-linux-imx6-sr (4.4.0) unstable; urgency=low
+linux-imx6-sr (4.9.0) stable; urgency=low
 
   * Initial release
 
- -- Josua Mayer <josua.mayer97@gmail.com>  Sat, 25 Oct 2014 22:43:37 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 30 Jan 2018 17:35:37 +0200
