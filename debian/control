@@ -1,4 +1,4 @@
-Source: linux
+Source: linux-imx6-sr
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua.mayer97@gmail.com>
@@ -8,14 +8,15 @@ Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
-Package: linux-image-NAME
+Package: linux-image-4.9.y-imx6-sr
 Architecture: any-arm
 Provides: linux-image
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
-Description: LONGNAME kernel
- This package provides the mainline kernel
+Description: Downstream kernel for SolidRun i.MX6 based devices
+ This package provides a downstream kernel optimized for i.MX6
+ Cubox-i and Hummingboard devices.
 
-Package: linux-headers-NAME
+Package: linux-headers-4.9.y-imx6-sr
 Architecture: any-arm
 Provides: linux-headers
 Depends: ${misc:Depends}
@@ -23,7 +24,7 @@ Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-NAME-dev
+Package: linux-4.9.y-imx6-sr-dev
 Architecture: any-arm
 Description: kernel API development files
  This package provides the required development files to
