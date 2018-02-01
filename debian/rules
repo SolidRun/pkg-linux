@@ -26,7 +26,7 @@ HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr
 DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
 
 # kernel version information
-BASEVERSION=4.9.0
+BASEVERSION=4.9.78
 LOCALVERSION=-imx6-sr
 SCMVERSION=
 ARCH=arm
@@ -43,7 +43,7 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	mkdir build
-	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m /dev/null
+	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m ./linux/arch/arm/configs/imx_v7_cbi_hb_defconfig
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
 	make -C linux O="$(CURDIR)/build" ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig

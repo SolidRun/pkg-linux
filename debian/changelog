@@ -1,5 +1,5 @@
-linux-imx6-sr (4.9.0) stable; urgency=low
+linux-imx6-sr (4.9.78) stable; urgency=low
 
   * Initial release
 
- -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 30 Jan 2018 17:35:37 +0200
+ -- Josua Mayer <josua.mayer97@gmail.com>  Thu, 01 Feb 2018 15:21:38 +0200
