@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
 Package: linux-image-4.9.y-imx6-sr
 Architecture: any-arm
-Provides: linux-image
+Provides: linux-image, galcore-6.2.2.93313
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Description: Downstream kernel for SolidRun i.MX6 based devices
  This package provides a downstream kernel optimized for i.MX6
