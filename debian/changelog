@@ -1,3 +1,9 @@
+linux-imx6-sr (4.9.78+2) stable; urgency=medium
+
+  * update
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 05 Feb 2018 14:01:25 +0100
+
 linux-imx6-sr (4.9.78+1) stable; urgency=medium
 
   * update
