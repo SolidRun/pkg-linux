@@ -25,6 +25,7 @@ Description: kernel development files
 
 Package: linux-NAME-dev
 Architecture: any-arm
+Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to
  utilize this kernel`s public API.
