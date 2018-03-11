@@ -1,3 +1,9 @@
+linux-latest (91) UNRELEASED; urgency=medium
+
+  * debian/control: Point Vcs URLs to Salsa
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Sun, 11 Mar 2018 18:16:36 +0000
+
 linux-latest (90) unstable; urgency=medium
 
   * Update to 4.15.0-1
