@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg12) stable; urgency=medium
+
+  * symlink new DTB names
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 11 Mar 2018 21:00:24 +0100
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg11) stable; urgency=medium
 
   * CVE: broadpwn

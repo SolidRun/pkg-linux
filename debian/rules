@@ -62,6 +62,14 @@ override_dh_auto_install:
 	mkdir -vp "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
 	find build/arch/$(ARCH)/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
+	# install compatibility symlinks for new DTB names
+	ln -sv imx6dl-cubox-i-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6dl-cubox-i-emmc-som-v15.dtb"
+	ln -sv imx6dl-hummingboard-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6dl-hummingboard-emmc-som-v15.dtb"
+	ln -sv imx6dl-hummingboard2-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6dl-hummingboard2-emmc-som-v15.dtb"
+	ln -sv imx6q-cubox-i-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6q-cubox-i-emmc-som-v15.dtb"
+	ln -sv imx6q-hummingboard-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6q-hummingboard-emmc-som-v15.dtb"
+	ln -sv imx6q-hummingboard2-som-v15.dtb "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/imx6q-hummingboard2-emmc-som-v15.dtb"
+
 	# install modules
 	make -C build -j$(PARALLEL) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
 	rm -fv $(KDESTDIR)/lib/modules/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/source
