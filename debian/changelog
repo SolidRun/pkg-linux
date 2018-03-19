@@ -1,3 +1,9 @@
+linux-3.14.y-fslc-imx6-sr (3.14.79pkg13) stable; urgency=medium
+
+  * add HB2 eMMC symlink
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 19 Mar 2018 15:24:39 +0100
+
 linux-3.14.y-fslc-imx6-sr (3.14.79pkg12) stable; urgency=medium
 
   * symlink new DTB names
