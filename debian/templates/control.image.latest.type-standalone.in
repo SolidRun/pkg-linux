@@ -1,4 +1,4 @@
-Package: linux-image@localversion@
+Package: linux-image@source_suffix@@localversion@
 Depends: linux-image-@abiname@@localversion@, ${misc:Depends}
 Provides: linux-latest-modules-@abiname@@localversion@
 Description: Linux for @class@ (meta-package)

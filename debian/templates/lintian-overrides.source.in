@@ -1,1 +1,1 @@
-@source_package@ source: dbg-package-missing-depends linux-image-@flavour@-dbg
+@source_package@ source: dbg-package-missing-depends linux-image@source_suffix@-@flavour@-dbg
