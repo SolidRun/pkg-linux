@@ -47,14 +47,17 @@ class Gencontrol(Base):
              'linux-headers-%s-all' % self.abiname]
         )
 
-        latest_source = self.templates["control.source.latest"]
-        packages.extend(self.process_packages(latest_source, vars))
+        # Only build these metapackages if their names won't exactly match
+        # the packages they depend on
+        if vars['source_suffix'] != '-' + vars['upstreamversion']:
+            latest_source = self.templates["control.source.latest"]
+            packages.extend(self.process_packages(latest_source, vars))
 
-        latest_doc = self.templates["control.doc.latest"]
-        packages.extend(self.process_packages(latest_doc, vars))
+            latest_doc = self.templates["control.doc.latest"]
+            packages.extend(self.process_packages(latest_doc, vars))
 
-        latest_tools = self.templates["control.tools.latest"]
-        packages.extend(self.process_packages(latest_tools, vars))
+            latest_tools = self.templates["control.tools.latest"]
+            packages.extend(self.process_packages(latest_tools, vars))
 
     def do_flavour_packages(self, packages, makefile, arch, featureset, flavour, vars, makeflags, extra):
         if self.version.linux_modifier is None:
