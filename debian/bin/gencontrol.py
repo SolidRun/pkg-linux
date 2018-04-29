@@ -20,6 +20,7 @@ class Gencontrol(Base):
         self.vars = {
             'upstreamversion': self.version.linux_upstream,
             'version': self.version.linux_version,
+            'source_package': self.changelog[0].source,
             'source_upstream': self.version.upstream,
             'abiname': self.abiname,
         }
