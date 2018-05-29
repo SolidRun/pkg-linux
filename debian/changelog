@@ -1,8 +1,12 @@
 linux-latest (94) UNRELEASED; urgency=medium
 
+  [ Ben Hutchings ]
   * Substitute source package name in lintian-overrides
   * Change binary package names to include any source package name suffix
   * Don't build redundant linux-doc, linux-source, linux-tools packages
+
+  [ Salvatore Bonaccorso ]
+  * Update to 4.16.0-2
 
  -- Ben Hutchings <ben@decadent.org.uk>  Sun, 29 Apr 2018 21:29:08 +0100
 
