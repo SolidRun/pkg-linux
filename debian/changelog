@@ -1,8 +1,9 @@
-linux-latest (96) UNRELEASED; urgency=medium
+linux-latest (96) unstable; urgency=medium
 
+  [ Romain Perier ]
   * Update to 4.17.0-2
 
- -- Romain Perier <romain.perier@gmail.com>  Tue, 14 Aug 2018 19:05:25 +0200
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 14 Aug 2018 18:55:00 +0100
 
 linux-latest (95) unstable; urgency=medium
 
