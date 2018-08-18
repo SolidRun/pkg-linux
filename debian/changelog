@@ -1,3 +1,9 @@
+linux-latest (97) UNRELEASED; urgency=medium
+
+  * Update to 4.17.0-3
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Sat, 18 Aug 2018 06:37:30 +0200
+
 linux-latest (96) unstable; urgency=medium
 
   [ Romain Perier ]
