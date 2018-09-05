@@ -21,13 +21,13 @@ endif
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
-KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx6-sr
-HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr
-DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
+KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx6-rt-sr
+HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-rt-sr
+DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-rt-sr-dev
 
 # kernel version information
 BASEVERSION=4.9.124
-LOCALVERSION=-imx6-sr
+LOCALVERSION=-imx6-rt-sr
 SCMVERSION=
 ARCH=arm
 IMAGE=zImage
@@ -92,7 +92,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	dh_strip --package=linux-image-4.9.y-imx6-sr
+	dh_strip --package=linux-image-4.9.y-imx6-rt-sr
 	# headers contain binary utilities built for the build host cpu
-	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.9.y-imx6-sr
+	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.9.y-imx6-rt-sr
 	# no need to strip -dev package, it is header-only

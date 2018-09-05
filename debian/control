@@ -1,22 +1,22 @@
-Source: linux-imx6-sr
+Source: linux-imx6-rt-sr
 Section: kernel
 Priority: optional
-Maintainer: Josua Mayer <josua.mayer97@gmail.com>
+Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop:native, linux-libc-dev:native
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
-Package: linux-image-4.9.y-imx6-sr
+Package: linux-image-4.9.y-imx6-rt-sr
 Architecture: armel armhf
 Provides: linux-image, galcore-6.2.2.93313
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
-Description: Downstream kernel for SolidRun i.MX6 based devices
+Description: Downstream kernel for SolidRun i.MX6 based devices preemptive realtime flavour
  This package provides a downstream kernel optimized for i.MX6
  Cubox-i and Hummingboard devices.
 
-Package: linux-headers-4.9.y-imx6-sr
+Package: linux-headers-4.9.y-imx6-rt-sr
 Architecture: armel armhf
 Provides: linux-headers
 Depends: ${misc:Depends}
@@ -24,7 +24,7 @@ Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-4.9.y-imx6-sr-dev
+Package: linux-4.9.y-imx6-rt-sr-dev
 Architecture: armel armhf
 Depends: ${misc:Depends}
 Description: kernel API development files
