@@ -26,7 +26,7 @@ HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr
 DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
 
 # kernel version information
-BASEVERSION=4.9.99
+BASEVERSION=4.9.124
 LOCALVERSION=-imx6-sr
 SCMVERSION=
 ARCH=arm

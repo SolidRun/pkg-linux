@@ -1,3 +1,9 @@
+linux-imx6-sr (4.9.124) stable; urgency=medium
+
+  * update to 17712be3d2546cce0f72a03d1da0fc47f84f5d07
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 05 Sep 2018 18:52:01 +0200
+
 linux-imx6-sr (4.9.99) stable; urgency=medium
 
   * update to 457f3ded3371686c15786fd8e934158625647a88
