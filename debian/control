@@ -30,3 +30,11 @@ Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to
  utilize this kernel`s public API.
+
+Package: imx-kernel-api-4.9.y-imx6-sr
+Architecture: armel armhf
+Provides: imx-kernel-api
+Depends: ${misc:Depends}, linux-4.9.y-imx6-sr-dev
+Description: i.MX series kernel API
+ This package provides a fixed path to the kernel API for
+ i.MX SoCs at /usr/include/imx-kernel-api.

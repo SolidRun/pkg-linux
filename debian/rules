@@ -24,6 +24,7 @@ PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx6-sr
 HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr
 DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
+ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.9.y-imx6-sr
 
 # kernel version information
 BASEVERSION=4.9.124
@@ -81,12 +82,17 @@ override_dh_auto_install:
 	rm -rf $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/include
 	find $(DDESTDIR)/usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) -name "*.cmd" -delete
 
+	# install symlink to public API headers
+	mkdir -p $(ADESTDIR)/usr/include
+	ln -sv /usr/include/kernel-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(ADESTDIR)/usr/include/imx-kernel-api
+
 	# move installed firmware into a kernelbuild-specific subfolder
 	# if no firmware is installed, created an empty folder for it
 	mkdir -p $(KDESTDIR)/lib/firmware
 	mv $(KDESTDIR)/lib/firmware $(KDESTDIR)/lib/firmware-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	mkdir -p $(KDESTDIR)/lib/firmware
 	mv $(KDESTDIR)/lib/firmware-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(KDESTDIR)/lib/firmware/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	
 
 override_dh_auto_test:
 	# don't test
