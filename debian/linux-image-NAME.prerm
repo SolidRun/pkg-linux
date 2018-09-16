@@ -20,22 +20,6 @@ KERNEL_IMAGE=zImage
 
 case $1 in
     remove|deconfigure)
-	# if there is a boot symlink to this kernel, remove it
-	if [ -h /boot/$KERNEL_IMAGE ] && [ "$(readlink /boot/$KERNEL_IMAGE)" = "$KERNEL_IMAGE-$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/$KERNEL_IMAGE
-	fi
-	# same for initrd
-	if [ -h /boot/initrd ] && [ "$(readlink /boot/initrd)" = "initrd.img-$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/initrd
-	fi
-	# same for DTBs
-	if [ -h /boot/dtb-dir ] && [ "$(readlink /boot/dtb-dir)" = "dtbs/$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/dtb-dir
-	fi
-	# same for old dtb symlink
-	if [ -h /boot/dtb ] && [ "$(readlink /boot/dtb)" = "dtbs/$KERNEL_LOCALVERSION" ]; then
-		rm -f /boot/dtb
-	fi
     ;;
     upgrade|failed-upgrade)
     ;;

@@ -22,42 +22,9 @@ KERNEL_IMAGE=zImage
 
 case "$1" in
 	configure)
-	# set this kernel as boot kernel if none other is set or exists
-	if ( [ ! -e "/boot/$KERNEL_IMAGE" ] || ( [ -h "/boot/$KERNEL_IMAGE" ] && [ ! -e "/boot/$(readlink /boot/$KERNEL_IMAGE)" ] ) ) \
-	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
-		ln -sfv $KERNEL_IMAGE-$KERNEL_LOCALVERSION /boot/$KERNEL_IMAGE
-		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
-
-		# also install old (pre-flash-kernel) /boot/dtb symlink
-		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
-			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
-		fi
-	elif ( [ "$(readlink /boot/$KERNEL_IMAGE)" = "$KERNEL_IMAGE-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb-dir)" = "dtbs/$KERNEL_LOCALVERSION" ]); then
-		# all good
-		:
-	else
-		echo "Notice: linux-image-$KERNEL_LOCALVERSION will not boot automatically!"
-		echo "If desired, please update the symlinks $KERNEL_IMAGE, initrd and dtb in /boot."
-	fi
 	;;
 
-	abort-upgrade|abort-remove|abort-deconfigure)
-	# This is a curious case! prerm has already been executed, but postinst of any new version probably hasn't
-	# do the minimum work required to get a consistent system:
-	# recreate boot symlinks for this current version
-	if ( [ ! -e "/boot/$KERNEL_IMAGE" ] || ( [ -h "/boot/$KERNEL_IMAGE" ] && [ ! -e "/boot/$(readlink /boot/$KERNEL_IMAGE)" ] ) ) \
-	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
-		ln -sfv $KERNEL_IMAGE-$KERNEL_LOCALVERSION /boot/$KERNEL_IMAGE
-		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
-
-		# also install old (pre-flash-kernel) /boot/dtb symlink
-		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
-			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
-		fi
-	fi
-	# ignore ramdisk (not strictly required, I hope)
+	configure|abort-upgrade|abort-remove|abort-deconfigure)
 	;;
 
 	*)
