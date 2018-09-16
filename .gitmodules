@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux.git
-	branch = master
+	url = https://github.com/SolidRun/linux-fslc.git
+	branch = solidrun-imx_4.9.x_imx8m_ga
