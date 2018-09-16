@@ -15,18 +15,21 @@ set -e
 #          <conflicting-package> <version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
+
 KERNEL_LOCALVERSION=4.4.0
 KERNEL_IMAGE=zImage
 
 case $1 in
-    remove|deconfigure)
-    ;;
-    upgrade|failed-upgrade)
-    ;;
-    *)
+	remove|deconfigure)
+	;;
+
+	upgrade|failed-upgrade)
+	;;
+
+	*)
 	echo "prerm called with unknown argument \`$1'" >&2
 	exit 1
-    ;;
+	;;
 esac
 
 # run standard prerm hooks

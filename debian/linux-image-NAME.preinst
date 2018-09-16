@@ -12,20 +12,21 @@ set -e
 #        * <old-preinst> `abort-upgrade' <new-version>                                                                                                                             
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
+
 KERNEL_LOCALVERSION=4.4.0
 KERNEL_IMAGE=zImage
 
 case "$1" in
-    install|upgrade)
-    ;;
+	install|upgrade)
+	;;
 
-    abort-upgrade)
-    ;;
+	abort-upgrade)
+	;;
 
-    *)
-        echo "preinst called with unknown argument \`$1'" >&2
-        exit 1
-    ;;
+	*)
+		echo "preinst called with unknown argument \`$1'" >&2
+		exit 1
+	;;
 esac
 
 # run standard preinst hooks
