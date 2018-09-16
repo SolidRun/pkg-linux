@@ -1,7 +1,7 @@
 Source: linux
 Section: kernel
 Priority: optional
-Maintainer: Josua Mayer <josua.mayer97@gmail.com>
+Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop:native, linux-libc-dev:native
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/

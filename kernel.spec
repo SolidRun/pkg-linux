@@ -1,7 +1,7 @@
 #
 # spec file for package kernel-3.14.y-fslc-imx6-sr
 #
-# Copyright (c) 2014-2015 Josua Mayer <josua.mayer97@gmail.com>
+# Copyright (c) 2014-2015 Josua Mayer <josua@solid-run.com>
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
