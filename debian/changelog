@@ -1,3 +1,11 @@
+linux-imx6-sr (4.9.124+3) stable; urgency=medium
+
+  * update to f89463da11e09deffbd66bbc24947e8c4b9097d7
+  * fix problems with cma allocation
+  * enable serdev support for broadcom bluetooth
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Mon, 08 Oct 2018 11:25:30 +0200
+
 linux-imx6-sr (4.9.124+2) stable; urgency=medium
 
   * enable default netfilter modules
