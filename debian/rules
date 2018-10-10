@@ -32,6 +32,7 @@ LOCALVERSION=-imx8-sr
 SCMVERSION=
 ARCH=arm64
 IMAGE=Image
+DIMAGE=vmlinuz
 
 %:
 	dh $@ --parallel --sourcedirectory=linux --builddirectory=build
@@ -55,7 +56,7 @@ override_dh_auto_build:
 override_dh_auto_install:
 	# install kernel image
 	mkdir -vp "$(KDESTDIR)/boot"
-	install -v -m755 build/arch/$(ARCH)/boot/$(IMAGE) $(KDESTDIR)/boot/$(IMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	install -v -m755 build/arch/$(ARCH)/boot/$(IMAGE) $(KDESTDIR)/boot/$(DIMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/System.map $(KDESTDIR)/boot/System.map-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/.config $(KDESTDIR)/boot/config-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
