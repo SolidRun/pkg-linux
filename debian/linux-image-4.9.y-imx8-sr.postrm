@@ -18,7 +18,7 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-KERNEL_LOCALVERSION=4.9.86
+KERNEL_LOCALVERSION=4.9.86-imx8-sr
 KERNEL_IMAGE=Image
 
 case "$1" in
