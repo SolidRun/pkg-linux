@@ -1,3 +1,9 @@
+linux-latest (100) UNRELEASED; urgency=medium
+
+  * Update to 4.18.0-3
+
+ -- Romain Perier <romain.perier@gmail.com>  Sun, 25 Nov 2018 16:53:20 +0100
+
 linux-latest (99) unstable; urgency=medium
 
   * Update to 4.18.0-2
