@@ -1,4 +1,4 @@
-linux-4.9.y-imx8-sr (4.9.144) stable; urgency=medium
+linux-4.9.y-imx8-sr (4.9.144+1) stable; urgency=medium
 
   * Update to 1f9b3d31b574cd282766ee399e95f67ca0daf0d2
 
