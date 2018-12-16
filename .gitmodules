@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/SolidRun/linux-fslc.git
-	branch = solidrun-imx_4.9.x_imx8m_ga
+	url = https://github.com/SolidRun/linux-stable.git
+	branch = linux-4.9.y-imx8
