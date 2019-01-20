@@ -27,7 +27,7 @@ DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
 ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.9.y-imx6-sr
 
 # kernel version information
-BASEVERSION=4.9.145
+BASEVERSION=4.9.150
 LOCALVERSION=-imx6-sr
 SCMVERSION=
 ARCH=arm
