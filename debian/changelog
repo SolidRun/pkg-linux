@@ -1,8 +1,8 @@
-linux-latest (102) UNRELEASED; urgency=medium
+linux-latest (102) unstable; urgency=medium
 
   * Update to 4.19.0-2
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 24 Jan 2019 12:46:21 +0100
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 24 Jan 2019 21:28:23 +0100
 
 linux-latest (101) unstable; urgency=medium
 
