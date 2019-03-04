@@ -21,13 +21,13 @@ endif
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
-KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx8-sr
-HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx8-sr
-DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx8-sr-dev
-ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.9.y-imx8-sr
+KDESTDIR=$(CURDIR)/debian/linux-image-4.14.y-imx8-sr
+HDESTDIR=$(CURDIR)/debian/linux-headers-4.14.y-imx8-sr
+DDESTDIR=$(CURDIR)/debian/linux-4.14.y-imx8-sr-dev
+ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.14.y-imx8-sr
 
 # kernel version information
-BASEVERSION=4.9.144
+BASEVERSION=4.14.104
 LOCALVERSION=-imx8-sr
 SCMVERSION=
 ARCH=arm64
@@ -45,7 +45,7 @@ override_dh_auto_clean:
 
 override_dh_auto_configure:
 	mkdir build
-	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m ./linux/arch/arm64/configs/defconfig
+	find config -name "*.conf" | sort | xargs ./linux/scripts/kconfig/merge_config.sh -O build -m ./linux/arch/arm64/configs/imx8m_sr_base_defconfig
 	./linux/scripts/config --file build/.config --set-str LOCALVERSION $(LOCALVERSION)
 	./linux/scripts/config --file build/.config --disable LOCALVERSION_AUTO
 	make -C linux O="$(CURDIR)/build" ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) olddefconfig
@@ -94,7 +94,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	dh_strip --package=linux-image-4.9.y-imx8-sr
+	dh_strip --package=linux-image-4.14.y-imx8-sr
 	# headers contain binary utilities built for the build host cpu
-	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.9.y-imx8-sr
+	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.14.y-imx8-sr
 	# no need to strip -dev package, it is header-only

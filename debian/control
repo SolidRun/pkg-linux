@@ -1,4 +1,4 @@
-Source: linux-4.9.y-imx8-sr
+Source: linux-4.14.y-imx8-sr
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua@solid-run.com>
@@ -8,15 +8,15 @@ Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
 Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
 
-Package: linux-image-4.9.y-imx8-sr
+Package: linux-image-4.14.y-imx8-sr
 Architecture: arm64
-Provides: linux-image, galcore-6.2.4.p1.150331
+Provides: linux-image, galcore-6.2.4.p2.163672
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Description: Downstream kernel for SolidRun i.MX8 based devices
  This package provides a downstream kernel optimized for i.MX8
  Cubox and Hummingboard devices.
 
-Package: linux-headers-4.9.y-imx8-sr
+Package: linux-headers-4.14.y-imx8-sr
 Architecture: arm64
 Provides: linux-headers
 Depends: ${misc:Depends}
@@ -24,17 +24,17 @@ Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-4.9.y-imx8-sr-dev
+Package: linux-4.14.y-imx8-sr-dev
 Architecture: arm64
 Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to
  utilize this kernel`s public API.
 
-Package: imx-kernel-api-4.9.y-imx8-sr
+Package: imx-kernel-api-4.14.y-imx8-sr
 Architecture: arm64
 Provides: imx-kernel-api
-Depends: ${misc:Depends}, linux-4.9.y-imx8-sr-dev (= ${binary:Version})
+Depends: ${misc:Depends}, linux-4.14.y-imx8-sr-dev (= ${binary:Version})
 Description: i.MX series kernel API
  This package provides a fixed path to the kernel API for
  i.MX SoCs at /usr/include/imx-kernel-api.

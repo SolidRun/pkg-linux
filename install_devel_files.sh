@@ -18,7 +18,7 @@ usage() {
 	echo "$0 <architecture> <sourcedir> <builddir> <destdir>"
 }
 
-if [ "x$#" != "x4" ]; then
+if [ "x$#" != "x3" ]; then
 	usage
 	exit 1
 fi
