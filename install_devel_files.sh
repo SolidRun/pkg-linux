@@ -23,16 +23,15 @@ if [ "x$#" != "x4" ]; then
 	exit 1
 fi
 
-KARCH=$1
-SRCDIR="$2"
-BUILDDIR="$3"
-DESTDIR="$4"
+SRCDIR="$1"
+BUILDDIR="$2"
+DESTDIR="$3"
 TMPDIR="$PWD"
 
 # snippet copied from kernel tree /scripts/package/builddeb
 (cd "$SRCDIR"; find . -name Makefile\* -o -name Kconfig\* -o -name \*.pl > "$TMPDIR/hdrsrcfiles")
-(cd "$SRCDIR"; find arch/$KARCH/include include scripts -type f >> "$TMPDIR/hdrsrcfiles")
-(cd "$BUILDDIR"; find arch/$KARCH/include .config Module.symvers include scripts -type f >> "$TMPDIR/hdrobjfiles")
+(cd "$SRCDIR"; find arch/{arm,arm64}/include include scripts -type f >> "$TMPDIR/hdrsrcfiles")
+(cd "$BUILDDIR"; find arch/{arm,arm64}/include .config Module.symvers include scripts -type f >> "$TMPDIR/hdrobjfiles")
 
 mkdir -p "$DESTDIR"
 (cd "$SRCDIR"; tar -c -f - -T "$TMPDIR/hdrsrcfiles") | (cd "$DESTDIR"; tar -xf -)
