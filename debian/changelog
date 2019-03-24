@@ -1,3 +1,9 @@
+linux-imx6-sr (4.9.150+1) stable; urgency=medium
+
+  * enable some features for docker, especially overlayfs
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 24 Mar 2019 14:57:40 +0100
+
 linux-imx6-sr (4.9.150) stable; urgency=medium
 
   * update to 467866c58280e865d8ce3f7c1280c11b3dabc1ac

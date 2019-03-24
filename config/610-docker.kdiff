@@ -1,0 +1,8 @@
+ CGROUP_NET_PRIO n -> y
+ CGROUP_PERF n -> y
+ CGROUP_PIDS n -> y
+ INET_XFRM_MODE_TRANSPORT n -> m
+ NET_L3_MASTER_DEV n -> y
+ OVERLAY_FS n -> m
++IPVLAN m
++NET_VRF n
