@@ -1,3 +1,9 @@
+linux-latest (105) unstable; urgency=medium
+
+  * Update to 4.19.0-5
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Tue, 07 May 2019 16:33:50 +0100
+
 linux-latest (104) unstable; urgency=medium
 
   * Update to 4.19.0-4
