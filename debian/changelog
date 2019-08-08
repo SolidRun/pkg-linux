@@ -1,3 +1,10 @@
+linux-latest (106) UNRELEASED; urgency=medium
+
+  [ Romain Perier ]
+  * Update to 5.2.0-2
+
+ -- Romain Perier <romain.perier@gmail.com>  Thu, 08 Aug 2019 21:04:13 +0200
+
 linux-latest (105) unstable; urgency=medium
 
   * Update to 4.19.0-5
