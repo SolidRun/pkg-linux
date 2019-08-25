@@ -1,3 +1,10 @@
+linux-latest (106~bpo10+1) buster-backports; urgency=medium
+
+  * Rebuild for buster-backports:
+    - ABI version is 0.bpo.2, not 2
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Sun, 25 Aug 2019 18:26:13 +0100
+
 linux-latest (106) unstable; urgency=medium
 
   [ Romain Perier ]
