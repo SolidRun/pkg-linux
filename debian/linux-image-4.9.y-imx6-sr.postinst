@@ -27,13 +27,13 @@ case "$1" in
 	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
 		ln -sfv $KERNEL_IMAGE-$KERNEL_LOCALVERSION /boot/$KERNEL_IMAGE
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
+		rm -f /boot/dtb-dir && ln -sv /usr/lib/linux-image-$KERNEL_LOCALVERSION /boot/dtb-dir
 
 		# also install old (pre-flash-kernel) /boot/dtb symlink
 		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
-			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
+			rm -f /boot/dtb && ln -sv /usr/lib/linux-image-$KERNEL_LOCALVERSION /boot/dtb
 		fi
-	elif ( [ "$(readlink /boot/$KERNEL_IMAGE)" = "$KERNEL_IMAGE-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb-dir)" = "dtbs/$KERNEL_LOCALVERSION" ]); then
+	elif ( [ "$(readlink /boot/$KERNEL_IMAGE)" = "$KERNEL_IMAGE-$KERNEL_LOCALVERSION" ] && [ "$(readlink /boot/dtb-dir)" = "/usr/lib/linux-image-$KERNEL_LOCALVERSION" ]); then
 		# all good
 		:
 	else
@@ -50,11 +50,11 @@ case "$1" in
 	|| ( [ ! -e "/boot/dtb-dir" ] || ( [ -h "/boot/dtb-dir" ] && [ ! -e "/boot/$(readlink /boot/dtb-dir)" ] ) ); then
 		ln -sfv $KERNEL_IMAGE-$KERNEL_LOCALVERSION /boot/$KERNEL_IMAGE
 		ln -sfv initrd.img-$KERNEL_LOCALVERSION /boot/initrd
-		rm -f /boot/dtb-dir && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb-dir
+		rm -f /boot/dtb-dir && ln -sv /usr/lib/linux-image-$KERNEL_LOCALVERSION /boot/dtb-dir
 
 		# also install old (pre-flash-kernel) /boot/dtb symlink
 		if [ ! -e "/boot/dtb" ] || ( [ -h "/boot/dtb" ] && [ ! -e "/boot/$(readlink /boot/dtb)" ] ); then
-			rm -f /boot/dtb && ln -sv dtbs/$KERNEL_LOCALVERSION /boot/dtb
+			rm -f /boot/dtb && ln -sv /usr/lib/linux-image-$KERNEL_LOCALVERSION /boot/dtb
 		fi
 	fi
 	# ignore ramdisk (not strictly required, I hope)
