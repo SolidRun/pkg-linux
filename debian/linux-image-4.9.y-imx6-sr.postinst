@@ -18,7 +18,7 @@ set -e
 # the debian-policy package
 
 KERNEL_LOCALVERSION=4.9.150-imx6-sr
-KERNEL_IMAGE=zImage
+KERNEL_IMAGE=vmlinuz
 
 case "$1" in
 	configure)
