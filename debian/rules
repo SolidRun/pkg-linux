@@ -62,8 +62,8 @@ override_dh_auto_install:
 	ln -sv /boot/$(IMAGE_D)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(KDESTDIR)/boot/$(IMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
 	# install DTBs
-	mkdir -vp "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
-	find build/arch/$(ARCH)/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
+	mkdir -vp "$(KDESTDIR)/usr/lib/linux-image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
+	find build/arch/$(ARCH)/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/usr/lib/linux-image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
 
 	# install modules
 	make -C build -j$(PARALLEL) INSTALL_MOD_STRIP=1 ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
