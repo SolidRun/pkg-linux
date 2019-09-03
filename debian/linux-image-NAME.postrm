@@ -19,7 +19,7 @@ set -e
 # the debian-policy package
 
 KERNEL_LOCALVERSION=4.4.0
-KERNEL_IMAGE=zImage
+KERNEL_IMAGE=vmlinuz
 
 case "$1" in
 	remove|upgrade|disappear)

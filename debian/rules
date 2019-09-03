@@ -31,6 +31,7 @@ LOCALVERSION=-NAME
 SCMVERSION=
 ARCH=arm
 IMAGE=zImage
+IMAGE_D=vmlinuz
 
 %:
 	dh $@ --parallel --sourcedirectory=linux --builddirectory=build
@@ -54,9 +55,11 @@ override_dh_auto_build:
 override_dh_auto_install:
 	# install kernel image
 	mkdir -vp "$(KDESTDIR)/boot"
-	install -v -m755 build/arch/$(ARCH)/boot/$(IMAGE) $(KDESTDIR)/boot/$(IMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	install -v -m755 build/arch/$(ARCH)/boot/$(IMAGE) $(KDESTDIR)/boot/$(IMAGE_D)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/System.map $(KDESTDIR)/boot/System.map-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 	install -v -m644 build/.config $(KDESTDIR)/boot/config-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
+	# before flash-kernel: zImage
+	ln -sv /boot/$(IMAGE_D)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) $(KDESTDIR)/boot/$(IMAGE)-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)
 
 	# install DTBs
 	mkdir -vp "$(KDESTDIR)/boot/dtbs/$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
