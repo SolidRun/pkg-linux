@@ -1,3 +1,10 @@
+linux-imx6-sr (4.9.150+2) stable; urgency=medium
+
+  * zImage -> vmlinuz
+  * /boot/dtbs/xyz -> /usr/lib/linux-image-xyz
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Tue, 03 Sep 2019 20:05:39 +0200
+
 linux-imx6-sr (4.9.150+1) stable; urgency=medium
 
   * enable some features for docker, especially overlayfs
