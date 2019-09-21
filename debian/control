@@ -1,4 +1,4 @@
-Source: linux
+Source: linux-4.19.y-imx8-sr
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua@solid-run.com>
@@ -8,23 +8,23 @@ Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/SolidRun/pkg-linux.git
 Vcs-Browser: https://github.com/mxOBS/pkg-linux
 
-Package: linux-image-NAME
-Architecture: any-arm
+Package: linux-image-4.19.y-imx8-sr
+Architecture: arm64
 Provides: linux-image
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Description: LONGNAME kernel
  This package provides the mainline kernel
 
-Package: linux-headers-NAME
-Architecture: any-arm
+Package: linux-headers-4.19.y-imx8-sr
+Architecture: arm64
 Provides: linux-headers
 Depends: ${misc:Depends}
 Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-NAME-dev
-Architecture: any-arm
+Package: linux-4.19.y-imx8-sr-dev
+Architecture: arm64
 Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to
