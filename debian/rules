@@ -34,7 +34,7 @@ IMAGE=zImage
 IMAGE_D=vmlinuz
 
 %:
-	dh $@ --parallel --sourcedirectory=linux --builddirectory=build
+	dh $@ --parallel --sourcedirectory=linux --builddirectory=build --with quilt
 
 override_dh_auto_clean:
 	dh_auto_clean
