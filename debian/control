@@ -5,8 +5,8 @@ Maintainer: Josua Mayer <josua@solid-run.com>
 Build-Depends: debhelper (>= 8.0.0), bc, lzop:native, linux-libc-dev:native
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
-Vcs-Git: https://github.com/mxOBS/deb-pkg_kernel-xyz.git
-Vcs-Browser: https://github.com/mxOBS/deb-pkg_kernel-xyz
+Vcs-Git: https://github.com/SolidRun/pkg-linux.git
+Vcs-Browser: https://github.com/mxOBS/pkg-linux
 
 Package: linux-image-NAME
 Architecture: any-arm
