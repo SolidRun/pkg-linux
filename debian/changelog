@@ -1,5 +1,5 @@
-linux (4.4.0) unstable; urgency=low
+linux-4.19.y-imx6-sr (4.19.72) stable; urgency=low
 
   * Initial release
 
- -- Josua Mayer <josua@solid-run.com>  Sat, 25 Oct 2014 22:43:37 +0200
+ -- Josua Mayer <josua@solid-run.com>  Sat, 21 Sep 2019 18:07:22 +0200

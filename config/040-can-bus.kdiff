@@ -1,0 +1,6 @@
+ CAN y -> m
+ CAN_BCM y -> m
+ CAN_DEV y -> m
+ CAN_FLEXCAN y -> m
+ CAN_GW y -> m
+ CAN_RAW y -> m
