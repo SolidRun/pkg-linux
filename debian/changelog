@@ -1,8 +1,8 @@
-linux-latest (107) UNRELEASED; urgency=medium
+linux-latest (107) unstable; urgency=medium
 
   * Update to 5.2.0-3
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 26 Sep 2019 19:18:25 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Fri, 27 Sep 2019 21:15:25 +0200
 
 linux-latest (106) unstable; urgency=medium
 
