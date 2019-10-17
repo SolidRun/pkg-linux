@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
-	url = https://github.com/SolidRun/linux-stable.git
-	branch = linux-4.19.y-nxp
+	url = https://github.com/Josua-SR/linux.git
+	branch = linux-4.19.y-nxp+josua
