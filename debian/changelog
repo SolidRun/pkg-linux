@@ -1,3 +1,9 @@
+linux-4.19.y-imx8-sr (4.19.72+1) stable; urgency=medium
+
+  * support for i.MX8MM HummingBoard Pulse
+
+ -- Josua Mayer <josua@solid-run.com>  Fri, 25 Oct 2019 16:50:36 +0200
+
 linux-4.19.y-imx8-sr (4.19.72) stable; urgency=low
 
   * Initial release
