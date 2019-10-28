@@ -1,3 +1,9 @@
+linux-4.19.y-imx8-sr (4.19.72+2) stable; urgency=medium
+
+  * enable all drivers for usb serial converters
+
+ -- Josua Mayer <josua@solid-run.com>  Mon, 28 Oct 2019 16:48:15 +0100
+
 linux-4.19.y-imx8-sr (4.19.72+1) stable; urgency=medium
 
   * support for i.MX8MM HummingBoard Pulse
