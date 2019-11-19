@@ -1,3 +1,9 @@
+linux-4.19.y-imx8-sr (4.19.72+3) stable; urgency=medium
+
+  * add DTB for i.MX8MQ Cubox Pulse
+
+ -- Josua Mayer <josua@solid-run.com>  Tue, 19 Nov 2019 22:05:04 +0100
+
 linux-4.19.y-imx8-sr (4.19.72+2) stable; urgency=medium
 
   * enable all drivers for usb serial converters
