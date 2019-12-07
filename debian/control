@@ -25,6 +25,7 @@ Description: kernel development files
 
 Package: linux-4.19.y-imx8-sr-dev
 Architecture: arm64
+Provides: imx-kernel-api
 Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to
