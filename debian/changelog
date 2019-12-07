@@ -1,3 +1,11 @@
+linux-4.19.y-imx8-sr (4.19.72+5) stable; urgency=medium
+
+  * enable acl support in tmpfs wanted by systemd
+  * let ion allocator use cma
+  * install ion.h uapi
+
+ -- Josua Mayer <josua@solid-run.com>  Sat, 07 Dec 2019 14:32:37 +0100
+
 linux-4.19.y-imx8-sr (4.19.72+4) stable; urgency=medium
 
   * enable netfilter framework
