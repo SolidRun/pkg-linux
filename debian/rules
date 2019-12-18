@@ -21,14 +21,14 @@ endif
 # extract value of debhelper parallel option
 PARALLEL=$(shell $(CURDIR)/parse-debopts.sh $(DEB_BUILD_OPTIONS))
 
-KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx6-sr
-HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr
-DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-dev
-ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.9.y-imx6-sr
+KDESTDIR=$(CURDIR)/debian/linux-image-4.9.y-imx6-sr-test
+HDESTDIR=$(CURDIR)/debian/linux-headers-4.9.y-imx6-sr-test
+DDESTDIR=$(CURDIR)/debian/linux-4.9.y-imx6-sr-test-dev
+ADESTDIR=$(CURDIR)/debian/imx-kernel-api-4.9.y-imx6-sr-test
 
 # kernel version information
 BASEVERSION=4.9.150
-LOCALVERSION=-imx6-sr
+LOCALVERSION=-imx6-sr-TEST
 SCMVERSION=
 ARCH=arm
 IMAGE=zImage
@@ -65,8 +65,6 @@ override_dh_auto_install:
 	# install DTBs
 	mkdir -vp "$(KDESTDIR)/usr/lib/linux-image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)"
 	find build/arch/$(ARCH)/boot/dts/ -name "*.dtb" -exec install -v -m644 {} "$(KDESTDIR)/usr/lib/linux-image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION)/" \;
-	# old location: /boot/dtb-dir
-	ln -sv /usr/lib/linux-image-$(BASEVERSION)$(LOCALVERSION)$(SCMVERSION) "$(KDESTDIR)/boot/dtb-dir"
 
 	# install modules
 	make -C build -j$(PARALLEL) INSTALL_MOD_STRIP=1 ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) INSTALL_MOD_PATH=$(KDESTDIR) modules_install
@@ -103,7 +101,7 @@ override_dh_auto_test:
 	# don't test
 
 override_dh_strip:
-	dh_strip --package=linux-image-4.9.y-imx6-sr
+	dh_strip --package=linux-image-4.9.y-imx6-sr-test
 	# headers contain binary utilities built for the build host cpu
-	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.9.y-imx6-sr
+	DEB_HOST_GNU_TYPE=$(DEB_BUILD_GNU_TYPE) dh_strip --package=linux-headers-4.9.y-imx6-sr-test
 	# no need to strip -dev package, it is header-only
