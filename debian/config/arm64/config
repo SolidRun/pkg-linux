@@ -67,6 +67,7 @@ CONFIG_ARCH_THUNDER2=y
 CONFIG_ARCH_VEXPRESS=y
 CONFIG_ARCH_XGENE=y
 CONFIG_ARCH_ZYNQMP=y
+CONFIG_ARCH_LAYERSCAPE=y
 
 ##
 ## file: drivers/acpi/Kconfig
@@ -102,6 +103,7 @@ CONFIG_AHCI_MVEBU=m
 CONFIG_AHCI_TEGRA=m
 CONFIG_AHCI_XGENE=m
 CONFIG_SATA_AHCI_SEATTLE=m
+CONFIG_AHCI_QORIQ=m
 
 ##
 ## file: drivers/bluetooth/Kconfig
@@ -115,6 +117,11 @@ CONFIG_BT_QCOMSMD=m
 CONFIG_HISILICON_LPC=y
 CONFIG_QCOM_EBI2=y
 CONFIG_TEGRA_ACONNECT=y
+
+##
+## file: drivers/bus/fsl-mc/Kconfig
+##
+CONFIG_FSL_MC_BUS=y
 
 ##
 ## file: drivers/char/hw_random/Kconfig
@@ -147,6 +154,7 @@ CONFIG_TCG_TIS_I2C_INFINEON=m
 CONFIG_COMMON_CLK_RK808=y
 CONFIG_COMMON_CLK_HI655X=y
 CONFIG_COMMON_CLK_XGENE=y
+CONFIG_CLK_QORIQ=y
 
 ##
 ## file: drivers/clk/bcm/Kconfig
@@ -181,6 +189,7 @@ CONFIG_SUN8I_DE2_CCU=y
 CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y
 ## end choice
 CONFIG_CPUFREQ_DT=m
+CONFIG_QORIQ_CPUFREQ=m
 
 ##
 ## file: drivers/cpufreq/Kconfig.arm
@@ -201,6 +210,11 @@ CONFIG_CRYPTO_DEV_MARVELL_CESA=m
 CONFIG_CRYPTO_DEV_QCE=m
 CONFIG_CRYPTO_DEV_QCOM_RNG=m
 CONFIG_CRYPTO_DEV_SAFEXCEL=m
+
+##
+## file: drivers/crypto/caam/Kconfig
+##
+CONFIG_CRYPTO_DEV_FSL_DPAA2_CAAM=m
 
 ##
 ## file: drivers/crypto/cavium/cpt/Kconfig
@@ -250,6 +264,7 @@ CONFIG_QCOM_HIDMA=m
 CONFIG_EDAC=y
 CONFIG_EDAC_THUNDERX=m
 CONFIG_EDAC_XGENE=m
+CONFIG_EDAC_LAYERSCAPE=m
 
 ##
 ## file: drivers/extcon/Kconfig
@@ -277,6 +292,7 @@ CONFIG_GPIO_ZYNQ=m
 CONFIG_GPIO_PCA953X=y
 CONFIG_GPIO_PCA953X_IRQ=y
 CONFIG_GPIO_MAX77620=y
+CONFIG_GPIO_MPC8XXX=y
 
 ##
 ## file: drivers/gpu/drm/Kconfig
@@ -388,6 +404,7 @@ CONFIG_I2C_HID=m
 ## file: drivers/hwmon/Kconfig
 ##
 CONFIG_SENSORS_XGENE=m
+CONFIG_SENSORS_LM90=m
 
 ##
 ## file: drivers/hwspinlock/Kconfig
@@ -398,6 +415,7 @@ CONFIG_HWSPINLOCK_QCOM=m
 ## file: drivers/i2c/Kconfig
 ##
 CONFIG_I2C=y
+CONFIG_I2C_MUX=m
 
 ##
 ## file: drivers/i2c/busses/Kconfig
@@ -416,6 +434,12 @@ CONFIG_I2C_THUNDERX=m
 CONFIG_I2C_XLP9XX=m
 CONFIG_I2C_CROS_EC_TUNNEL=m
 CONFIG_I2C_XGENE_SLIMPRO=m
+CONFIG_I2C_IMX=m
+
+##
+## file: drivers/i2c/muxes/Kconfig
+##
+CONFIG_I2C_MUX_PCA954x=m
 
 ##
 ## file: drivers/iio/accel/Kconfig
@@ -572,6 +596,7 @@ CONFIG_MMC_DW_ROCKCHIP=m
 CONFIG_MMC_SUNXI=m
 CONFIG_MMC_BCM2835=m
 CONFIG_MMC_SDHCI_XENON=m
+CONFIG_MMC_SDHCI_OF_ESDHC=m
 
 ##
 ## file: drivers/mtd/spi-nor/Kconfig
@@ -659,6 +684,18 @@ CONFIG_DM9102=m
 CONFIG_NET_VENDOR_DLINK=y
 CONFIG_SUNDANCE=m
 # CONFIG_SUNDANCE_MMIO is not set
+
+##
+## file: drivers/net/ethernet/freescale/Kconfig
+##
+CONFIG_FSL_DPAA2_PTP_CLOCK=m
+CONFIG_FSL_XGMAC_MDIO=m
+CONFIG_NET_VENDOR_FREESCALE=y
+
+##
+## file: drivers/net/ethernet/freescale/dpaa2/Kconfig
+##
+CONFIG_FSL_DPAA2_ETH=m
 
 ##
 ## file: drivers/net/ethernet/hisilicon/Kconfig
@@ -962,6 +999,11 @@ CONFIG_CHARGER_QCOM_SMBB=m
 CONFIG_CHARGER_CROS_USBPD=m
 
 ##
+## file: drivers/ptp/Kconfig
+##
+CONFIG_PTP_1588_CLOCK_QORIQ=m
+
+##
 ## file: drivers/pwm/Kconfig
 ##
 CONFIG_PWM=y
@@ -1024,6 +1066,7 @@ CONFIG_RTC_DRV_ARMADA38X=m
 CONFIG_RTC_DRV_PM8XXX=m
 CONFIG_RTC_DRV_TEGRA=y
 CONFIG_RTC_DRV_XGENE=y
+CONFIG_RTC_DRV_PCF2127=m
 
 ##
 ## file: drivers/scsi/Kconfig
@@ -1040,6 +1083,13 @@ CONFIG_SCSI_HISI_SAS_PCI=m
 ## file: drivers/soc/bcm/Kconfig
 ##
 CONFIG_RASPBERRYPI_POWER=y
+
+##
+## file: drivers/soc/fsl/Kconfig
+##
+CONFIG_DPAA2_CONSOLE
+CONFIG_FSL_GUTS=y
+CONFIG_FSL_MC_DPIO=m
 
 ##
 ## file: drivers/soc/qcom/Kconfig
@@ -1069,6 +1119,7 @@ CONFIG_SPI_ARMADA_3700=m
 CONFIG_SPI_BCM2835=m
 CONFIG_SPI_BCM2835AUX=m
 CONFIG_SPI_MESON_SPIFC=m
+CONFIG_SPI_NXP_FLEXSPI=m
 CONFIG_SPI_ROCKCHIP=m
 CONFIG_SPI_QUP=m
 CONFIG_SPI_TEGRA114=m
