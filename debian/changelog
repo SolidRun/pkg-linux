@@ -1,3 +1,11 @@
+linux (5.4.19-1~sr+1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Enable armada-388 comphy driver
+  * enable initial support for honeycomb workstation
+
+ -- Josua Mayer <josua@solid-run.com>  Sun, 26 Apr 2020 11:34:17 +0200
+
 linux (5.4.19-1~bpo10+1) buster-backports; urgency=medium
 
   * Rebuild for buster-backports:
