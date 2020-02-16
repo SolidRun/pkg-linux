@@ -1,3 +1,12 @@
+linux (5.7.10-1~sr+1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Enable armada-388 comphy driver
+  * enable initial support for honeycomb workstation
+  * enable cubox hdmi out
+
+ -- Josua Mayer <josua@solid-run.com>  Thu, 20 Aug 2020 19:42:15 +0200
+
 linux (5.7.10-1~bpo10+1) buster-backports; urgency=medium
 
   * Rebuild for buster-backports:
