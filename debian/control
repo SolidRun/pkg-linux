@@ -1,0 +1,61 @@
+Source: linux-latest-sr
+Section: kernel
+Priority: optional
+Maintainer: Josua Mayer <josua@solid-run.com>
+Standards-Version: 3.9.8
+Build-Depends: debhelper (>= 9)
+
+Package: linux-source
+Architecture: all
+Depends: linux-source-5.4, ${misc:Depends}
+Description: Linux kernel source (meta-package)
+ This package depends on packages containing the sources of the latest
+ Linux kernel.
+
+Package: linux-image-armmp
+Architecture: armhf
+Provides: linux-latest-modules-5.4.0-0.bpo.3-armmp
+Depends: linux-image-5.4.0-0.bpo.3-armmp (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Linux for ARMv7 multiplatform compatible SoCs (meta-package)
+ This package depends on the latest Linux kernel and modules for use on
+ ARMv7 multiplatform kernel.  See
+ https://wiki.debian.org/DebianKernel/ARMMP for details of supported  
+ platforms.
+
+Package: linux-headers-armmp
+Architecture: armhf  
+Depends: linux-headers-5.4.0-0.bpo.3-armmp (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Header files for Linux armmp configuration (meta-package)
+ This package depends on the architecture-specific header files for the  
+ latest Linux kernel armmp configuration.
+
+Package: linux-image-armmp-dbg
+Architecture: armhf  
+Provides: linux-latest-image-dbg
+Depends: linux-image-5.4.0-0.bpo.3-armmp-dbg (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Debugging symbols for Linux armmp configuration (meta-package)
+ This package depends on the detached debugging symbols for the latest
+ Linux kernel armmp configuration.
+
+Package: linux-image-arm64 
+Architecture: arm64
+Provides: linux-latest-modules-5.4.0-0.bpo.3-arm64 
+Depends: linux-image-5.4.0-0.bpo.3-arm64 (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Linux for 64-bit ARMv8 machines (meta-package)
+ This package depends on the latest Linux kernel and modules for use on
+ 64-bit ARMv8 machines.
+
+Package: linux-headers-arm64
+Architecture: arm64
+Depends: linux-headers-5.4.0-0.bpo.3-arm64 (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Header files for Linux arm64 configuration (meta-package)
+ This package depends on the architecture-specific header files for the
+ latest Linux kernel arm64 configuration.
+
+Package: linux-image-arm64-dbg
+Architecture: arm64  
+Provides: linux-latest-image-dbg
+Depends: linux-image-5.4.0-0.bpo.3-arm64-dbg (>= 5.4.13-1~sr+1), ${misc:Depends}
+Description: Debugging symbols for Linux arm64 configuration (meta-package)
+ This package depends on the detached debugging symbols for the latest
+ Linux kernel arm64 configuration.
