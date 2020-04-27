@@ -1,3 +1,10 @@
+linux-4.19.y-imx8-sr (4.19.72+6) stable; urgency=medium
+
+  * enable pppoe modules
+  * update DMA_BUF_IOCTL_PHYS ioctl number as of NXP 4.19.35-1.1.0
+
+ -- Josua Mayer <josua@solid-run.com>  Mon, 27 Apr 2020 21:19:40 +0200
+
 linux-4.19.y-imx8-sr (4.19.72+5) stable; urgency=medium
 
   * enable acl support in tmpfs wanted by systemd
