@@ -1,3 +1,9 @@
+linux-imx6-sr (4.9.150+3) stable; urgency=medium
+
+  * enable driver for MMA8452 and related accelerometers
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Wed, 10 Jun 2020 13:48:48 +0200
+
 linux-imx6-sr (4.9.150+2) stable; urgency=medium
 
   * zImage -> vmlinuz
