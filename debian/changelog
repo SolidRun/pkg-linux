@@ -1,3 +1,9 @@
+linux-4.19.y-imx8-sr (4.19.72+7) UNRELEASED; urgency=medium
+
+  * enable additional features for docker
+
+ -- Josua Mayer <josua@solid-run.com>  Tue, 14 Jul 2020 18:50:15 +0200
+
 linux-4.19.y-imx8-sr (4.19.72+6) stable; urgency=medium
 
   * enable pppoe modules
