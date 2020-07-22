@@ -1,3 +1,9 @@
+linux (5.7.6-1sr1) UNRELEASED; urgency=medium
+
+  * enable lx2160a pcie controller driver
+
+ -- Josua Mayer <josua@solid-run.com>  Wed, 22 Jul 2020 11:38:38 +0200
+
 linux (5.7.6-1) unstable; urgency=medium
 
   * New upstream release: https://kernelnewbies.org/Linux_5.7

@@ -890,6 +890,11 @@ CONFIG_PCIE_ARMADA_8K=y
 CONFIG_PCIE_KIRIN=y
 
 ##
+## file: drivers/pci/controller/mobiveil/Kconfig
+##
+CONFIG_PCIE_LAYERSCAPE_GEN4=y
+
+##
 ## file: drivers/pci/hotplug/Kconfig
 ##
 CONFIG_HOTPLUG_PCI=y
