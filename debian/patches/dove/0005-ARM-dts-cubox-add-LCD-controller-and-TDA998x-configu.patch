@@ -1,0 +1,80 @@
+From c1cdd572d908dedd65e9b18188cd55324d65f674 Mon Sep 17 00:00:00 2001
+From: Russell King <rmk+kernel@arm.linux.org.uk>
+Date: Tue, 10 Jul 2018 11:24:24 +0100
+Subject: [PATCH 5/5] ARM: dts: cubox: add LCD controller and TDA998x
+ configuration
+
+Add DT configuration for the HDMI display output on the Dove Cubox.
+This adds support for the LCD0 controller which is connected to a
+TDA19988 HDMI encoder.
+
+Signed-off-by: Russell King <rmk+kernel@arm.linux.org.uk>
+Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
+---
+ arch/arm/boot/dts/dove-cubox.dts | 43 ++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+
+diff --git a/arch/arm/boot/dts/dove-cubox.dts b/arch/arm/boot/dts/dove-cubox.dts
+index 3e1584e787aec..6695b07003e21 100644
+--- a/arch/arm/boot/dts/dove-cubox.dts
++++ b/arch/arm/boot/dts/dove-cubox.dts
+@@ -67,6 +67,25 @@ ir_recv: ir-receiver {
+ 	gpu-subsystem {
+ 		status = "okay";
+ 	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		display_reserved: framebuffer {
++			compatible = "shared-dma-pool";
++			size = <0x02000000>;
++			alignment = <0x00200000>;
++			no-map;
++		};
++	};
++
++	display-subsystem {
++		compatible = "marvell,dove-display-subsystem";
++		memory-region = <&display_reserved>;
++		ports = <&lcd0_port>;
++	};
+ };
+ 
+ &uart0 { status = "okay"; };
+@@ -117,6 +136,30 @@ clkout2 {
+ 			silabs,pll-master;
+ 		};
+ 	};
++
++	tda998x: hdmi-encoder@70 {
++		compatible = "nxp,tda998x";
++		reg = <0x70>;
++		video-ports = <0x234501>;
++		interrupts-extended = <&gpio0 27 IRQ_TYPE_LEVEL_LOW>;
++
++		port {
++			tda998x_video: endpoint {
++				remote-endpoint = <&lcd0_rgb>;
++			};
++		};
++	};
++};
++
++&lcd0 {
++	status = "okay";
++	clocks = <&si5351 0>;
++	clock-names = "ext_ref_clk1";
++	lcd0_port: port {
++		lcd0_rgb: endpoint {
++			remote-endpoint = <&tda998x_video>;
++		};
++	};
+ };
+ 
+ &sdio0 {
+-- 
+2.28.0
+

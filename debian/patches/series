@@ -129,3 +129,11 @@ bugfix/all/libtraceevent-fix-build-with-binutils-2.35.patch
 debian/overlayfs-permit-mounts-in-userns.patch
 
 # ABI maintenance
+
+# Dove Cubox
+dove/0001-drm-armada-fix-compare_of-for-LCD-controllers.patch
+dove/0002-drm-armada-use-of_compare-with-drm_of_component_prob.patch
+dove/0003-drm-armada-add-of_match-table.patch
+dove/0004-drm-armada-implement-assigning-framebuffer-memory-fr.patch
+dove/0005-ARM-dts-cubox-add-LCD-controller-and-TDA998x-configu.patch
+dove/0006-drm-etnaviv-fix-external-abort-seen-on-GC600-rev-0x1.patch

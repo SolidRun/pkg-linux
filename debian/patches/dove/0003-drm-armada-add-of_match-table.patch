@@ -1,0 +1,39 @@
+From 136c14bf5fd92de0dd0ab521d4d58ba76fbaaba7 Mon Sep 17 00:00:00 2001
+From: Josua Mayer <josua@solid-run.com>
+Date: Thu, 20 Aug 2020 19:09:13 +0200
+Subject: [PATCH 3/5] drm/armada: add of_match table
+
+Introduce the new compatible-string "marvell,dove-display-subsystem" for
+the armada-drm platform driver.
+
+Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
+---
+ drivers/gpu/drm/armada/armada_drv.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/drivers/gpu/drm/armada/armada_drv.c b/drivers/gpu/drm/armada/armada_drv.c
+index c366d29be5c4e..466fd8a491485 100644
+--- a/drivers/gpu/drm/armada/armada_drv.c
++++ b/drivers/gpu/drm/armada/armada_drv.c
+@@ -282,11 +282,18 @@ static const struct platform_device_id armada_drm_platform_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(platform, armada_drm_platform_ids);
+ 
++static const struct of_device_id armada_drm_dt_ids[] = {
++	{ .compatible = "marvell,dove-display-subsystem", },
++	{ /* sentinel */ },
++};
++MODULE_DEVICE_TABLE(of, armada_drm_dt_ids);
++
+ static struct platform_driver armada_drm_platform_driver = {
+ 	.probe	= armada_drm_probe,
+ 	.remove	= armada_drm_remove,
+ 	.driver	= {
+ 		.name	= "armada-drm",
++		.of_match_table = armada_drm_dt_ids,
+ 	},
+ 	.id_table = armada_drm_platform_ids,
+ };
+-- 
+2.28.0
+

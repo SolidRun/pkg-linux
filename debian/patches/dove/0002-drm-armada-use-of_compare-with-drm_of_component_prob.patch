@@ -1,0 +1,31 @@
+From eb139b57eaf1e7651dcb4e71849a05e0b1aaf6ce Mon Sep 17 00:00:00 2001
+From: Josua Mayer <josua@solid-run.com>
+Date: Thu, 20 Aug 2020 18:44:25 +0200
+Subject: [PATCH 2/5] drm/armada: use of_compare with drm_of_component_probe
+
+Matching device-tree port nodes with the original compare_dev_name function
+produces no matches. Switch the drm_of_component_probe call to use the already
+implemented of_compare function.
+
+Fixes 7fc7e86d096f ("drm/armada: Convert the probe function to the generic drm_of_component_probe()")
+Signed-off-by: Josua Mayer <josua.mayer@jm0.eu>
+---
+ drivers/gpu/drm/armada/armada_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/armada/armada_drv.c b/drivers/gpu/drm/armada/armada_drv.c
+index c6f7e04fb83bf..c366d29be5c4e 100644
+--- a/drivers/gpu/drm/armada/armada_drv.c
++++ b/drivers/gpu/drm/armada/armada_drv.c
+@@ -235,7 +235,7 @@ static int armada_drm_probe(struct platform_device *pdev)
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
+-	ret = drm_of_component_probe(dev, compare_dev_name, &armada_master_ops);
++	ret = drm_of_component_probe(dev, compare_of, &armada_master_ops);
+ 	if (ret != -EINVAL)
+ 		return ret;
+ 
+-- 
+2.28.0
+
