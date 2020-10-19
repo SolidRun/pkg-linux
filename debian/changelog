@@ -1,9 +1,15 @@
+linux-4.19.y-imx8-sr (2:4.19.35) stable; urgency=medium
+
+  * switch base to NXP 4.19.35/1.1.0 release
+
+ -- Josua Mayer <josua@solid-run.com>  Mon, 19 Oct 2020 15:36:18 +0200
+
 linux-4.19.y-imx8-sr (4.19.72+8) stable; urgency=medium
 
   * rename dtb for cubox pulse
   * enable additional features for docker
 
- -- Josua Mayer <josua@solid-run.com>  Tue, 14 Jul 2020 18:50:15 +0200
+ -- Josua Mayer <josua@solid-run.com>  Thu, 16 Jul 2020 14:29:50 +0200
 
 linux-4.19.y-imx8-sr (4.19.72+6) stable; urgency=medium
 
