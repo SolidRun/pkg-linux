@@ -1,30 +1,31 @@
-Source: linux
+Source: linux-5.4.y-imx8-sr
 Section: kernel
 Priority: optional
 Maintainer: Josua Mayer <josua@solid-run.com>
-Build-Depends: debhelper (>= 8.0.0), bc, lzop:native, linux-libc-dev:native
+Build-Depends: debhelper (>= 8.0.0), bc, lzop, linux-libc-dev:native, bison, flex, libssl-dev, quilt, rsync
 Standards-Version: 3.9.3
 Homepage: https://www.kernel.org/
 Vcs-Git: https://github.com/SolidRun/pkg-linux.git
 Vcs-Browser: https://github.com/mxOBS/pkg-linux
 
-Package: linux-image-NAME
-Architecture: any-arm
-Provides: linux-image
+Package: linux-image-5.4.y-imx8-sr
+Architecture: arm64
+Provides: linux-image, galcore-6.4.3.286725
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
 Description: LONGNAME kernel
  This package provides the mainline kernel
 
-Package: linux-headers-NAME
-Architecture: any-arm
+Package: linux-headers-5.4.y-imx8-sr
+Architecture: arm64
 Provides: linux-headers
 Depends: ${misc:Depends}
 Description: kernel development files
  This package provides the required development files to build	
  modules for this kernel.
 
-Package: linux-NAME-dev
-Architecture: any-arm
+Package: linux-5.4.y-imx8-sr-dev
+Architecture: arm64
+Provides: imx-kernel-api
 Depends: ${misc:Depends}
 Description: kernel API development files
  This package provides the required development files to

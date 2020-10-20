@@ -1,0 +1,2 @@
+ TMPFS_POSIX_ACL n -> y
+ TMPFS_XATTR n -> y

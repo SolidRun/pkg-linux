@@ -1,5 +1,5 @@
-linux (4.4.0) unstable; urgency=low
+linux-5.4.y-imx8-sr (5.4.47) UNRELEASED; urgency=medium
 
-  * Initial release
+  * Initial Release
 
- -- Josua Mayer <josua@solid-run.com>  Sat, 25 Oct 2014 22:43:37 +0200
+ -- Josua Mayer <josua@solid-run.com>  Mon, 19 Oct 2020 17:13:38 +0200
