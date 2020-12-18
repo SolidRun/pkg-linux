@@ -1,0 +1,81 @@
+From 5fd5be579c16c08b3925b7fc9c3357130fd0da66 Mon Sep 17 00:00:00 2001
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
+Date: Thu, 21 Nov 2019 21:15:25 +0200
+Subject: [PATCH 42/42] dpaa2-eth: do not hold rtnl_lock on phylink_create() or
+ _destroy()
+
+The rtnl_lock should not be held when calling phylink_create() or
+phylink_destroy() since it leads to the deadlock listed below:
+
+[   18.656576]  rtnl_lock+0x18/0x20
+[   18.659798]  sfp_bus_add_upstream+0x28/0x90
+[   18.663974]  phylink_create+0x2cc/0x828
+[   18.667803]  dpaa2_mac_connect+0x14c/0x2a8
+[   18.671890]  dpaa2_eth_connect_mac+0x94/0xd8
+
+Fix this by moving the _lock() and _unlock() calls just outside of
+phylink_of_phy_connect() and phylink_disconnect_phy().
+
+Fixes: 719479230893 ("dpaa2-eth: add MAC/PHY support through phylink")
+Reported-by: Russell King <linux@armlinux.org.uk>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+---
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 4 ----
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c | 4 ++++
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+index d880ab2a7d96..41908a783fbd 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
+@@ -4100,12 +4100,10 @@ static irqreturn_t dpni_irq0_handler_thread(int irq_num, void *arg)
+ 		dpaa2_eth_set_mac_addr(netdev_priv(net_dev));
+ 		dpaa2_eth_update_tx_fqids(priv);
+ 
+-		rtnl_lock();
+ 		if (priv->mac)
+ 			dpaa2_eth_disconnect_mac(priv);
+ 		else
+ 			dpaa2_eth_connect_mac(priv);
+-		rtnl_unlock();
+ 	}
+ 
+ 	return IRQ_HANDLED;
+@@ -4395,9 +4393,7 @@ static int dpaa2_eth_remove(struct fsl_mc_device *ls_dev)
+ #ifdef CONFIG_DEBUG_FS
+ 	dpaa2_dbg_remove(priv);
+ #endif
+-	rtnl_lock();
+ 	dpaa2_eth_disconnect_mac(priv);
+-	rtnl_unlock();
+ 
+ 	unregister_netdev(net_dev);
+ 
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+index 011ccddbea67..951d0e7687ff 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+@@ -406,7 +406,9 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 	if (mac->pcs)
+ 		phylink_set_pcs(mac->phylink, &mac->pcs->pcs);
+ 
++	rtnl_lock();
+ 	err = phylink_fwnode_phy_connect(mac->phylink, dpmac_node, 0);
++	rtnl_unlock();
+ 	if (err) {
+ 		netdev_err(net_dev, "phylink_fwnode_phy_connect() = %d\n", err);
+ 		goto err_phylink_destroy;
+@@ -434,7 +436,9 @@ void dpaa2_mac_disconnect(struct dpaa2_mac *mac)
+ 	if (!mac->phylink)
+ 		return;
+ 
++	rtnl_lock();
+ 	phylink_disconnect_phy(mac->phylink);
++	rtnl_unlock();
+ 	phylink_destroy(mac->phylink);
+ 	dpaa2_pcs_destroy(mac);
+ 
+-- 
+2.30.1
+

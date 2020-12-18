@@ -1,0 +1,152 @@
+From ab1f2d9f7bcc21ea91ad7169742d1fdc8ad71765 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:55 +0530
+Subject: [PATCH 25/42] net: mdio: Add ACPI support code for mdio
+
+Define acpi_mdiobus_register() to Register mii_bus and create PHYs for
+each ACPI child node.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ MAINTAINERS                  |  1 +
+ drivers/net/mdio/Kconfig     |  7 ++++++
+ drivers/net/mdio/Makefile    |  1 +
+ drivers/net/mdio/acpi_mdio.c | 49 ++++++++++++++++++++++++++++++++++++
+ include/linux/acpi_mdio.h    | 27 ++++++++++++++++++++
+ 5 files changed, 85 insertions(+)
+ create mode 100644 drivers/net/mdio/acpi_mdio.c
+ create mode 100644 include/linux/acpi_mdio.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 281de213ef47..7dfdd0dc610f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -6585,6 +6585,7 @@ F:	Documentation/devicetree/bindings/net/mdio*
+ F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
+ F:	Documentation/networking/phy.rst
+ F:	drivers/net/mdio/
++F:	drivers/net/mdio/acpi_mdio.c
+ F:	drivers/net/mdio/of_mdio.c
+ F:	drivers/net/pcs/
+ F:	drivers/net/phy/
+diff --git a/drivers/net/mdio/Kconfig b/drivers/net/mdio/Kconfig
+index a10cc460d7cf..df6bb7837d6a 100644
+--- a/drivers/net/mdio/Kconfig
++++ b/drivers/net/mdio/Kconfig
+@@ -27,6 +27,13 @@ config OF_MDIO
+ 	help
+ 	  OpenFirmware MDIO bus (Ethernet PHY) accessors
+ 
++config ACPI_MDIO
++	def_tristate PHYLIB
++	depends on ACPI
++	depends on PHYLIB
++	help
++	  ACPI MDIO bus (Ethernet PHY) accessors
++
+ if MDIO_BUS
+ 
+ config MDIO_DEVRES
+diff --git a/drivers/net/mdio/Makefile b/drivers/net/mdio/Makefile
+index 5c498dde463f..2373ade8af13 100644
+--- a/drivers/net/mdio/Makefile
++++ b/drivers/net/mdio/Makefile
+@@ -2,6 +2,7 @@
+ # Makefile for Linux MDIO bus drivers
+ 
+ obj-$(CONFIG_OF_MDIO)	+= of_mdio.o
++obj-$(CONFIG_ACPI_MDIO)	+= acpi_mdio.o
+ 
+ obj-$(CONFIG_MDIO_ASPEED)		+= mdio-aspeed.o
+ obj-$(CONFIG_MDIO_BCM_IPROC)		+= mdio-bcm-iproc.o
+diff --git a/drivers/net/mdio/acpi_mdio.c b/drivers/net/mdio/acpi_mdio.c
+new file mode 100644
+index 000000000000..adab5dc9d911
+--- /dev/null
++++ b/drivers/net/mdio/acpi_mdio.c
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * ACPI helpers for the MDIO (Ethernet PHY) API
++ *
++ * This file provides helper functions for extracting PHY device information
++ * out of the ACPI ASL and using it to populate an mii_bus.
++ */
++
++#include <linux/acpi.h>
++#include <linux/acpi_mdio.h>
++
++/**
++ * acpi_mdiobus_register - Register mii_bus and create PHYs from the ACPI ASL.
++ *
++ * @mdio: pointer to mii_bus structure
++ * @fwnode: pointer to fwnode of MDIO bus.
++ *
++ * This function registers the mii_bus structure and registers a phy_device
++ * for each child node of @fwnode.
++ */
++int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
++{
++	struct fwnode_handle *child;
++	u32 addr;
++	int ret;
++
++	/* Mask out all PHYs from auto probing. */
++	mdio->phy_mask = ~0;
++	ret = mdiobus_register(mdio);
++	if (ret)
++		return ret;
++
++	mdio->dev.fwnode = fwnode;
++/* Loop over the child nodes and register a phy_device for each PHY */
++	fwnode_for_each_child_node(fwnode, child) {
++		ret = fwnode_get_id(child, &addr);
++
++		if (addr >= PHY_MAX_ADDR)
++			continue;
++
++		ret = fwnode_mdiobus_register_phy(mdio, child, addr);
++		if (ret == -ENODEV)
++			dev_err(&mdio->dev,
++				"MDIO device at address %d is missing.\n",
++				addr);
++	}
++	return 0;
++}
++EXPORT_SYMBOL(acpi_mdiobus_register);
+diff --git a/include/linux/acpi_mdio.h b/include/linux/acpi_mdio.h
+new file mode 100644
+index 000000000000..9be6f63cde8f
+--- /dev/null
++++ b/include/linux/acpi_mdio.h
+@@ -0,0 +1,27 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * ACPI helpers for the MDIO (Ethernet PHY) API
++ *
++ */
++
++#ifndef __LINUX_ACPI_MDIO_H
++#define __LINUX_ACPI_MDIO_H
++
++#include <linux/device.h>
++#include <linux/phy.h>
++
++#if IS_ENABLED(CONFIG_ACPI_MDIO)
++int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode);
++#else /* CONFIG_ACPI_MDIO */
++static inline int acpi_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
++{
++	/*
++	 * Fall back to mdiobus_register() function to register a bus.
++	 * This way, we don't have to keep compat bits around in drivers.
++	 */
++
++	return mdiobus_register(mdio);
++}
++#endif
++
++#endif /* __LINUX_ACPI_MDIO_H */
+-- 
+2.30.1
+

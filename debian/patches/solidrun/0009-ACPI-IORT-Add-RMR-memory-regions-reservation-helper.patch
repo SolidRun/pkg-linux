@@ -1,0 +1,145 @@
+From bccb90894066b2c7e78f2d96c8528837bd901724 Mon Sep 17 00:00:00 2001
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Date: Thu, 19 Nov 2020 12:11:46 +0000
+Subject: [PATCH 09/42] ACPI/IORT: Add RMR memory regions reservation helper
+
+Add a helper function that retrieves RMR memory descriptors
+associated with a given IOMMU. This will be used by IOMMU
+drivers to setup necessary mappings.
+
+Now that we have this, invoke this from the generic helper
+interface.
+
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ drivers/acpi/arm64/iort.c | 60 +++++++++++++++++++++++++++++++++++++++
+ drivers/iommu/dma-iommu.c |  3 ++
+ include/linux/acpi_iort.h |  6 ++++
+ 3 files changed, 69 insertions(+)
+
+diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
+index 61ebc5e7f243..86ec394efeeb 100644
+--- a/drivers/acpi/arm64/iort.c
++++ b/drivers/acpi/arm64/iort.c
+@@ -12,6 +12,7 @@
+ 
+ #include <linux/acpi_iort.h>
+ #include <linux/bitfield.h>
++#include <linux/dma-iommu.h>
+ #include <linux/iommu.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
+@@ -843,6 +844,63 @@ static inline int iort_add_device_replay(struct device *dev)
+ 	return err;
+ }
+ 
++/**
++ * iort_iommu_get_rmrs - Helper to retrieve RMR info associated with IOMMU
++ * @iommu: fwnode for the IOMMU
++ * @head: RMR list head to be populated
++ *
++ * Returns: 0 on success, <0 failure
++ */
++int iort_iommu_get_rmrs(struct fwnode_handle *iommu_fwnode,
++			struct list_head *head)
++{
++	struct iort_rmr_entry *e;
++	struct acpi_iort_node *iommu;
++
++	iommu = iort_get_iort_node(iommu_fwnode);
++	if (!iommu)
++		return 0;
++
++	list_for_each_entry(e, &iort_rmr_list, list) {
++		struct iort_rmr_id *rmr_ids = e->rmr_ids;
++		struct acpi_iort_rmr_desc *rmr_desc;
++		struct iommu_rmr *rmr;
++		u32 *ids, num_ids = 0;
++		int i, j = 0;
++
++		for (i = 0; i < e->rmr_ids_num; i++) {
++			if (rmr_ids[i].smmu == iommu)
++				num_ids++;
++		}
++
++		if (!num_ids)
++			continue;
++
++		ids = kmalloc_array(num_ids, sizeof(*ids), GFP_KERNEL);
++		if (!ids)
++			return -ENOMEM;
++
++		for (i = 0; i < e->rmr_ids_num; i++) {
++			if (rmr_ids[i].smmu == iommu)
++				ids[j++] = rmr_ids[i].sid;
++		}
++
++		rmr_desc = e->rmr_desc;
++		rmr = iommu_dma_alloc_rmr(rmr_desc->base_address,
++					  rmr_desc->length,
++					  ids, num_ids);
++		if (!rmr) {
++			kfree(ids);
++			return -ENOMEM;
++		}
++
++		list_add_tail(&rmr->list, head);
++		kfree(ids);
++	}
++
++	return 0;
++}
++
+ /**
+  * iort_iommu_msi_get_resv_regions - Reserved region driver helper
+  * @dev: Device from iommu_get_resv_regions()
+@@ -1113,6 +1171,8 @@ int iort_iommu_msi_get_resv_regions(struct device *dev, struct list_head *head)
+ const struct iommu_ops *iort_iommu_configure_id(struct device *dev,
+ 						const u32 *input_id)
+ { return NULL; }
++int iort_iommu_get_rmrs(struct fwnode_handle *fwnode, struct list_head *head)
++{ return 0; }
+ #endif
+ 
+ static int nc_dma_get_range(struct device *dev, u64 *size)
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index d73768ecdd1a..aa8304e50786 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -176,6 +176,9 @@ EXPORT_SYMBOL(iommu_dma_get_resv_regions);
+ int iommu_dma_get_rmrs(struct fwnode_handle *iommu_fwnode,
+ 		       struct list_head *list)
+ {
++	if (!is_of_node(iommu_fwnode))
++		return iort_iommu_get_rmrs(iommu_fwnode, list);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(iommu_dma_get_rmrs);
+diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
+index 20a32120bb88..0b61b98a4941 100644
+--- a/include/linux/acpi_iort.h
++++ b/include/linux/acpi_iort.h
+@@ -38,6 +38,8 @@ void iort_dma_setup(struct device *dev, u64 *dma_addr, u64 *size);
+ const struct iommu_ops *iort_iommu_configure_id(struct device *dev,
+ 						const u32 *id_in);
+ int iort_iommu_msi_get_resv_regions(struct device *dev, struct list_head *head);
++int iort_iommu_get_rmrs(struct fwnode_handle *iommu_fwnode,
++			struct list_head *list);
+ #else
+ static inline void acpi_iort_init(void) { }
+ static inline u32 iort_msi_map_id(struct device *dev, u32 id)
+@@ -55,6 +57,10 @@ static inline const struct iommu_ops *iort_iommu_configure_id(
+ static inline
+ int iort_iommu_msi_get_resv_regions(struct device *dev, struct list_head *head)
+ { return 0; }
++static inline
++int iort_iommu_get_rmrs(struct fwnode_handle *iommu_fwnode,
++			struct list_head *list)
++{ return 0; }
+ #endif
+ 
+ #endif /* __ACPI_IORT_H__ */
+-- 
+2.30.1
+

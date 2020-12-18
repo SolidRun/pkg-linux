@@ -694,10 +694,10 @@ class Gencontrol(Base):
                version.linux_revision_other:
                 raise RuntimeError("Can't upload to %s with a version of %s" %
                                    (distribution, version))
-        if distribution in ('experimental', ):
-            if not version.linux_revision_experimental:
-                raise RuntimeError("Can't upload to %s with a version of %s" %
-                                   (distribution, version))
+        #if distribution in ('experimental', ):
+        #    if not version.linux_revision_experimental:
+        #        raise RuntimeError("Can't upload to %s with a version of %s" %
+        #                           (distribution, version))
         if distribution.endswith('-security') or distribution.endswith('-lts'):
             if version.linux_revision_backports or \
                version.linux_revision_other:

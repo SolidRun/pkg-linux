@@ -1,0 +1,39 @@
+From d51a9e937375be7196bb144fcdcf191cf5bebe78 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:51 +0530
+Subject: [PATCH 21/42] of: mdio: Refactor of_get_phy_id()
+
+With the introduction of fwnode_get_phy_id(), refactor of_get_phy_id()
+to use fwnode equivalent.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/mdio/of_mdio.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index 94ec421dd91b..d4cc293358f7 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -29,17 +29,7 @@ MODULE_LICENSE("GPL");
+  * ethernet-phy-idAAAA.BBBB */
+ static int of_get_phy_id(struct device_node *device, u32 *phy_id)
+ {
+-	struct property *prop;
+-	const char *cp;
+-	unsigned int upper, lower;
+-
+-	of_property_for_each_string(device, "compatible", prop, cp) {
+-		if (sscanf(cp, "ethernet-phy-id%4x.%4x", &upper, &lower) == 2) {
+-			*phy_id = ((upper & 0xFFFF) << 16) | (lower & 0xFFFF);
+-			return 0;
+-		}
+-	}
+-	return -EINVAL;
++	return fwnode_get_phy_id(of_fwnode_handle(device), phy_id);
+ }
+ 
+ static struct mii_timestamper *of_find_mii_timestamper(struct device_node *node)
+-- 
+2.30.1
+

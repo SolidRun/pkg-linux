@@ -1,0 +1,138 @@
+From 70232f48e8fe7d5200ce4a0fa88b6321fb2216f9 Mon Sep 17 00:00:00 2001
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
+Date: Thu, 14 Jan 2021 19:07:51 +0200
+Subject: [PATCH 34/42] bus: fsl-mc: add bus rescan attribute
+
+Introduce the rescan attribute as a bus attribute to
+synchronize the fsl-mc bus objects and the MC firmware.
+
+To rescan the fsl-mc bus, e.g.,
+echo 1 > /sys/bus/fsl-mc/rescan
+
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+---
+ Documentation/ABI/stable/sysfs-bus-fsl-mc |  9 +++++
+ MAINTAINERS                               |  1 +
+ drivers/bus/fsl-mc/dprc-driver.c          |  4 +--
+ drivers/bus/fsl-mc/fsl-mc-bus.c           | 41 +++++++++++++++++++++++
+ drivers/bus/fsl-mc/fsl-mc-private.h       |  3 ++
+ 5 files changed, 56 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/ABI/stable/sysfs-bus-fsl-mc
+
+diff --git a/Documentation/ABI/stable/sysfs-bus-fsl-mc b/Documentation/ABI/stable/sysfs-bus-fsl-mc
+new file mode 100644
+index 000000000000..a4d384df9ba8
+--- /dev/null
++++ b/Documentation/ABI/stable/sysfs-bus-fsl-mc
+@@ -0,0 +1,9 @@
++What:		/sys/bus/fsl-mc/rescan
++Date:		January 2021
++KernelVersion:	5.12
++Contact:	Ioana Ciornei <ioana.ciornei@nxp.com>
++Description:	Writing a non-zero value to this attribute will
++		force a rescan of fsl-mc bus in the system and
++		synchronize the objects under fsl-mc bus and the
++		Management Complex firmware.
++Users:		Userspace drivers and management tools
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3ea01138519c..94fc33d1159b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14421,6 +14421,7 @@ M:	Stuart Yoder <stuyoder@gmail.com>
+ M:	Laurentiu Tudor <laurentiu.tudor@nxp.com>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
++F:	Documentation/ABI/stable/sysfs-bus-fsl-mc
+ F:	Documentation/devicetree/bindings/misc/fsl,qoriq-mc.txt
+ F:	Documentation/networking/device_drivers/ethernet/freescale/dpaa2/overview.rst
+ F:	drivers/bus/fsl-mc/
+diff --git a/drivers/bus/fsl-mc/dprc-driver.c b/drivers/bus/fsl-mc/dprc-driver.c
+index ca2ce38a5d51..57a59f7f9802 100644
+--- a/drivers/bus/fsl-mc/dprc-driver.c
++++ b/drivers/bus/fsl-mc/dprc-driver.c
+@@ -237,8 +237,8 @@ static void dprc_add_new_devices(struct fsl_mc_device *mc_bus_dev,
+  * populated before they can get allocation requests from probe callbacks
+  * of the device drivers for the non-allocatable devices.
+  */
+-static int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
+-			    bool alloc_interrupts)
++int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
++		      bool alloc_interrupts)
+ {
+ 	int num_child_objects;
+ 	int dprc_get_obj_failures;
+diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
+index b8e6acdf932e..cb031287b190 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -208,12 +208,53 @@ static struct attribute *fsl_mc_dev_attrs[] = {
+ 
+ ATTRIBUTE_GROUPS(fsl_mc_dev);
+ 
++static int scan_fsl_mc_bus(struct device *dev, void *data)
++{
++	struct fsl_mc_device *root_mc_dev;
++	struct fsl_mc_bus *root_mc_bus;
++
++	if (!fsl_mc_is_root_dprc(dev))
++		goto exit;
++
++	root_mc_dev = to_fsl_mc_device(dev);
++	root_mc_bus = to_fsl_mc_bus(root_mc_dev);
++	mutex_lock(&root_mc_bus->scan_mutex);
++	dprc_scan_objects(root_mc_dev, NULL);
++	mutex_unlock(&root_mc_bus->scan_mutex);
++
++exit:
++	return 0;
++}
++
++static ssize_t rescan_store(struct bus_type *bus,
++			    const char *buf, size_t count)
++{
++	unsigned long val;
++
++	if (kstrtoul(buf, 0, &val) < 0)
++		return -EINVAL;
++
++	if (val)
++		bus_for_each_dev(bus, NULL, NULL, scan_fsl_mc_bus);
++
++	return count;
++}
++static BUS_ATTR_WO(rescan);
++
++static struct attribute *fsl_mc_bus_attrs[] = {
++	&bus_attr_rescan.attr,
++	NULL,
++};
++
++ATTRIBUTE_GROUPS(fsl_mc_bus);
++
+ struct bus_type fsl_mc_bus_type = {
+ 	.name = "fsl-mc",
+ 	.match = fsl_mc_bus_match,
+ 	.uevent = fsl_mc_bus_uevent,
+ 	.dma_configure  = fsl_mc_dma_configure,
+ 	.dev_groups = fsl_mc_dev_groups,
++	.bus_groups = fsl_mc_bus_groups,
+ };
+ EXPORT_SYMBOL_GPL(fsl_mc_bus_type);
+ 
+diff --git a/drivers/bus/fsl-mc/fsl-mc-private.h b/drivers/bus/fsl-mc/fsl-mc-private.h
+index 6293a24de456..42bdb8679a36 100644
+--- a/drivers/bus/fsl-mc/fsl-mc-private.h
++++ b/drivers/bus/fsl-mc/fsl-mc-private.h
+@@ -594,6 +594,9 @@ int __init dprc_driver_init(void);
+ 
+ void dprc_driver_exit(void);
+ 
++int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
++		      bool alloc_interrupts);
++
+ int __init fsl_mc_allocator_driver_init(void);
+ 
+ void fsl_mc_allocator_driver_exit(void);
+-- 
+2.30.1
+

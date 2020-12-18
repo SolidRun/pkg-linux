@@ -1,0 +1,76 @@
+From c71eb6bfbb17cc64341b534582fc86077a493fd7 Mon Sep 17 00:00:00 2001
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Date: Thu, 19 Nov 2020 12:11:50 +0000
+Subject: [PATCH 13/42] =?UTF-8?q?iommu/arm-smmu-v3:=20Reserve=20any=20RMR?=
+ =?UTF-8?q?=20regions=20associated=20with=20a=C2=A0dev?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Get RMR regions associated with a dev reserved so that there is
+a unity mapping for them in SMMU.
+
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 38 +++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 97df1df001c9..174a9bcfd627 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -2492,6 +2492,43 @@ static int arm_smmu_of_xlate(struct device *dev, struct of_phandle_args *args)
+ 	return iommu_fwspec_add_ids(dev, args->args, 1);
+ }
+ 
++static bool arm_smmu_dev_has_rmr(struct arm_smmu_master *master,
++				 struct iommu_rmr *e)
++{
++	int i, j;
++
++	for (i = 0; i < master->num_sids; i++) {
++		for (j = 0; j < e->num_ids; j++) {
++			if (e->ids[j] == master->sids[i])
++				return true;
++		}
++	}
++
++	return false;
++}
++
++static void arm_smmu_rmr_get_resv_regions(struct device *dev,
++					  struct list_head *head)
++{
++	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
++	struct arm_smmu_device *smmu = master->smmu;
++	struct iommu_rmr *rmr;
++
++	list_for_each_entry(rmr, &smmu->rmr_list, list) {
++		struct iommu_resv_region *region;
++		int prot = IOMMU_READ | IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
++
++		if (!arm_smmu_dev_has_rmr(master, rmr))
++			continue;
++		region = iommu_alloc_resv_region(rmr->base_address,
++						 rmr->length, prot,
++						 IOMMU_RESV_DIRECT);
++		if (!region)
++			return;
++
++		list_add_tail(&region->list, head);
++	}
++}
+ static void arm_smmu_get_resv_regions(struct device *dev,
+ 				      struct list_head *head)
+ {
+@@ -2506,6 +2543,7 @@ static void arm_smmu_get_resv_regions(struct device *dev,
+ 	list_add_tail(&region->list, head);
+ 
+ 	iommu_dma_get_resv_regions(dev, head);
++	arm_smmu_rmr_get_resv_regions(dev, head);
+ }
+ 
+ static bool arm_smmu_dev_has_feature(struct device *dev,
+-- 
+2.30.1
+

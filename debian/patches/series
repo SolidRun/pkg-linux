@@ -135,3 +135,47 @@ bugfix/all/tools-include-uapi-fix-errno.h.patch
 debian/overlayfs-permit-mounts-in-userns.patch
 
 # ABI maintenance
+
+# SolidRun LX2K
+solidrun/0001-bus-fsl-mc-make-sure-MC-firmware-is-up-and-running.patch
+solidrun/0002-bus-fsl-mc-added-missing-fields-to-dprc_rsp_get_obj_.patch
+solidrun/0003-soc-fsl-enable-acpi-support-for-Guts-driver.patch
+solidrun/0004-mmc-sdhci-of-esdhc-Add-ACPI-support.patch
+solidrun/0005-drivers-mmc-host-sdhci-of-esdhc-Fix-DMA-coherent-che.patch
+solidrun/0006-ACPICA-IORT-Update-for-revision-E.patch
+solidrun/0007-ACPI-IORT-Add-support-for-RMR-node-parsing.patch
+solidrun/0008-iommu-dma-Introduce-generic-helper-to-retrieve-RMR-i.patch
+solidrun/0009-ACPI-IORT-Add-RMR-memory-regions-reservation-helper.patch
+solidrun/0010-iommu-arm-smmu-v3-Introduce-strtab-init-helper.patch
+solidrun/0011-iommu-arm-smmu-v3-Add-bypass-flag-to-arm_smmu_write_.patch
+solidrun/0012-iommu-arm-smmu-v3-Get-associated-RMR-info-and-instal.patch
+solidrun/0013-iommu-arm-smmu-v3-Reserve-any-RMR-regions-associated.patch
+solidrun/0014-iommu-arm-smmu-Get-associated-RMR-info-and-install-b.patch
+solidrun/0015-iommu-arm-smmu-Reserve-any-RMR-regions-associated-wi.patch
+solidrun/0016-Documentation-ACPI-DSD-Document-MDIO-PHY.patch
+solidrun/0017-net-phy-Introduce-fwnode_mdio_find_device.patch
+solidrun/0018-net-phy-Introduce-phy-related-fwnode-functions.patch
+solidrun/0019-of-mdio-Refactor-of_phy_find_device.patch
+solidrun/0020-net-phy-Introduce-fwnode_get_phy_id.patch
+solidrun/0021-of-mdio-Refactor-of_get_phy_id.patch
+solidrun/0022-net-mdiobus-Introduce-fwnode_mdiobus_register_phy.patch
+solidrun/0023-of-mdio-Refactor-of_mdiobus_register_phy.patch
+solidrun/0024-device-property-Introduce-fwnode_get_id.patch
+solidrun/0025-net-mdio-Add-ACPI-support-code-for-mdio.patch
+solidrun/0026-net-mdiobus-Introduce-fwnode_mdiobus_register.patch
+solidrun/0027-net-fsl-Use-fwnode_mdiobus_register.patch
+solidrun/0028-phylink-introduce-phylink_fwnode_phy_connect.patch
+solidrun/0029-net-phylink-Refactor-phylink_of_phy_connect.patch
+solidrun/0030-net-dpaa2-mac-Add-ACPI-support-for-DPAA2-MAC-driver.patch
+solidrun/0031-bus-fsl-mc-move-fsl_mc_command-struct-in-a-uapi-head.patch
+solidrun/0032-bus-fsl-mc-export-mc_cmd_hdr_read_cmdid-to-the-fsl-m.patch
+solidrun/0033-bus-fsl-mc-add-fsl-mc-userspace-support.patch
+solidrun/0034-bus-fsl-mc-add-bus-rescan-attribute.patch
+solidrun/0035-bus-fsl-mc-add-autorescan-sysfs.patch
+solidrun/0036-bus-fsl-mc-fix-dprc-object-reading-race.patch
+solidrun/0037-iommu-silence-iommu-group-prints.patch
+solidrun/0038-net-pcs-add-pcs-lynx-1000BASE-X-support.patch
+solidrun/0039-net-dpaa2-mac-add-1000BASE-X-support.patch
+solidrun/0040-net-dpaa2-mac-add-backplane-link-mode-support.patch
+solidrun/0041-net-dpaa2-mac-add-support-for-more-10G-modes.patch
+solidrun/0042-dpaa2-eth-do-not-hold-rtnl_lock-on-phylink_create-or.patch

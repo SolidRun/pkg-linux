@@ -1,0 +1,96 @@
+From 402e085508c5d9622c89a8260c16c482b8d6ea04 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:47 +0530
+Subject: [PATCH 17/42] net: phy: Introduce fwnode_mdio_find_device()
+
+Define fwnode_mdio_find_device() to get a pointer to the
+mdio_device from fwnode passed to the function.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/mdio/of_mdio.c   | 11 +----------
+ drivers/net/phy/phy_device.c | 23 +++++++++++++++++++++++
+ include/linux/phy.h          |  6 ++++++
+ 3 files changed, 30 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index 4daf94bb56a5..7bd33b930116 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -347,16 +347,7 @@ EXPORT_SYMBOL(of_mdiobus_register);
+  */
+ struct mdio_device *of_mdio_find_device(struct device_node *np)
+ {
+-	struct device *d;
+-
+-	if (!np)
+-		return NULL;
+-
+-	d = bus_find_device_by_of_node(&mdio_bus_type, np);
+-	if (!d)
+-		return NULL;
+-
+-	return to_mdio_device(d);
++	return fwnode_mdio_find_device(of_fwnode_handle(np));
+ }
+ EXPORT_SYMBOL(of_mdio_find_device);
+ 
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 5dab6be6fc38..60f288ed3840 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -2818,6 +2818,29 @@ static bool phy_drv_supports_irq(struct phy_driver *phydrv)
+ 	return phydrv->config_intr && phydrv->ack_interrupt;
+ }
+ 
++/**
++ * fwnode_mdio_find_device - Given a fwnode, find the mdio_device
++ * @np: pointer to the mdio_device's fwnode
++ *
++ * If successful, returns a pointer to the mdio_device with the embedded
++ * struct device refcount incremented by one, or NULL on failure.
++ * The caller should call put_device() on the mdio_device after its use
++ */
++struct mdio_device *fwnode_mdio_find_device(struct fwnode_handle *fwnode)
++{
++	struct device *d;
++
++	if (!fwnode)
++		return NULL;
++
++	d = bus_find_device_by_fwnode(&mdio_bus_type, fwnode);
++	if (!d)
++		return NULL;
++
++	return to_mdio_device(d);
++}
++EXPORT_SYMBOL(fwnode_mdio_find_device);
++
+ /**
+  * phy_probe - probe and init a PHY device
+  * @dev: device to probe and init
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 56563e5e0dc7..a90b0eb55481 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1348,11 +1348,17 @@ struct phy_device *phy_device_create(struct mii_bus *bus, int addr, u32 phy_id,
+ 				     bool is_c45,
+ 				     struct phy_c45_device_ids *c45_ids);
+ #if IS_ENABLED(CONFIG_PHYLIB)
++struct mdio_device *fwnode_mdio_find_device(struct fwnode_handle *fwnode);
+ struct phy_device *get_phy_device(struct mii_bus *bus, int addr, bool is_c45);
+ int phy_device_register(struct phy_device *phy);
+ void phy_device_free(struct phy_device *phydev);
+ #else
+ static inline
++struct mdio_device *fwnode_mdio_find_device(struct fwnode_handle *fwnode)
++{
++	return 0;
++}
++static inline
+ struct phy_device *get_phy_device(struct mii_bus *bus, int addr, bool is_c45)
+ {
+ 	return NULL;
+-- 
+2.30.1
+

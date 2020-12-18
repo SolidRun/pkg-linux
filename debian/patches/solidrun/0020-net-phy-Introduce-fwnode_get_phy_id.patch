@@ -1,0 +1,73 @@
+From e2969100b4e5b53c6ef29667dc235c911b571bc3 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:50 +0530
+Subject: [PATCH 20/42] net: phy: Introduce fwnode_get_phy_id()
+
+Extract phy_id from compatible string. This will be used by
+fwnode_mdiobus_register_phy() to create phy device using the
+phy_id.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/phy/phy_device.c | 21 +++++++++++++++++++++
+ include/linux/phy.h          |  5 +++++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index 545573db230a..c64bee29e30f 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -846,6 +846,27 @@ static int get_phy_c22_id(struct mii_bus *bus, int addr, u32 *phy_id)
+ 	return 0;
+ }
+ 
++/* Extract the phy ID from the compatible string of the form
++ * ethernet-phy-idAAAA.BBBB.
++ */
++int fwnode_get_phy_id(struct fwnode_handle *fwnode, u32 *phy_id)
++{
++	unsigned int upper, lower;
++	const char *cp;
++	int ret;
++
++	ret = fwnode_property_read_string(fwnode, "compatible", &cp);
++	if (ret)
++		return ret;
++
++	if (sscanf(cp, "ethernet-phy-id%4x.%4x", &upper, &lower) != 2)
++		return -EINVAL;
++
++	*phy_id = ((upper & GENMASK(15, 0)) << 16) | (lower & GENMASK(15, 0));
++	return 0;
++}
++EXPORT_SYMBOL(fwnode_get_phy_id);
++
+ /**
+  * get_phy_device - reads the specified PHY device and returns its @phy_device
+  *		    struct
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 40b231a12f54..d0c5d9034689 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1348,6 +1348,7 @@ struct phy_device *phy_device_create(struct mii_bus *bus, int addr, u32 phy_id,
+ 				     bool is_c45,
+ 				     struct phy_c45_device_ids *c45_ids);
+ #if IS_ENABLED(CONFIG_PHYLIB)
++int fwnode_get_phy_id(struct fwnode_handle *fwnode, u32 *phy_id);
+ struct mdio_device *fwnode_mdio_find_device(struct fwnode_handle *fwnode);
+ struct phy_device *fwnode_phy_find_device(struct fwnode_handle *phy_fwnode);
+ struct phy_device *device_phy_find_device(struct device *dev);
+@@ -1356,6 +1357,10 @@ struct phy_device *get_phy_device(struct mii_bus *bus, int addr, bool is_c45);
+ int phy_device_register(struct phy_device *phy);
+ void phy_device_free(struct phy_device *phydev);
+ #else
++static inline int fwnode_get_phy_id(struct fwnode_handle *fwnode, u32 *phy_id)
++{
++	return 0;
++}
+ static inline
+ struct mdio_device *fwnode_mdio_find_device(struct fwnode_handle *fwnode)
+ {
+-- 
+2.30.1
+

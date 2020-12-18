@@ -1,0 +1,39 @@
+From 1d49b55379e42e518ea41b2c9eb9c5fd78ffe955 Mon Sep 17 00:00:00 2001
+From: Russell King <rmk+kernel@armlinux.org.uk>
+Date: Fri, 24 Jan 2020 17:59:49 +0000
+Subject: [PATCH 37/42] iommu: silence iommu group prints
+
+On the LX2160A, there are lots (about 160) of IOMMU messages produced
+during boot; this is excessive.  Reduce the severity of these messages
+to debug level.
+
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+---
+ drivers/iommu/iommu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 0f4dc25d46c9..0e48e9c91b36 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -845,7 +845,7 @@ int iommu_group_add_device(struct iommu_group *group, struct device *dev)
+ 
+ 	trace_add_device_to_group(group->id, dev);
+ 
+-	dev_info(dev, "Adding to iommu group %d\n", group->id);
++	dev_dbg(dev, "Adding to iommu group %d\n", group->id);
+ 
+ 	return 0;
+ 
+@@ -879,7 +879,7 @@ void iommu_group_remove_device(struct device *dev)
+ 	struct iommu_group *group = dev->iommu_group;
+ 	struct group_device *tmp_device, *device = NULL;
+ 
+-	dev_info(dev, "Removing from iommu group %d\n", group->id);
++	dev_dbg(dev, "Removing from iommu group %d\n", group->id);
+ 
+ 	/* Pre-notify listeners that a device is being removed. */
+ 	blocking_notifier_call_chain(&group->notifier,
+-- 
+2.30.1
+

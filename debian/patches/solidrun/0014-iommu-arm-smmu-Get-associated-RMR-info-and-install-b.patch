@@ -1,0 +1,98 @@
+From 4b0e76557e5f86f9ce0d88c6332de37bb2f05160 Mon Sep 17 00:00:00 2001
+From: Jon Nettleton <jon@solid-run.com>
+Date: Fri, 18 Dec 2020 05:04:43 -0500
+Subject: [PATCH 14/42] iommu/arm-smmu: Get associated RMR info and install
+ bypass SMR
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Check if there is any RMR info associated with the devices behind
+the SMMU and if any, install bypass SMRs for them. This is to
+keep any ongoing traffic associated with these devices alive
+when we enable/reset SMMU during probe().
+
+Signed-off-by: Jon Nettleton <jon@solid-run.com>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu.c | 44 +++++++++++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu.h |  2 ++
+ 2 files changed, 46 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+index bcbacf22331d..338850966fe8 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -2095,6 +2095,45 @@ err_reset_platform_ops: __maybe_unused;
+ 	return err;
+ }
+ 
++static void arm_smmu_rmr_install_bypass_smr(struct arm_smmu_device *smmu)
++{
++	struct iommu_rmr *e;
++	int i, j, cnt = 0;
++	u32 smr;
++
++	for (i = 0; i < smmu->num_mapping_groups; i++) {
++		smr = arm_smmu_gr0_read(smmu, ARM_SMMU_GR0_SMR(i));
++		if (!FIELD_GET(ARM_SMMU_SMR_VALID, smr))
++			continue;
++
++		list_for_each_entry(e, &smmu->rmr_list, list) {
++			for (j = 0; j < e->num_ids; j++) {
++				if (FIELD_GET(ARM_SMMU_SMR_ID, smr) != e->ids[j])
++					continue;
++
++				smmu->smrs[i].id = FIELD_GET(ARM_SMMU_SMR_ID, smr);
++				smmu->smrs[i].mask = FIELD_GET(ARM_SMMU_SMR_MASK, smr);
++				smmu->smrs[i].valid = true;
++
++				smmu->s2crs[i].type = S2CR_TYPE_BYPASS;
++				smmu->s2crs[i].privcfg = S2CR_PRIVCFG_DEFAULT;
++				smmu->s2crs[i].cbndx = 0xff;
++
++				cnt++;
++			}
++		}
++	}
++
++	dev_notice(smmu->dev, "\tpreserved %d boot mapping%s\n", cnt,
++		cnt == 1 ? "" : "s");
++}
++
++static int arm_smmu_get_rmr(struct arm_smmu_device *smmu)
++{
++	INIT_LIST_HEAD(&smmu->rmr_list);
++	return iommu_dma_get_rmrs(dev_fwnode(smmu->dev), &smmu->rmr_list);
++}
++
+ static int arm_smmu_device_probe(struct platform_device *pdev)
+ {
+ 	struct resource *res;
+@@ -2224,6 +2263,11 @@ static int arm_smmu_device_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	platform_set_drvdata(pdev, smmu);
++
++	/* Check for RMRs and install bypass SMRs if any */
++	if (!arm_smmu_get_rmr(smmu))
++		arm_smmu_rmr_install_bypass_smr(smmu);
++
+ 	arm_smmu_device_reset(smmu);
+ 	arm_smmu_test_smr_masks(smmu);
+ 
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+index b71647eaa319..a3c3442e7d4c 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
+@@ -325,6 +325,8 @@ struct arm_smmu_device {
+ 
+ 	/* IOMMU core code handle */
+ 	struct iommu_device		iommu;
++
++	struct list_head		rmr_list;
+ };
+ 
+ enum arm_smmu_context_fmt {
+-- 
+2.30.1
+

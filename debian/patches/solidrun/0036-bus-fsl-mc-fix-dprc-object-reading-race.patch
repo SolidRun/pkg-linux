@@ -1,0 +1,115 @@
+From 0e7e7541b11694ede5eff0996f4d16ded05735e3 Mon Sep 17 00:00:00 2001
+From: Russell King <rmk+kernel@armlinux.org.uk>
+Date: Tue, 24 Dec 2019 14:46:48 +0000
+Subject: [PATCH 36/42] bus: fsl-mc: fix dprc object reading race
+
+When modifying the objects attached to a DPRC, we may end up reading
+the list of objects from the firmware while another thread is changing
+changing the list. Since we read the objects via:
+
+- Read the number of DPRC objects
+- Iterate over this number of objects retrieving their details
+
+and objects can be added in the middle of the list, this causes the
+last few objects to unexpectedly disappear. The side effect of this
+is if network interfaces are added after boot, they come and go. This
+can result in already configured interfaces unexpectedly disappearing.
+
+This has been easy to provoke with the restool interface added, and a
+script which adds network interfaces one after each other; the kernel
+rescanning runs asynchronously to restool.
+
+NXP's approach to fixing this was to introduce a sysfs "attribute" in
+their vendor tree, /sys/bus/fsl-mc/rescan, which userspace poked at to
+request the kernel to rescan the DPRC object tree each time the
+"restool" command completed (whether or not the tool changed anything.)
+This has the effect of making the kernel's rescan synchronous with a
+scripted restool, but still fails if we have multiple restools running
+concurrently.
+
+This patch takes a different approach:
+- Read the number of DPRC objects
+- Iterate over this number of objects retrieving their details
+- Re-read the number of DPRC objects
+- If the number of DPRC objects has changed while reading, repeat.
+
+This solves the issue where network interfaces unexpectedly disappear
+while adding others via ls-addni, because they've fallen off the end
+of the object list.
+
+This does *not* solve the issue that if an object is deleted while
+another is added while we are reading the objects - that requires
+firmware modification, or a more elaborate solution on the Linux side
+(e.g., CRCing the object details and reading all objects at least
+twice to check the CRC is stable.)
+
+However, without firmware modification, this is probably the best way
+to ensure that we read all the objects.
+
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+---
+ drivers/bus/fsl-mc/dprc-driver.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/bus/fsl-mc/dprc-driver.c b/drivers/bus/fsl-mc/dprc-driver.c
+index df71c16f8a73..787844f0b636 100644
+--- a/drivers/bus/fsl-mc/dprc-driver.c
++++ b/drivers/bus/fsl-mc/dprc-driver.c
+@@ -240,11 +240,11 @@ static void dprc_add_new_devices(struct fsl_mc_device *mc_bus_dev,
+ int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
+ 		      bool alloc_interrupts)
+ {
+-	int num_child_objects;
++	int num_child_objects, num_child_objects2;
+ 	int dprc_get_obj_failures;
+ 	int error;
+-	unsigned int irq_count = mc_bus_dev->obj_desc.irq_count;
+-	struct fsl_mc_obj_desc *child_obj_desc_array = NULL;
++	unsigned int irq_count;
++	struct fsl_mc_obj_desc *child_obj_desc_array;
+ 	struct fsl_mc_bus *mc_bus = to_fsl_mc_bus(mc_bus_dev);
+ 
+ 	error = dprc_get_obj_count(mc_bus_dev->mc_io,
+@@ -257,6 +257,9 @@ int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
+ 		return error;
+ 	}
+ 
++retry:
++	irq_count = mc_bus_dev->obj_desc.irq_count;
++	child_obj_desc_array = NULL;
+ 	if (num_child_objects != 0) {
+ 		int i;
+ 
+@@ -315,6 +318,29 @@ int dprc_scan_objects(struct fsl_mc_device *mc_bus_dev,
+ 		}
+ 	}
+ 
++	error = dprc_get_obj_count(mc_bus_dev->mc_io,
++				   0,
++				   mc_bus_dev->mc_handle,
++				   &num_child_objects2);
++	if (error < 0) {
++		if (child_obj_desc_array)
++			devm_kfree(&mc_bus_dev->dev, child_obj_desc_array);
++		dev_err(&mc_bus_dev->dev, "dprc_get_obj_count() failed: %d\n",
++			error);
++		return error;
++	}
++
++	if (num_child_objects != num_child_objects2) {
++		/*
++		 * Something changed while reading the number of objects.
++		 * Retry reading the child object list.
++		 */
++		if (child_obj_desc_array)
++			devm_kfree(&mc_bus_dev->dev, child_obj_desc_array);
++		num_child_objects = num_child_objects2;
++		goto retry;
++	}
++
+ 	/*
+ 	 * Allocate IRQ's before binding the scanned devices with their
+ 	 * respective drivers.
+-- 
+2.30.1
+

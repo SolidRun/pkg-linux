@@ -1,0 +1,86 @@
+From a0b96015eb5ac8bf0b6a85d0ea6f375a9ac7e8d5 Mon Sep 17 00:00:00 2001
+From: Makarand Pawagi <makarand.pawagi@nxp.com>
+Date: Tue, 21 Apr 2020 11:25:53 +0530
+Subject: [PATCH 03/42] soc: fsl: enable acpi support for Guts driver
+
+ACPI support is added in the Guts driver
+This is in accordance with the DSDT table added for Guts
+
+Signed-off-by: Makarand Pawagi <makarand.pawagi@nxp.com>
+---
+ drivers/soc/fsl/guts.c | 27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/soc/fsl/guts.c b/drivers/soc/fsl/guts.c
+index 34810f9bb2ee..56b6797c265e 100644
+--- a/drivers/soc/fsl/guts.c
++++ b/drivers/soc/fsl/guts.c
+@@ -3,6 +3,7 @@
+  * Freescale QorIQ Platforms GUTS Driver
+  *
+  * Copyright (C) 2016 Freescale Semiconductor, Inc.
++ * Copyright 2020 NXP
+  */
+ 
+ #include <linux/io.h>
+@@ -138,7 +139,7 @@ static u32 fsl_guts_get_svr(void)
+ 
+ static int fsl_guts_probe(struct platform_device *pdev)
+ {
+-	struct device_node *np = pdev->dev.of_node;
++	struct device_node *root;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
+ 	const struct fsl_soc_die_attr *soc_die;
+@@ -150,7 +151,8 @@ static int fsl_guts_probe(struct platform_device *pdev)
+ 	if (!guts)
+ 		return -ENOMEM;
+ 
+-	guts->little_endian = of_property_read_bool(np, "little-endian");
++	guts->little_endian = fwnode_property_read_bool(pdev->dev.fwnode,
++							"little-endian");
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	guts->regs = devm_ioremap_resource(dev, res);
+@@ -158,9 +160,17 @@ static int fsl_guts_probe(struct platform_device *pdev)
+ 		return PTR_ERR(guts->regs);
+ 
+ 	/* Register soc device */
+-	root = of_find_node_by_path("/");
+-	if (of_property_read_string(root, "model", &machine))
+-		of_property_read_string_index(root, "compatible", 0, &machine);
++	if (dev_of_node(&pdev->dev)) {
++		root = of_find_node_by_path("/");
++		if (of_property_read_string(root, "model", &machine))
++			of_property_read_string_index(root,
++					"compatible", 0, &machine);
++		of_node_put(root);
++	} else {
++		fwnode_property_read_string(pdev->dev.fwnode,
++				"model", &machine);
++	}
++
+ 	if (machine)
+ 		soc_dev_attr.machine = machine;
+ 
+@@ -234,10 +244,17 @@ static const struct of_device_id fsl_guts_of_match[] = {
+ };
+ MODULE_DEVICE_TABLE(of, fsl_guts_of_match);
+ 
++static const struct acpi_device_id fsl_guts_acpi_match[] = {
++	{"NXP0030", 0 },
++	{ }
++};
++MODULE_DEVICE_TABLE(acpi, fsl_guts_acpi_match);
++
+ static struct platform_driver fsl_guts_driver = {
+ 	.driver = {
+ 		.name = "fsl-guts",
+ 		.of_match_table = fsl_guts_of_match,
++		.acpi_match_table = fsl_guts_acpi_match,
+ 	},
+ 	.probe = fsl_guts_probe,
+ 	.remove = fsl_guts_remove,
+-- 
+2.30.1
+

@@ -1,0 +1,108 @@
+From 490ba040ae279f1ab48a316431850d101f69d138 Mon Sep 17 00:00:00 2001
+From: Meharbaan <meharbaan.ali@puresoftware.com>
+Date: Tue, 28 Jul 2020 17:41:31 +0530
+Subject: [PATCH 05/42] drivers/mmc/host/sdhci-of-esdhc : Fix DMA coherent
+ check in ACPI mode.
+
+DMA-coherent check to set ESDHC_DMA_SNOOP mask was bypassed
+when booted in ACPI mode. Now it also checks the acpi device and
+its parents for _CCA property in the device, and sets the flag
+accordingly.
+
+Signed-off-by: Meharbaan <meharbaan.ali@puresoftware.com>
+---
+ drivers/base/property.c           | 38 +++++++++++++++++++++++++++++++
+ drivers/mmc/host/sdhci-of-esdhc.c |  7 ++++--
+ include/linux/property.h          |  2 ++
+ 3 files changed, 45 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index 4c43d30145c6..c9d76e55a226 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -17,6 +17,7 @@
+ #include <linux/property.h>
+ #include <linux/etherdevice.h>
+ #include <linux/phy.h>
++#include <linux/platform_device.h>
+ 
+ struct fwnode_handle *dev_fwnode(struct device *dev)
+ {
+@@ -837,6 +838,43 @@ enum dev_dma_attr device_get_dma_attr(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(device_get_dma_attr);
+ 
++/**
++ * device_match_fw_node - Check if the device is the parent node.
++ * @dev:		Pointer to the device.
++ * @parent_fwnode	Pointer to the parent's firmware node.
++ *
++ * The function returns true if the device has no parent.
++ *
++ */
++static int device_match_fw_node(struct device *dev, const void *parent_fwnode)
++{
++	return dev->fwnode == parent_fwnode;
++}
++
++/**
++ * dev_dma_is_coherent - Check if the device or any of its parents has
++ * dma support enabled.
++ * @dev:     Pointer to the device.
++ *
++ * The function gets the device pointer and check for device_dma_supported()
++ * on the device pointer passed and then recursively on its parent nodes.
++ */
++
++bool dev_dma_is_coherent(struct device *dev)
++{
++	struct fwnode_handle *parent_fwnode;
++
++	while (dev) {
++		if (device_dma_supported(dev))
++			return true;
++		parent_fwnode = fwnode_get_next_parent(dev->fwnode);
++		dev = bus_find_device(&platform_bus_type, NULL,	parent_fwnode,
++				      device_match_fw_node);
++	}
++	return false;
++}
++EXPORT_SYMBOL_GPL(dev_dma_is_coherent);
++
+ /**
+  * fwnode_get_phy_mode - Get phy mode for given firmware node
+  * @fwnode:	Pointer to the given node
+diff --git a/drivers/mmc/host/sdhci-of-esdhc.c b/drivers/mmc/host/sdhci-of-esdhc.c
+index 62a70b39497d..bb7e456ad17b 100644
+--- a/drivers/mmc/host/sdhci-of-esdhc.c
++++ b/drivers/mmc/host/sdhci-of-esdhc.c
+@@ -541,8 +541,11 @@ static int esdhc_of_enable_dma(struct sdhci_host *host)
+ 		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(40));
+ 
+ 	value = sdhci_readl(host, ESDHC_DMA_SYSCTL);
+-
+-	if (of_dma_is_coherent(dev->of_node))
++	/*
++	 * of_dma_is_coherent() returns false in case of acpi hence
++	 * dev_dma_is_coherent() is used along with it.
++	 */
++	if (of_dma_is_coherent(dev->of_node) ||  dev_dma_is_coherent(dev))
+ 		value |= ESDHC_DMA_SNOOP;
+ 	else
+ 		value &= ~ESDHC_DMA_SNOOP;
+diff --git a/include/linux/property.h b/include/linux/property.h
+index 2d4542629d80..3e0a1a5655f0 100644
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -379,6 +379,8 @@ bool device_dma_supported(struct device *dev);
+ 
+ enum dev_dma_attr device_get_dma_attr(struct device *dev);
+ 
++bool dev_dma_is_coherent(struct device *dev);
++
+ const void *device_get_match_data(struct device *dev);
+ 
+ int device_get_phy_mode(struct device *dev);
+-- 
+2.30.1
+

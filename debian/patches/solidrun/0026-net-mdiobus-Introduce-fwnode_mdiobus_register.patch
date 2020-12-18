@@ -1,0 +1,69 @@
+From baa2850b849f3dcc19e51f461f082ec06207e011 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:56 +0530
+Subject: [PATCH 26/42] net: mdiobus: Introduce fwnode_mdiobus_register()
+
+Introduce fwnode_mdiobus_register() to register PHYs on the  mdiobus.
+If the fwnode is DT node, then call of_mdiobus_register().
+If it is an ACPI node, then call acpi_mdiobus_register().
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/phy/mdio_bus.c | 21 +++++++++++++++++++++
+ include/linux/phy.h        |  1 +
+ 2 files changed, 22 insertions(+)
+
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 142213a55205..755380b4be3a 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -9,6 +9,7 @@
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
+ #include <linux/acpi.h>
++#include <linux/acpi_mdio.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+@@ -568,6 +569,26 @@ static int mdiobus_create_device(struct mii_bus *bus,
+ 	return ret;
+ }
+ 
++/**
++ * fwnode_mdiobus_register - Register mii_bus and create PHYs from fwnode
++ * @mdio: pointer to mii_bus structure
++ * @fwnode: pointer to fwnode of MDIO bus.
++ *
++ * This function returns of_mdiobus_register() for DT and
++ * acpi_mdiobus_register() for ACPI.
++ */
++int fwnode_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode)
++{
++	if (is_of_node(fwnode))
++		return of_mdiobus_register(mdio, to_of_node(fwnode));
++
++	if (is_acpi_node(fwnode))
++		return acpi_mdiobus_register(mdio, fwnode);
++
++	return -EINVAL;
++}
++EXPORT_SYMBOL(fwnode_mdiobus_register);
++
+ /**
+  * __mdiobus_register - bring up all the PHYs on a given bus and attach them to bus
+  * @bus: target mii_bus
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index d0c5d9034689..0d88d19154a2 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -383,6 +383,7 @@ static inline struct mii_bus *mdiobus_alloc(void)
+ 	return mdiobus_alloc_size(0);
+ }
+ 
++int fwnode_mdiobus_register(struct mii_bus *mdio, struct fwnode_handle *fwnode);
+ int __mdiobus_register(struct mii_bus *bus, struct module *owner);
+ int __devm_mdiobus_register(struct device *dev, struct mii_bus *bus,
+ 			    struct module *owner);
+-- 
+2.30.1
+

@@ -1,0 +1,105 @@
+From 286b3670de987d1b1aec749261f422eef6ccfc8b Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:58 +0530
+Subject: [PATCH 28/42] phylink: introduce phylink_fwnode_phy_connect()
+
+Define phylink_fwnode_phy_connect() to connect phy specified by
+a fwnode to a phylink instance.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/phy/phylink.c | 56 +++++++++++++++++++++++++++++++++++++++
+ include/linux/phylink.h   |  3 +++
+ 2 files changed, 59 insertions(+)
+
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index fe2296fdda19..f839ec5b2460 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -5,6 +5,7 @@
+  *
+  * Copyright (C) 2015 Russell King
+  */
++#include <linux/acpi.h>
+ #include <linux/ethtool.h>
+ #include <linux/export.h>
+ #include <linux/gpio/consumer.h>
+@@ -1120,6 +1121,61 @@ int phylink_of_phy_connect(struct phylink *pl, struct device_node *dn,
+ }
+ EXPORT_SYMBOL_GPL(phylink_of_phy_connect);
+ 
++/**
++ * phylink_fwnode_phy_connect() - connect the PHY specified in the fwnode.
++ * @pl: a pointer to a &struct phylink returned from phylink_create()
++ * @fwnode: a pointer to a &struct fwnode_handle.
++ * @flags: PHY-specific flags to communicate to the PHY device driver
++ *
++ * Connect the phy specified @fwnode to the phylink instance specified
++ * by @pl.
++ *
++ * Returns 0 on success or a negative errno.
++ */
++int phylink_fwnode_phy_connect(struct phylink *pl,
++			       struct fwnode_handle *fwnode,
++			       u32 flags)
++{
++	struct fwnode_handle *phy_fwnode;
++	struct phy_device *phy_dev;
++	int ret;
++
++	if (is_of_node(fwnode)) {
++		/* Fixed links and 802.3z are handled without needing a PHY */
++		if (pl->cfg_link_an_mode == MLO_AN_FIXED ||
++		    (pl->cfg_link_an_mode == MLO_AN_INBAND &&
++		     phy_interface_mode_is_8023z(pl->link_interface)))
++			return 0;
++	}
++
++	phy_fwnode = fwnode_get_phy_node(fwnode);
++	if (IS_ERR(phy_fwnode)) {
++		if (pl->cfg_link_an_mode == MLO_AN_PHY)
++			return -ENODEV;
++		return 0;
++	}
++
++	phy_dev = fwnode_phy_find_device(phy_fwnode);
++	/* We're done with the phy_node handle */
++	fwnode_handle_put(phy_fwnode);
++	if (!phy_dev)
++		return -ENODEV;
++
++	ret = phy_attach_direct(pl->netdev, phy_dev, flags,
++				pl->link_interface);
++	if (ret) {
++		phy_device_free(phy_dev);
++		return ret;
++	}
++
++	ret = phylink_bringup_phy(pl, phy_dev, pl->link_config.interface);
++	if (ret)
++		phy_detach(phy_dev);
++
++	return ret;
++}
++EXPORT_SYMBOL_GPL(phylink_fwnode_phy_connect);
++
+ /**
+  * phylink_disconnect_phy() - disconnect any PHY attached to the phylink
+  *   instance.
+diff --git a/include/linux/phylink.h b/include/linux/phylink.h
+index d81a714cfbbd..75d4f99090fd 100644
+--- a/include/linux/phylink.h
++++ b/include/linux/phylink.h
+@@ -439,6 +439,9 @@ void phylink_destroy(struct phylink *);
+ 
+ int phylink_connect_phy(struct phylink *, struct phy_device *);
+ int phylink_of_phy_connect(struct phylink *, struct device_node *, u32 flags);
++int phylink_fwnode_phy_connect(struct phylink *pl,
++			       struct fwnode_handle *fwnode,
++			       u32 flags);
+ void phylink_disconnect_phy(struct phylink *);
+ 
+ void phylink_mac_change(struct phylink *, bool up);
+-- 
+2.30.1
+

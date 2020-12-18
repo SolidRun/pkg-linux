@@ -1,0 +1,36 @@
+From 28eced8172b2af379afc7be27e4fcfbf14fd1b34 Mon Sep 17 00:00:00 2001
+From: Russell King <rmk+kernel@armlinux.org.uk>
+Date: Thu, 30 Jan 2020 22:42:38 +0000
+Subject: [PATCH 40/42] net: dpaa2-mac: add backplane link mode support
+
+Add support for backplane link mode, which is, according to discussions
+with NXP earlier in the year, is a mode where the OS (Linux) is able to
+manage the PCS and Serdes itself.
+
+This commit prepares the ground work for allowing 1G fiber connections
+to be used with DPAA2 on the SolidRun CEX7 platforms.
+
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+---
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+index c09bc4caae9a..2f9388dfadb9 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+@@ -377,8 +377,9 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 		goto err_put_node;
+ 	}
+ 
+-	if (attr.link_type == DPMAC_LINK_TYPE_PHY &&
+-	    attr.eth_if != DPMAC_ETH_IF_RGMII) {
++	if ((attr.link_type == DPMAC_LINK_TYPE_PHY &&
++	     attr.eth_if != DPMAC_ETH_IF_RGMII) ||
++	    attr.link_type == DPMAC_LINK_TYPE_BACKPLANE) {
+ 		err = dpaa2_pcs_create(mac, dpmac_node, attr.id);
+ 		if (err)
+ 			goto err_put_node;
+-- 
+2.30.1
+

@@ -1,0 +1,205 @@
+From 0719d67938432b3ce2287781a595d2658a69e639 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:13:00 +0530
+Subject: [PATCH 30/42] net: dpaa2-mac: Add ACPI support for DPAA2 MAC driver
+
+Modify dpaa2_mac_connect() to support ACPI along with DT.
+Modify dpaa2_mac_get_node() to get the dpmac fwnode from either
+DT or ACPI.
+
+Replace of_get_phy_mode with fwnode_get_phy_mode to get
+phy-mode for a dpmac_node.
+
+Use helper function phylink_fwnode_phy_connect() to find phy_dev and
+connect to mac->phylink.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ .../net/ethernet/freescale/dpaa2/dpaa2-mac.c  | 86 +++++++++++--------
+ 1 file changed, 50 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+index 828c177df03d..c242d5c2a9ed 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-mac.c
+@@ -1,6 +1,9 @@
+ // SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+ /* Copyright 2019 NXP */
+ 
++#include <linux/acpi.h>
++#include <linux/property.h>
++
+ #include "dpaa2-eth.h"
+ #include "dpaa2-mac.h"
+ 
+@@ -34,39 +37,47 @@ static int phy_mode(enum dpmac_eth_if eth_if, phy_interface_t *if_mode)
+ 	return 0;
+ }
+ 
+-/* Caller must call of_node_put on the returned value */
+-static struct device_node *dpaa2_mac_get_node(u16 dpmac_id)
++static struct fwnode_handle *dpaa2_mac_get_node(struct device *dev,
++						u16 dpmac_id)
+ {
+-	struct device_node *dpmacs, *dpmac = NULL;
+-	u32 id;
++	struct device_node *dpmacs = NULL;
++	struct fwnode_handle *parent, *child  = NULL;
+ 	int err;
++	u32 id;
+ 
+-	dpmacs = of_find_node_by_name(NULL, "dpmacs");
+-	if (!dpmacs)
+-		return NULL;
++	if (is_of_node(dev->parent->fwnode)) {
++		dpmacs = of_find_node_by_name(NULL, "dpmacs");
++		if (!dpmacs)
++			return NULL;
++		parent = of_fwnode_handle(dpmacs);
++	} else if (is_acpi_node(dev->parent->fwnode)) {
++		parent = dev->parent->fwnode;
++	}
+ 
+-	while ((dpmac = of_get_next_child(dpmacs, dpmac)) != NULL) {
+-		err = of_property_read_u32(dpmac, "reg", &id);
+-		if (err)
++	fwnode_for_each_child_node(parent, child) {
++		err = fwnode_get_id(child, &id);
++		if (err) {
+ 			continue;
+-		if (id == dpmac_id)
+-			break;
++		} else if (id == dpmac_id) {
++			if (is_of_node(dev->parent->fwnode))
++				of_node_put(dpmacs);
++			return child;
++		}
+ 	}
+-
+-	of_node_put(dpmacs);
+-
+-	return dpmac;
++	if (is_of_node(dev->parent->fwnode))
++		of_node_put(dpmacs);
++	return NULL;
+ }
+ 
+-static int dpaa2_mac_get_if_mode(struct device_node *node,
++static int dpaa2_mac_get_if_mode(struct fwnode_handle *dpmac_node,
+ 				 struct dpmac_attr attr)
+ {
+ 	phy_interface_t if_mode;
+ 	int err;
+ 
+-	err = of_get_phy_mode(node, &if_mode);
+-	if (!err)
+-		return if_mode;
++	err = fwnode_get_phy_mode(dpmac_node);
++	if (err > 0)
++		return err;
+ 
+ 	err = phy_mode(attr.eth_if, &if_mode);
+ 	if (!err)
+@@ -255,26 +266,27 @@ bool dpaa2_mac_is_type_fixed(struct fsl_mc_device *dpmac_dev,
+ }
+ 
+ static int dpaa2_pcs_create(struct dpaa2_mac *mac,
+-			    struct device_node *dpmac_node, int id)
++			    struct fwnode_handle *dpmac_node,
++			    int id)
+ {
+ 	struct mdio_device *mdiodev;
+-	struct device_node *node;
++	struct fwnode_handle *node;
+ 
+-	node = of_parse_phandle(dpmac_node, "pcs-handle", 0);
+-	if (!node) {
++	node = fwnode_find_reference(dpmac_node, "pcs-handle", 0);
++	if (IS_ERR(node)) {
+ 		/* do not error out on old DTS files */
+ 		netdev_warn(mac->net_dev, "pcs-handle node not found\n");
+ 		return 0;
+ 	}
+ 
+-	if (!of_device_is_available(node)) {
++	if (!of_device_is_available(to_of_node(node))) {
+ 		netdev_err(mac->net_dev, "pcs-handle node not available\n");
+-		of_node_put(node);
++		of_node_put(to_of_node(node));
+ 		return -ENODEV;
+ 	}
+ 
+-	mdiodev = of_mdio_find_device(node);
+-	of_node_put(node);
++	mdiodev = fwnode_mdio_find_device(node);
++	fwnode_handle_put(node);
+ 	if (!mdiodev)
+ 		return -EPROBE_DEFER;
+ 
+@@ -304,7 +316,7 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ {
+ 	struct fsl_mc_device *dpmac_dev = mac->mc_dev;
+ 	struct net_device *net_dev = mac->net_dev;
+-	struct device_node *dpmac_node;
++	struct fwnode_handle *dpmac_node = NULL;
+ 	struct phylink *phylink;
+ 	struct dpmac_attr attr;
+ 	int err;
+@@ -324,7 +336,7 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 
+ 	mac->if_link_type = attr.link_type;
+ 
+-	dpmac_node = dpaa2_mac_get_node(attr.id);
++	dpmac_node = dpaa2_mac_get_node(&mac->mc_dev->dev, attr.id);
+ 	if (!dpmac_node) {
+ 		netdev_err(net_dev, "No dpmac@%d node found.\n", attr.id);
+ 		err = -ENODEV;
+@@ -342,7 +354,7 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 	 * error out if the interface mode requests them and there is no PHY
+ 	 * to act upon them
+ 	 */
+-	if (of_phy_is_fixed_link(dpmac_node) &&
++	if (of_phy_is_fixed_link(to_of_node(dpmac_node)) &&
+ 	    (mac->if_mode == PHY_INTERFACE_MODE_RGMII_ID ||
+ 	     mac->if_mode == PHY_INTERFACE_MODE_RGMII_RXID ||
+ 	     mac->if_mode == PHY_INTERFACE_MODE_RGMII_TXID)) {
+@@ -362,7 +374,7 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 	mac->phylink_config.type = PHYLINK_NETDEV;
+ 
+ 	phylink = phylink_create(&mac->phylink_config,
+-				 of_fwnode_handle(dpmac_node), mac->if_mode,
++				 dpmac_node, mac->if_mode,
+ 				 &dpaa2_mac_phylink_ops);
+ 	if (IS_ERR(phylink)) {
+ 		err = PTR_ERR(phylink);
+@@ -373,13 +385,14 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ 	if (mac->pcs)
+ 		phylink_set_pcs(mac->phylink, &mac->pcs->pcs);
+ 
+-	err = phylink_of_phy_connect(mac->phylink, dpmac_node, 0);
++	err = phylink_fwnode_phy_connect(mac->phylink, dpmac_node, 0);
+ 	if (err) {
+-		netdev_err(net_dev, "phylink_of_phy_connect() = %d\n", err);
++		netdev_err(net_dev, "phylink_fwnode_phy_connect() = %d\n", err);
+ 		goto err_phylink_destroy;
+ 	}
+ 
+-	of_node_put(dpmac_node);
++	if (is_of_node(dpmac_node))
++		fwnode_handle_put(dpmac_node);
+ 
+ 	return 0;
+ 
+@@ -388,7 +401,8 @@ int dpaa2_mac_connect(struct dpaa2_mac *mac)
+ err_pcs_destroy:
+ 	dpaa2_pcs_destroy(mac);
+ err_put_node:
+-	of_node_put(dpmac_node);
++	if (is_of_node(dpmac_node))
++		fwnode_handle_put(dpmac_node);
+ err_close_dpmac:
+ 	dpmac_close(mac->mc_io, 0, dpmac_dev->mc_handle);
+ 	return err;
+-- 
+2.30.1
+

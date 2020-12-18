@@ -1,0 +1,66 @@
+From a54541aff1173c12012d0046cedb0cf7393bb1b0 Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:53 +0530
+Subject: [PATCH 23/42] of: mdio: Refactor of_mdiobus_register_phy()
+
+Refactor of_mdiobus_register_phy() to use fwnode_mdiobus_register_phy().
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/mdio/of_mdio.c | 40 +-------------------------------------
+ 1 file changed, 1 insertion(+), 39 deletions(-)
+
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index cd7da38ae763..1b561849269e 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -98,45 +98,7 @@ EXPORT_SYMBOL(of_mdiobus_phy_device_register);
+ static int of_mdiobus_register_phy(struct mii_bus *mdio,
+ 				    struct device_node *child, u32 addr)
+ {
+-	struct mii_timestamper *mii_ts;
+-	struct phy_device *phy;
+-	bool is_c45;
+-	int rc;
+-	u32 phy_id;
+-
+-	mii_ts = of_find_mii_timestamper(child);
+-	if (IS_ERR(mii_ts))
+-		return PTR_ERR(mii_ts);
+-
+-	is_c45 = of_device_is_compatible(child,
+-					 "ethernet-phy-ieee802.3-c45");
+-
+-	if (!is_c45 && !of_get_phy_id(child, &phy_id))
+-		phy = phy_device_create(mdio, addr, phy_id, 0, NULL);
+-	else
+-		phy = get_phy_device(mdio, addr, is_c45);
+-	if (IS_ERR(phy)) {
+-		if (mii_ts)
+-			unregister_mii_timestamper(mii_ts);
+-		return PTR_ERR(phy);
+-	}
+-
+-	rc = of_mdiobus_phy_device_register(mdio, phy, child, addr);
+-	if (rc) {
+-		if (mii_ts)
+-			unregister_mii_timestamper(mii_ts);
+-		phy_device_free(phy);
+-		return rc;
+-	}
+-
+-	/* phy->mii_ts may already be defined by the PHY driver. A
+-	 * mii_timestamper probed via the device tree will still have
+-	 * precedence.
+-	 */
+-	if (mii_ts)
+-		phy->mii_ts = mii_ts;
+-
+-	return 0;
++	return fwnode_mdiobus_register_phy(mdio, of_fwnode_handle(child), addr);
+ }
+ 
+ static int of_mdiobus_register_device(struct mii_bus *mdio,
+-- 
+2.30.1
+

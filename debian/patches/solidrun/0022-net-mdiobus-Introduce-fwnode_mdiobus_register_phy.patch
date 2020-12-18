@@ -1,0 +1,164 @@
+From 98051e48b4c19b3ad3190370207760095b942c6b Mon Sep 17 00:00:00 2001
+From: Calvin Johnson <calvin.johnson@oss.nxp.com>
+Date: Fri, 22 Jan 2021 21:12:52 +0530
+Subject: [PATCH 22/42] net: mdiobus: Introduce fwnode_mdiobus_register_phy()
+
+Introduce fwnode_mdiobus_register_phy() to register PHYs on the
+mdiobus. From the compatible string, identify whether the PHY is
+c45 and based on this create a PHY device instance which is
+registered on the mdiobus.
+
+Signed-off-by: Calvin Johnson <calvin.johnson@oss.nxp.com>
+---
+ drivers/net/mdio/of_mdio.c |  3 +-
+ drivers/net/phy/mdio_bus.c | 67 ++++++++++++++++++++++++++++++++++++++
+ include/linux/mdio.h       |  2 ++
+ include/linux/of_mdio.h    |  6 +++-
+ 4 files changed, 76 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index d4cc293358f7..cd7da38ae763 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -32,7 +32,7 @@ static int of_get_phy_id(struct device_node *device, u32 *phy_id)
+ 	return fwnode_get_phy_id(of_fwnode_handle(device), phy_id);
+ }
+ 
+-static struct mii_timestamper *of_find_mii_timestamper(struct device_node *node)
++struct mii_timestamper *of_find_mii_timestamper(struct device_node *node)
+ {
+ 	struct of_phandle_args arg;
+ 	int err;
+@@ -49,6 +49,7 @@ static struct mii_timestamper *of_find_mii_timestamper(struct device_node *node)
+ 
+ 	return register_mii_timestamper(arg.np, arg.args[0]);
+ }
++EXPORT_SYMBOL(of_find_mii_timestamper);
+ 
+ int of_mdiobus_phy_device_register(struct mii_bus *mdio, struct phy_device *phy,
+ 			      struct device_node *child, u32 addr)
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 757e950fb745..142213a55205 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -8,6 +8,7 @@
+ 
+ #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 
++#include <linux/acpi.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+@@ -106,6 +107,72 @@ int mdiobus_unregister_device(struct mdio_device *mdiodev)
+ }
+ EXPORT_SYMBOL(mdiobus_unregister_device);
+ 
++int fwnode_mdiobus_register_phy(struct mii_bus *bus,
++				struct fwnode_handle *child, u32 addr)
++{
++	struct mii_timestamper *mii_ts;
++	struct phy_device *phy;
++	bool is_c45 = false;
++	u32 phy_id;
++	int rc;
++
++	if (is_of_node(child)) {
++		mii_ts = of_find_mii_timestamper(to_of_node(child));
++		if (IS_ERR(mii_ts))
++			return PTR_ERR(mii_ts);
++	}
++
++	rc = fwnode_property_match_string(child, "compatible", "ethernet-phy-ieee802.3-c45");
++	if (rc >= 0)
++		is_c45 = true;
++
++	if (is_c45 || fwnode_get_phy_id(child, &phy_id))
++		phy = get_phy_device(bus, addr, is_c45);
++	else
++		phy = phy_device_create(bus, addr, phy_id, 0, NULL);
++	if (IS_ERR(phy)) {
++		if (mii_ts && is_of_node(child))
++			unregister_mii_timestamper(mii_ts);
++		return PTR_ERR(phy);
++	}
++
++	if (is_acpi_node(child)) {
++		phy->irq = bus->irq[addr];
++
++		/* Associate the fwnode with the device structure so it
++		 * can be looked up later.
++		 */
++		phy->mdio.dev.fwnode = child;
++
++		/* All data is now stored in the phy struct, so register it */
++		rc = phy_device_register(phy);
++		if (rc) {
++			phy_device_free(phy);
++			fwnode_handle_put(phy->mdio.dev.fwnode);
++			return rc;
++		}
++
++		dev_dbg(&bus->dev, "registered phy at address %i\n", addr);
++	} else if (is_of_node(child)) {
++		rc = of_mdiobus_phy_device_register(bus, phy, to_of_node(child), addr);
++		if (rc) {
++			if (mii_ts)
++				unregister_mii_timestamper(mii_ts);
++			phy_device_free(phy);
++			return rc;
++		}
++
++		/* phy->mii_ts may already be defined by the PHY driver. A
++		 * mii_timestamper probed via the device tree will still have
++		 * precedence.
++		 */
++		if (mii_ts)
++			phy->mii_ts = mii_ts;
++	}
++	return 0;
++}
++EXPORT_SYMBOL(fwnode_mdiobus_register_phy);
++
+ struct phy_device *mdiobus_get_phy(struct mii_bus *bus, int addr)
+ {
+ 	struct mdio_device *mdiodev = bus->mdio_map[addr];
+diff --git a/include/linux/mdio.h b/include/linux/mdio.h
+index dbd69b3d170b..f138ec333725 100644
+--- a/include/linux/mdio.h
++++ b/include/linux/mdio.h
+@@ -368,6 +368,8 @@ int mdiobus_register_device(struct mdio_device *mdiodev);
+ int mdiobus_unregister_device(struct mdio_device *mdiodev);
+ bool mdiobus_is_registered_device(struct mii_bus *bus, int addr);
+ struct phy_device *mdiobus_get_phy(struct mii_bus *bus, int addr);
++int fwnode_mdiobus_register_phy(struct mii_bus *bus,
++				      struct fwnode_handle *child, u32 addr);
+ 
+ /**
+  * mdio_module_driver() - Helper macro for registering mdio drivers
+diff --git a/include/linux/of_mdio.h b/include/linux/of_mdio.h
+index cfe8c607a628..3b66016f18aa 100644
+--- a/include/linux/of_mdio.h
++++ b/include/linux/of_mdio.h
+@@ -34,6 +34,7 @@ struct mii_bus *of_mdio_find_bus(struct device_node *mdio_np);
+ int of_phy_register_fixed_link(struct device_node *np);
+ void of_phy_deregister_fixed_link(struct device_node *np);
+ bool of_phy_is_fixed_link(struct device_node *np);
++struct mii_timestamper *of_find_mii_timestamper(struct device_node *np);
+ int of_mdiobus_phy_device_register(struct mii_bus *mdio, struct phy_device *phy,
+ 				   struct device_node *child, u32 addr);
+ 
+@@ -128,7 +129,10 @@ static inline bool of_phy_is_fixed_link(struct device_node *np)
+ {
+ 	return false;
+ }
+-
++static inline struct mii_timestamper *of_find_mii_timestamper(struct device_node *np)
++{
++	return NULL;
++}
+ static inline int of_mdiobus_phy_device_register(struct mii_bus *mdio,
+ 					    struct phy_device *phy,
+ 					    struct device_node *child, u32 addr)
+-- 
+2.30.1
+
