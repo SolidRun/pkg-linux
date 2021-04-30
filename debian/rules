@@ -3,7 +3,7 @@
 # output every command that modifies files on the build system.
 #export DH_VERBOSE = 1
 
-export DESTDIR := debian/kernel-obs-build
+export DESTDIR := debian/kernel-obs-build-$(DEB_HOST_ARCH)
 export PATH := $(PATH):/usr/sbin:/sbin
 
 %:
