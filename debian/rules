@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+export DESTDIR := debian/kernel-obs-build
+export PATH := $(PATH):/usr/sbin:/sbin
+
+%:
+	dh $@
+
+override_dh_auto_install:
+	# grab (latest) kernel images
+	mkdir -p $(DESTDIR)/boot
+	find /boot -name "vmlinuz-*-arm64"  | sort | tail -1 | xargs -I{} cp -v {} $(DESTDIR)/boot/Image.guest
+	find /boot -name "vmlinuz-*-armmp" | sort | tail -1 | xargs -I{} cp -v {} $(DESTDIR)/boot/zImage.guest
+	find /boot -name "vmlinuz-*-armmp-lpae" | sort | tail -1 | xargs -I{} cp -v {} $(DESTDIR)/boot/Image.guest32
+
+	# grab (latest) kernel modules
+	mkdir -p $(DESTDIR)/lib/modules
+	find /lib/modules -name "*-arm64" | sort | tail -1 | xargs -I{} cp -r {} $(DESTDIR)/lib/modules/
+	find /lib/modules -name "*-armmp" | sort | tail -1 | xargs -I{} cp -r {} $(DESTDIR)/lib/modules/
+	find /lib/modules -name "*-armmp-lpae" | sort | tail -1 | xargs -I{} cp -r {} $(DESTDIR)/lib/modules/
+
+	# generate initrd
+	find /lib/modules -name "*-arm64" -exec basename {} \; | xargs -I{} mkinitramfs -o $(DESTDIR)/boot/initrd.guest {}
+	find /lib/modules -name "*-armmp" -exec basename {} \; | xargs -I{} mkinitramfs -o $(DESTDIR)/boot/initrd.guest {}
+	find /lib/modules -name "*-armmp-lpae" -exec basename {} \; | xargs -I{} mkinitramfs -o $(DESTDIR)/boot/initrd.guest32 {}

@@ -1,0 +1,21 @@
+Source: kernel-obs-build
+Section: kernel
+Priority: optional
+Maintainer: Josua Mayer <josua@solid-run.com>
+Build-Depends:
+ debhelper (>= 11),
+ initramfs-tools [arm64 armhf],
+ linux-image-arm64 [arm64],
+ linux-image-armmp [armhf],
+ linux-image-armmp-lpae [arm64],
+Standards-Version: 4.1.3
+Vcs-Browser: https://github.com/SolidRun/pkg-linux
+Vcs-Git: https://github.com/SolidRun/pkg-linux.git
+
+Package: kernel-obs-build
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends},
+Description: Kernels for OBS Builds
+ Provides prepared kernel and initrd images for use in OBS builds.
