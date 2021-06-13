@@ -1,4 +1,10 @@
-linux-5.4.y-imx8-sr (5.4.47) UNRELEASED; urgency=medium
+linux-5.4.y-imx8-sr (5.4.47+1) stable; urgency=medium
+
+  * add imx8mp cubox pulse
+
+ -- Josua Mayer <josua@solid-run.com>  Wed, 16 Jun 2021 20:03:26 +0000
+
+linux-5.4.y-imx8-sr (5.4.47) stable; urgency=medium
 
   * Initial Release
 
