@@ -1,3 +1,9 @@
+linux-5.4.y-imx8-sr (5.4.47+3) stable; urgency=medium
+
+  * enable driver for Qualcomm USB Modems
+
+ -- Josua Mayer <josua@solid-run.com>  Tue, 01 Feb 2022 21:15:59 +0100
+
 linux-5.4.y-imx8-sr (5.4.47+2) stable; urgency=medium
 
   * attempt to fix imx8mp cubox pulse usb
