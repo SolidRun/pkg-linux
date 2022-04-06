@@ -1,17 +1,5 @@
-linux-5.4.y-imx8-sr (5.4.47+2) stable; urgency=medium
-
-  * attempt to fix imx8mp cubox pulse usb
-
- -- Josua Mayer <josua@solid-run.com>  Tue, 06 Jul 2021 08:59:48 +0000
-
-linux-5.4.y-imx8-sr (5.4.47+1) stable; urgency=medium
-
-  * add imx8mp cubox pulse
-
- -- Josua Mayer <josua@solid-run.com>  Wed, 16 Jun 2021 20:03:26 +0000
-
-linux-5.4.y-imx8-sr (5.4.47) stable; urgency=medium
+linux-5.10.y-imx8-sr (5.10.35) UNRELEASED; urgency=medium
 
   * Initial Release
 
- -- Josua Mayer <josua@solid-run.com>  Mon, 19 Oct 2020 17:13:38 +0200
+ -- Josua Mayer <josua@solid-run.com>  Sat, 04 Sep 2021 15:19:22 +0200

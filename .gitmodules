@@ -1,4 +1,4 @@
 [submodule "linux"]
 	path = linux
 	url = https://github.com/SolidRun/linux-stable.git
-	branch = linux-5.4.y-imx8
+	branch = lf-5.10.35-2.0.0-sr
