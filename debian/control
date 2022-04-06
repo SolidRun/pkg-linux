@@ -12,7 +12,7 @@ Package: linux-image-5.10.y-imx8-sr
 Architecture: arm64
 Provides: linux-image, galcore-6.4.3.336687
 Depends: ${misc:Depends}, initramfs-tools | linux-initramfs-tool
-Description: LONGNAME kernel
+Description: SolidRun kernel for i.MX8M
  This package provides the mainline kernel
 
 Package: linux-headers-5.10.y-imx8-sr

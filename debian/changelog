@@ -1,5 +1,6 @@
-linux-5.10.y-imx8-sr (5.10.35) UNRELEASED; urgency=medium
+linux-5.10.y-imx8-sr (5.10.72) stable; urgency=medium
 
   * Initial Release
+  * update to lf-5.10.72-2.2.0-sr
 
- -- Josua Mayer <josua@solid-run.com>  Sat, 04 Sep 2021 15:19:22 +0200
+ -- Josua Mayer <josua@solid-run.com>  Mon, 21 Feb 2022 14:42:34 +0100
