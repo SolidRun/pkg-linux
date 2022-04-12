@@ -1,3 +1,9 @@
+linux-5.4.y-imx8-sr (5.4.47+4) stable; urgency=medium
+
+  * add support for i.MX8MN Compact
+
+ -- Josua Mayer <josua@solid-run.com>  Tue, 12 Apr 2022 08:15:04 +0000
+
 linux-5.4.y-imx8-sr (5.4.47+3) stable; urgency=medium
 
   * enable driver for Qualcomm USB Modems
