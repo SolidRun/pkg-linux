@@ -1,3 +1,10 @@
+linux (5.10.106-1+sr2) bullseye; urgency=medium
+
+  * Enable ADIN phy driver as a module
+  * Support SolidRun i.MX6 SoM revision 1.9+ ethernet
+
+ -- Josua Mayer <josua@solid-run.com>  Thu, 16 Jun 2022 08:32:37 +0200
+
 linux (5.10.106-1) bullseye; urgency=medium
 
   * New upstream stable update:

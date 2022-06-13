@@ -1,0 +1,49 @@
+From 237e92c77e434ce3f8143e3053ef4717c63cbb15 Mon Sep 17 00:00:00 2001
+From: Josua Mayer <josua@solid-run.com>
+Date: Tue, 17 May 2022 11:54:31 +0300
+Subject: [PATCH 3/5] ARM: dts: imx6qdl-sr-som: update phy configuration for
+ som revision 1.9
+
+Since SoM revision 1.9 the PHY has been replaced with an ADIN1300,
+add an entry for it next to the original.
+
+As Russell King pointed out, additional phy nodes cause warnings like:
+mdio_bus 2188000.ethernet-1: MDIO device at address 1 is missing
+To avoid this the new node has its status set to disabled. U-Boot will
+be modified to enable the appropriate phy node after probing.
+
+The existing ar8035 nodes have to stay enabled by default to avoid
+breaking existing systems when they update Linux only.
+
+Co-developed-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+Signed-off-by: Alvaro Karsz <alvaro.karsz@solid-run.com>
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ arch/arm/boot/dts/imx6qdl-sr-som.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/arch/arm/boot/dts/imx6qdl-sr-som.dtsi b/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
+index c56337b63c3b..da78d4040560 100644
+--- a/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
+@@ -81,6 +81,16 @@ ethernet-phy@4 {
+ 			reg = <4>;
+ 			qca,clk-out-frequency = <125000000>;
+ 		};
++
++		/*
++		 * ADIN1300 (som rev 1.9 or later) is always at address 1. It
++		 * will be enabled automatically by U-Boot if detected.
++		 */
++		ethernet-phy@1 {
++			reg = <1>;
++			adi,phy-output-clock = "125mhz-free-running";
++			status = "disabled";
++		};
+ 	};
+ };
+ 
+-- 
+2.30.2
+

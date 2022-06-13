@@ -1,0 +1,39 @@
+From e4f048beb49df5f8f26dcb5c3be05be3c6290ff6 Mon Sep 17 00:00:00 2001
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+Date: Tue, 24 May 2022 16:11:53 +0200
+Subject: [PATCH 4/5] dt-bindings: net: adin: Fix adi,phy-output-clock
+ description syntax
+
+"make dt_binding_check":
+
+    Documentation/devicetree/bindings/net/adi,adin.yaml:40:77: [error] syntax error: mapping values are not allowed here (syntax)
+
+The first line of the description ends with a colon, hence the block
+needs to be marked with a "|".
+
+Fixes: 1f77204e11f8b9e5 ("dt-bindings: net: adin: document phy clock output properties")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/6fcef2665a6cd86a021509a84c5956ec2efd93ed.1653401420.git.geert+renesas@glider.be
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+ Documentation/devicetree/bindings/net/adi,adin.yaml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/net/adi,adin.yaml b/Documentation/devicetree/bindings/net/adi,adin.yaml
+index 77750df0c2c4..88611720545d 100644
+--- a/Documentation/devicetree/bindings/net/adi,adin.yaml
++++ b/Documentation/devicetree/bindings/net/adi,adin.yaml
+@@ -37,7 +37,8 @@ properties:
+     default: 8
+ 
+   adi,phy-output-clock:
+-    description: Select clock output on GP_CLK pin. Two clocks are available:
++    description: |
++      Select clock output on GP_CLK pin. Two clocks are available:
+       A 25MHz reference and a free-running 125MHz.
+       The phy can alternatively automatically switch between the reference and
+       the 125MHz clocks based on its internal state.
+-- 
+2.30.2
+

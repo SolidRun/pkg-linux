@@ -138,4 +138,11 @@ bugfix/all/tools-include-uapi-fix-errno.h.patch
 # overlay: allow mounting in user namespaces
 debian/overlayfs-permit-mounts-in-userns.patch
 
+# SR
+solidrun/0001-dt-bindings-net-adin-document-phy-clock-output-prope.patch
+solidrun/0002-net-phy-adin-add-support-for-clock-output.patch
+solidrun/0003-ARM-dts-imx6qdl-sr-som-update-phy-configuration-for-.patch
+solidrun/0004-dt-bindings-net-adin-Fix-adi-phy-output-clock-descri.patch
+solidrun/0005-HACK-ARM-dts-imx6qdl-sr-som-enable-adin-phy-node.patch
+
 # ABI maintenance
