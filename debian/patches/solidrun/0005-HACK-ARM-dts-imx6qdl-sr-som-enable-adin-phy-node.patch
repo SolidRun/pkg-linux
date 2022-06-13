@@ -1,0 +1,31 @@
+From 1fb4acaddd44b2acde396d45c7b88a50b453f873 Mon Sep 17 00:00:00 2001
+From: Josua Mayer <josua@solid-run.com>
+Date: Thu, 26 May 2022 09:44:33 +0300
+Subject: [PATCH 5/5] HACK: ARM: dts: imx6qdl-sr-som: enable adin phy node
+
+The ADIN1300 PHY is going to be enabled by U-Boot automatically in
+future releases.
+Enable the phy node unconditionally to allow operation with the existing
+v2018.01-based U-Boot release.
+
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+---
+ arch/arm/boot/dts/imx6qdl-sr-som.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/imx6qdl-sr-som.dtsi b/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
+index da78d4040560..45e6620f11ff 100644
+--- a/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-sr-som.dtsi
+@@ -89,7 +89,7 @@ ethernet-phy@4 {
+ 		ethernet-phy@1 {
+ 			reg = <1>;
+ 			adi,phy-output-clock = "125mhz-free-running";
+-			status = "disabled";
++			status = "okay";
+ 		};
+ 	};
+ };
+-- 
+2.30.2
+
