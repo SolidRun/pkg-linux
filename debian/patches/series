@@ -147,4 +147,7 @@ bugfix/all/tools-perf-fix-missing-ldflags-for-some-programs.patch
 # debian-installer fixes
 bugfix/powerpc/fbdev-offb-Update-expected-device-name.patch
 
+# SR
+solidrun/0006-arm-dts-Add-support-for-SolidRun-HummingBoard-CBi.patch
+
 # ABI maintenance
