@@ -1,9 +1,10 @@
-linux (5.10.106-1+sr2) bullseye; urgency=medium
+linux (5.10.106-1+sr3) bullseye; urgency=medium
 
   * Enable ADIN phy driver as a module
   * Support SolidRun i.MX6 SoM revision 1.9+ ethernet
+  * Support SolidRun HummingBoard CBi
 
- -- Josua Mayer <josua@solid-run.com>  Thu, 16 Jun 2022 08:32:37 +0200
+ -- Josua Mayer <josua@solid-run.com>  Thu, 07 Jul 2022 11:01:00 +0300
 
 linux (5.10.106-1) bullseye; urgency=medium
 
