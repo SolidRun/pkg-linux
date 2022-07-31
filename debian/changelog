@@ -1,3 +1,9 @@
+linux-imx6-sr (4.9.150+4) stable; urgency=medium
+
+  * add driver for new adin1300 phy in SoMs rev 1.9+
+
+ -- Josua Mayer <josua.mayer97@gmail.com>  Sun, 31 Jul 2022 10:45:00 +0300
+
 linux-imx6-sr (4.9.150+3) stable; urgency=medium
 
   * enable driver for MMA8452 and related accelerometers
