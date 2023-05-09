@@ -4,6 +4,7 @@ drivers/net/wireless/**
 # Include staging wireless drivers
 prism2_usb ?
 drivers/staging/rtl8** ?
+r8188eu ?
 vt6656_stage ?
 
 # Exclude drivers packaged in nic-pcmcia-modules
