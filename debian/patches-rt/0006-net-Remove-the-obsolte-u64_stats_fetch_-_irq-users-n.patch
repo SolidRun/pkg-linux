@@ -1,9 +1,9 @@
-From e2a1cdcf3bde6c54fbfbdcc6760a9f791c191008 Mon Sep 17 00:00:00 2001
+From 80a876b3bd1a13c140b813a1886e98d0a25d016f Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:17:37 +0200
 Subject: [PATCH 06/52] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (net).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -33,7 +33,7 @@ Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
  16 files changed, 44 insertions(+), 45 deletions(-)
 
 diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index e1bb41a443c4..296d0145932f 100644
+index 07e86d03d4ba..5920544e93e8 100644
 --- a/net/8021q/vlan_dev.c
 +++ b/net/8021q/vlan_dev.c
 @@ -712,13 +712,13 @@ static void vlan_dev_get_stats64(struct net_device *dev,
@@ -327,7 +327,7 @@ index 03af6a2ffd56..fb7cabc71366 100644
  		seq_printf(seq, "%3X %8LX %8LX %8LX %16LX %16LX\n",
  			   i, (u64)conns, (u64)inpkts,
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 12d815b9aa13..202b8f907778 100644
+index f663262df698..91fb7934fb9b 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
 @@ -1546,10 +1546,10 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
@@ -389,5 +389,5 @@ index d4a2db0b2299..0a0e4c283f02 100644
  			masks_and_count[i].counter += counter;
  		}
 -- 
-2.40.0
+2.40.1
 

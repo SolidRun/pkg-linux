@@ -655,6 +655,7 @@ linux (6.1.29-1) UNRELEASED; urgency=medium
   * d/rules.real: Fix typo in setup_image target.
   * [amd64,arm64] drivers/virtio: Enable VIRTIO_MEM as module (Closes: #1038665)
   * Bump ABI to 10
+  * [rt] Update to 6.1.28-rt10
 
   [ Cyril Brulebois ]
   * udeb: Add r8188eu to nic-wireless-modules (Closes: #1035824)

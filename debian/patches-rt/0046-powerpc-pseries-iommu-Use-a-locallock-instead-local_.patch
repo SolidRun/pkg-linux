@@ -1,9 +1,9 @@
-From b91575c4fbe7612f047285949d9536fe37ac9b36 Mon Sep 17 00:00:00 2001
+From fe70172fa7f558373663a36dea459343f64074f2 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 26 Mar 2019 18:31:54 +0100
 Subject: [PATCH 46/52] powerpc/pseries/iommu: Use a locallock instead
  local_irq_save()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
 
 The locallock protects the per-CPU variable tce_page. The function
 attempts to allocate memory while tce_page is protected (by disabling
@@ -114,5 +114,5 @@ index 561adac69022..61c4c0610aa6 100644
  }
  
 -- 
-2.40.0
+2.40.1
 

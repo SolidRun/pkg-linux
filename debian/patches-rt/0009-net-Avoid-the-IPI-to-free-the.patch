@@ -1,8 +1,8 @@
-From 4b8e1fa3cdb1a99404bc373ad5f590308ecd58c4 Mon Sep 17 00:00:00 2001
+From 32289d1c2b802386f13bba1a4cb25274cc9b3158 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 15 Aug 2022 17:29:50 +0200
 Subject: [PATCH 09/52] net: Avoid the IPI to free the
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
 
 skb_attempt_defer_free() collects a skbs, which was allocated on a
 remote CPU, on a per-CPU list. These skbs are either freed on that
@@ -104,10 +104,10 @@ index f540b47faf79..dec69ba97e5e 100644
  
  		init_gro_hash(&sd->backlog);
 diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index cd4b3a610961..60ec16b6e97a 100644
+index 597c1f17d388..f0e185742c20 100644
 --- a/net/core/skbuff.c
 +++ b/net/core/skbuff.c
-@@ -6662,6 +6662,11 @@ nodefer:	__kfree_skb(skb);
+@@ -6665,6 +6665,11 @@ nodefer:	__kfree_skb(skb);
  	/* Make sure to trigger NET_RX_SOFTIRQ on the remote CPU
  	 * if we are unlucky enough (this seems very unlikely).
  	 */
@@ -121,5 +121,5 @@ index cd4b3a610961..60ec16b6e97a 100644
 +	}
  }
 -- 
-2.40.0
+2.40.1
 

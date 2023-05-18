@@ -1,9 +1,9 @@
-From c6c29b80a00481a25af3a4993f2caaed51390cf3 Mon Sep 17 00:00:00 2001
+From e494959dcbfae39aa58a5b3da44e620df0b6cea1 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:15:44 +0200
 Subject: [PATCH 05/52] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (drivers).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -691,7 +691,7 @@ index 2cca9e84e31e..34ab5ff9823b 100644
  		stats->tx_packets += packets;
  		stats->tx_bytes   += bytes;
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-index f6fa63e4253c..1465ed7a6166 100644
+index e632041aed5f..995b2a7c8973 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
 @@ -154,7 +154,7 @@ __i40e_add_ethtool_stats(u64 **data, void *pointer,
@@ -724,7 +724,7 @@ index f6fa63e4253c..1465ed7a6166 100644
  	/* Once we successfully copy the stats in, update the data pointer */
  	*data += size;
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 68f390ce4f6e..6492d87107e1 100644
+index 0e01b1927c1c..9eef9d47efec 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_main.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
 @@ -419,10 +419,10 @@ static void i40e_get_netdev_stats_struct_tx(struct i40e_ring *ring,
@@ -981,7 +981,7 @@ index 1d9b70e0ff67..56d611fbeee8 100644
  		packets += _packets;
  	}
 diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index e88e3dfac8c2..eda7188e8df4 100644
+index 0051aa676e19..1c22ff2dba9b 100644
 --- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
 +++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
 @@ -1335,10 +1335,10 @@ static void ixgbe_get_ethtool_stats(struct net_device *netdev,
@@ -2147,5 +2147,5 @@ index dc404e05970c..14aec417fa06 100644
  		tot->rx_packets += rx_packets;
  		tot->tx_packets += tx_packets;
 -- 
-2.40.0
+2.40.1
 
