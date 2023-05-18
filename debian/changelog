@@ -1,4 +1,4 @@
-linux (6.1.28-1) UNRELEASED; urgency=medium
+linux (6.1.29-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.28
@@ -447,6 +447,208 @@ linux (6.1.28-1) UNRELEASED; urgency=medium
     - i40e: Remove string printing for i40e_status
     - i40e: use int for i40e_status
     - scsi: libsas: Grab the ATA port lock in sas_ata_device_link_abort()
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.29
+    - [arm64,armhf] USB: dwc3: gadget: drop dead hibernation code
+    - [arm64,armhf] usb: dwc3: gadget: Execute gadget stop after halting the
+      controller
+    - drm/vmwgfx: Remove explicit and broken vblank handling
+    - drm/vmwgfx: Fix Legacy Display Unit atomic drm support
+    - [amd64] crypto: ccp - Clear PSP interrupt status register before calling
+      handler
+    - [x86] perf/x86/core: Zero @lbr instead of returning -1 in
+      x86_perf_get_lbr() stub
+    - [x86] KVM: x86: Track supported PERF_CAPABILITIES in kvm_caps
+    - [x86] KVM: x86/pmu: Disallow legacy LBRs if architectural LBRs are
+      available
+    - mtd: spi-nor: spansion: Remove NO_SFDP_FLAGS from s28hs512t info
+    - mtd: spi-nor: add SFDP fixups for Quad Page Program
+    - mtd: spi-nor: Add a RWW flag
+    - mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx
+      SEMPER flash
+    - [arm64] mailbox: zynq: Switch to flexible array to simplify code
+    - [arm64] mailbox: zynqmp: Fix counts of child nodes
+    - mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s25hx
+      SEMPER flash
+    - drm/amd/display: Ext displays with dock can't recognized after resume
+    - [x86] KVM: x86/mmu: Avoid indirect call for get_cr3
+    - [x86] KVM: x86: Do not unload MMU roots when only toggling CR0.WP with TDP
+      enabled
+    - [x86] KVM: x86: Make use of kvm_read_cr*_bits() when testing bits
+    - [x86] KVM: VMX: Make CR0.WP a guest owned bit
+    - [x86] KVM: x86/mmu: Refresh CR0.WP prior to checking for emulated
+      permission faults
+    - [x86] ASoC: Intel: soc-acpi-byt: Fix "WM510205" match no longer working
+    - scsi: qedi: Fix use after free bug in qedi_remove()
+    - drm/amd/display: Remove FPU guards from the DML folder
+    - drm/amd/display: Add missing WA and MCLK validation
+    - drm/amd/display: Return error code on DSC atomic check failure
+    - drm/amd/display: Fixes for dcn32_clk_mgr implementation
+    - drm/amd/display: Reset OUTBOX0 r/w pointer on DMUB reset
+    - drm/amd/display: Do not clear GPINT register when releasing DMUB from
+      reset
+    - drm/amd/display: Update bounding box values for DCN321
+    - ixgbe: Fix panic during XDP_TX with > 64 CPUs
+    - [armhf] net/ncsi: clear Tx enable mode when handling a Config required AEN
+    - tcp: fix skb_copy_ubufs() vs BIG TCP
+    - net/sched: cls_api: remove block_cb from driver_list before freeing
+    - sit: update dev->needed_headroom in ipip6_tunnel_bind_dev()
+    - net: ipv6: fix skb hash for some RST packets
+    - [arm64,armhf] net: dsa: mv88e6xxx: add mv88e6321 rsvd2cpu
+    - writeback: fix call of incorrect macro
+    - block: Skip destroyed blkg when restart in blkg_destroy_all()
+    - [arm64,armhf] watchdog: dw_wdt: Fix the error handling path of
+      dw_wdt_drv_probe()
+    - [arm64,armhf] i2c: tegra: Fix PEC support for SMBUS block read
+    - net/sched: act_mirred: Add carrier check
+    - r8152: fix flow control issue of RTL8156A
+    - r8152: fix the poor throughput for 2.5G devices
+    - r8152: move setting r8153b_rx_agg_chg_indicate()
+    - sfc: Fix module EEPROM reporting for QSFP modules
+    - rxrpc: Fix hard call timeout units
+    - [x86] drm/i915/mtl: Add the missing CPU transcoder mask in
+      intel_device_info
+    - ethtool: Fix uninitialized number of lanes
+    - af_packet: Don't send zero-byte data in packet_sendmsg_spkt().
+    - drm/amdgpu: add a missing lock for AMDGPU_SCHED
+    - ALSA: caiaq: input: Add error handling for unsupported input methods in
+      `snd_usb_caiaq_input_init`
+    - [s390x] KVM: s390: fix race in gmap_make_secure()
+    - ice: block LAN in case of VF to VF offload
+    - virtio_net: suppress cpu stall when free_unused_bufs
+    - [arm64] net: enetc: check the index of the SFI rather than the handle
+    - perf record: Fix "read LOST count failed" msg with sample read
+    - perf scripts intel-pt-events.py: Fix IPC output for Python 2
+    - perf vendor events s390: Remove UTF-8 characters from JSON file
+    - perf tests record_offcpu.sh: Fix redirection of stderr to stdin
+    - perf ftrace: Make system wide the default target for latency subcommand
+    - perf vendor events power9: Remove UTF-8 characters from JSON files
+    - perf pmu: zfree() expects a pointer to a pointer to zero it after freeing
+      its contents
+    - perf map: Delete two variable initialisations before null pointer checks
+      in sort__sym_from_cmp()
+    - perf cs-etm: Fix timeless decode mode detection
+    - crypto: api - Add scaffolding to change completion function signature
+    - crypto: engine - Use crypto_request_complete
+    - crypto: engine - fix crypto_queue backlog handling
+    - perf symbols: Fix return incorrect build_id size in elf_read_build_id()
+    - perf tracepoint: Fix memory leak in is_valid_tracepoint()
+    - perf stat: Separate bperf from bpf_profiler
+    - [x86] retbleed: Fix return thunk alignment
+    - btrfs: fix btrfs_prev_leaf() to not return the same key twice
+    - btrfs: zoned: fix wrong use of bitops API in btrfs_ensure_empty_zones
+    - btrfs: properly reject clear_cache and v1 cache for block-group-tree
+    - btrfs: fix assertion of exclop condition when starting balance
+    - btrfs: fix encoded write i_size corruption with no-holes
+    - btrfs: don't free qgroup space unless specified
+    - btrfs: zero the buffer before marking it dirty in btrfs_redirty_list_add
+    - btrfs: make clear_cache mount option to rebuild FST without disabling it
+    - btrfs: print-tree: parent bytenr must be aligned to sector size
+    - btrfs: fix space cache inconsistency after error loading it from disk
+    - btrfs: zoned: zone finish data relocation BG with last IO
+    - btrfs: zoned: fix full zone super block reading on ZNS
+    - cifs: fix pcchunk length type in smb2_copychunk_range
+    - cifs: release leases for deferred close handles when freezing
+    - [amd64] platform/x86/intel-uncore-freq: Return error on write frequency
+    - [x86] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts
+      on the Juno Tablet
+    - [x86] platform/x86: thinkpad_acpi: Fix platform profiles on T490
+    - [x86] platform/x86: touchscreen_dmi: Add info for the Dexp Ursus KX210i
+    - [x86] platform/x86: thinkpad_acpi: Add profile force ability
+    - inotify: Avoid reporting event with invalid wd
+    - smb3: fix problem remounting a share after shutdown
+    - SMB3: force unmount was failing to close deferred close files
+    - [armhf] remoteproc: stm32: Call of_node_put() on iteration error
+    - sysctl: clarify register_sysctl_init() base directory order
+    - [armhf] ARM: dts: aspeed: asrock: Correct firmware flash SPI clocks
+    - [armhf] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
+    - [armhf] ARM: dts: aspeed: romed8hm3: Fix GPIO polarity of system-fault LED
+    - [arm64] drm/msm/adreno: fix runtime PM imbalance at gpu load
+    - [x86] drm/i915/color: Fix typo for Plane CSC indexes
+    - [arm64] drm/msm: fix NULL-deref on snapshot tear down
+    - [arm64] drm/msm: fix NULL-deref on irq uninstall
+    - [arm64] drm/msm: fix drm device leak on bind errors
+    - [arm64] drm/msm: fix vram leak on bind errors
+    - [arm64] drm/msm: fix workqueue leak on bind errors
+    - [x86] drm/i915/dsi: Use unconditional msleep() instead of
+      intel_dsi_msleep()
+    - f2fs: fix null pointer panic in tracepoint in __replace_atomic_write_block
+    - f2fs: fix potential corruption when moving a directory
+    - [armhf] drm/panel: otm8009a: Set backlight parent to panel device
+    - drm/amd/display: Add NULL plane_state check for cursor disable logic
+    - drm/amd/display: Fix 4to1 MPC black screen with DPP RCO
+    - drm/amd/display: filter out invalid bits in pipe_fuses
+    - drm/amd/display: fix flickering caused by S/G mode
+    - drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v10_0_hw_fini
+    - drm/amdgpu: fix an amdgpu_irq_put() issue in gmc_v9_0_hw_fini()
+    - drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v11_0_hw_fini
+    - drm/amdgpu/gfx: disable gfx9 cp_ecc_error_irq only when enabling legacy
+      gfx ras
+    - drm/amdgpu/jpeg: Remove harvest checking for JPEG3
+    - drm/amdgpu: change gfx 11.0.4 external_id range
+    - drm/amdgpu: Fix vram recover doesn't work after whole GPU reset (v2)
+    - drm/amd/display: Enforce 60us prefetch for 200Mhz DCFCLK modes
+    - drm/amd/pm: parse pp_handle under appropriate conditions
+    - drm/amdgpu: disable sdma ecc irq only when sdma RAS is enabled in suspend
+    - drm/amd/pm: avoid potential UBSAN issue on legacy asics
+    - drm/amdgpu: remove deprecated MES version vars
+    - drm/amd: Load MES microcode during early_init
+    - drm/amd: Add a new helper for loading/validating microcode
+    - drm/amd: Use `amdgpu_ucode_*` helpers for MES
+    - HID: wacom: Set a default resolution for older tablets
+    - HID: wacom: insert timestamp to packed Bluetooth (BT) events
+    - [arm64] drm/msm/adreno: adreno_gpu: Use suspend() instead of idle() on
+      load error
+    - f2fs: specify extent cache for read explicitly
+    - f2fs: move internal functions into extent_cache.c
+    - f2fs: remove unnecessary __init_extent_tree
+    - f2fs: refactor extent_cache to support for read and more
+    - f2fs: allocate the extent_cache by default
+    - f2fs: factor out victim_entry usage from general rb_tree use
+    - [arm64] drm/msm/adreno: Simplify read64/write64 helpers
+    - [arm64] drm/msm: Hangcheck progress detection
+    - [arm64] drm/msm: fix missing wq allocation error handling
+    - wifi: rtw88: rtw8821c: Fix rfe_option field width
+    - [x86] drm/i915/mtl: update scaler source and destination limits for MTL
+    - [x86] drm/i915: Check pipe source size when using skl+ scalers
+    - drm/amd/display: Refactor eDP PSR codes
+    - drm/amd/display: Add Z8 allow states to z-state support list
+    - drm/amd/display: Add debug option to skip PSR CRTC disable
+    - drm/amd/display: Fix Z8 support configurations
+    - drm/amd/display: Add minimum Z8 residency debug option
+    - drm/amd/display: Update minimum stutter residency for DCN314 Z8
+    - drm/amd/display: Lowering min Z8 residency time
+    - [x86] ASoC: codecs: constify static sdw_slave_ops struct
+    - drm/amd/display: Update Z8 watermarks for DCN314
+    - drm/amd/display: Update Z8 SR exit/enter latencies
+    - drm/amd/display: Change default Z8 watermark values
+    - ksmbd: Implements sess->ksmbd_chann_list as xarray
+    - ksmbd: fix racy issue from session setup and logoff (CVE-2023-32250)
+    - ksmbd: destroy expired sessions
+    - ksmbd: block asynchronous requests when making a delay on session setup
+    - ksmbd: fix racy issue from smb2 close and logoff with multichannel
+    - drm: Add missing DP DSC extended capability definitions.
+    - drm/dsc: fix drm_edp_dsc_sink_output_bpp() DPCD high byte usage
+    - locking/rwsem: Add __always_inline annotation to __down_read_common() and
+      inlined callers
+    - ext4: fix WARNING in mb_find_extent
+    - ext4: avoid a potential slab-out-of-bounds in ext4_group_desc_csum
+      (CVE-2023-34256)
+    - ext4: fix data races when using cached status extents
+    - ext4: check iomap type only if ext4_iomap_begin() does not fail
+    - ext4: improve error recovery code paths in __ext4_remount()
+    - ext4: improve error handling from ext4_dirhash()
+    - ext4: fix deadlock when converting an inline directory in nojournal mode
+    - ext4: add bounds checking in get_max_inline_xattr_value_size()
+    - ext4: bail out of ext4_xattr_ibody_get() fails for any reason
+    - ext4: fix lockdep warning when enabling MMP
+    - ext4: remove a BUG_ON in ext4_mb_release_group_pa()
+    - ext4: fix invalid free tracking in ext4_xattr_move_to_block()
+    - drm/dsc: fix DP_DSC_MAX_BPP_DELTA_* macro values
+    - f2fs: fix to do sanity check on extent cache correctly
+    - f2fs: inode: fix to do sanity check on extent cache correctly
+    - [x86] amd_nb: Add PCI ID for family 19h model 78h
+    - [x86] fix clear_user_rep_good() exception handling annotation
+    - drm/amd/display: Fix hang when skipping modeset
 
   [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
