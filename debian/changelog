@@ -1,4 +1,4 @@
-linux (6.1.30-1) UNRELEASED; urgency=medium
+linux (6.1.31-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.28
@@ -920,6 +920,105 @@ linux (6.1.30-1) UNRELEASED; urgency=medium
     - drm/amdgpu: declare firmware for new MES 11.0.4
     - drm/amd/amdgpu: introduce gc_*_mes_2.bin v2
     - drm/amdgpu: reserve the old gc_11_0_*_mes.bin
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.31
+    - [arm64,armhf] usb: dwc3: fix gadget mode suspend interrupt handler issue
+    - tpm, tpm_tis: Avoid cache incoherency in test for interrupts
+    - tpm, tpm_tis: Only handle supported interrupts
+    - tpm_tis: Use tpm_chip_{start,stop} decoration inside tpm_tis_resume
+    - tpm, tpm_tis: startup chip before testing for interrupts
+    - tpm: Re-enable TPM chip boostrapping non-tpm_tis TPM drivers
+    - tpm: Prevent hwrng from activating during resume
+    - [x86] watchdog: sp5100_tco: Immediately trigger upon starting.
+    - drm/amd/amdgpu: update mes11 api def
+    - drm/amdgpu/mes11: enable reg active poll
+    - skbuff: Proactively round up to kmalloc bucket size
+    - [arm64,armhf] net: dsa: mv88e6xxx: Add RGMII delay to 88E6320
+    - drm/amd/display: hpd rx irq not working with eDP interface
+    - ocfs2: Switch to security_inode_init_security()
+    - [x86] mm: Avoid incomplete Global INVLPG flushes
+    - [x86] ALSA: hda/ca0132: add quirk for EVGA X299 DARK
+    - ALSA: hda: Fix unhandled register update during auto-suspend period
+    - [x86] ALSA: hda/realtek: Enable headset onLenovo M70/M90
+    - SUNRPC: Don't change task->tk_status after the call to rpc_exit_task
+    - [arm64,armhf] imc: sdhci-esdhc-imx: make "no-mmc-hs400" works
+    - mmc: block: ensure error propagation for non-blk
+    - [x86] power: supply: axp288_fuel_gauge: Fix external_power_changed race
+    - [arm64] power: supply: bq25890: Fix external_power_changed race
+    - ASoC: rt5682: Disable jack detection interrupt during suspend
+    - net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
+    - btrfs: use nofs when cleaning up aborted transactions
+    - [x86] drm/mgag200: Fix gamma lut not initialized.
+    - drm/radeon: reintroduce radeon_dp_work_func content
+    - drm/amd/pm: add missing NotifyPowerSource message mapping for SMU13.0.7
+    - drm/amd/pm: Fix output of pp_od_clk_voltage
+    - Revert "binder_alloc: add missing mmap_lock calls when using the VMA"
+    - [arm*] Revert "android: binder: stop saving a pointer to the VMA"
+    - [arm*] binder: add lockless binder_alloc_(set|get)_vma()
+    - [arm*] binder: fix UAF caused by faulty buffer cleanup
+    - [arm*] binder: fix UAF of alloc->vma in race with munmap()
+    - drm/amd/amdgpu: limit one queue per gang
+    - [x86] perf/x86/uncore: Correct the number of CHAs on SPR
+    - [x86] topology: Fix erroneous smp_num_siblings on Intel Hybrid platforms
+    - [mips*] irqchip/mips-gic: Don't touch vl_map if a local interrupt is not
+      routable
+    - [mips*] irqchip/mips-gic: Use raw spinlock for gic_lock
+    - debugobjects: Don't wake up kswapd from fill_pool()
+    - fbdev: udlfb: Fix endpoint check
+    - net: fix stack overflow when LRO is disabled for virtual interfaces
+    - udplite: Fix NULL pointer dereference in __sk_mem_raise_allocated().
+    - USB: core: Add routines for endpoint checks in old drivers
+    - USB: sisusbvga: Add endpoint checks
+    - media: radio-shark: Add endpoint checks
+    - net: fix skb leak in __skb_tstamp_tx()
+    - drm: fix drmm_mutex_init()
+    - bpf: Fix mask generation for 32-bit narrow loads of 64-bit fields
+    - bpf: fix a memory leak in the LRU and LRU_PERCPU hash maps
+    - ipv6: Fix out-of-bounds access in ipv6_find_tlv()
+    - cifs: mapchars mount option ignored
+    - power: supply: leds: Fix blink to LED on transition
+    - power: supply: bq27xxx: Fix bq27xxx_battery_update() race condition
+    - power: supply: bq27xxx: Fix I2C IRQ race on remove
+    - power: supply: bq27xxx: Fix poll_interval handling and races on remove
+    - power: supply: bq27xxx: Add cache parameter to
+      bq27xxx_battery_current_and_status()
+    - power: supply: bq27xxx: Move bq27xxx_battery_update() down
+    - power: supply: bq27xxx: Ensure power_supply_changed() is called on current
+      sign changes
+    - power: supply: bq27xxx: After charger plug in/out wait 0.5s for things to
+      stabilize
+    - [arm64] power: supply: bq25890: Call power_supply_changed() after updating
+      input current or voltage
+    - [x86] power: supply: bq24190: Call power_supply_changed() after updating
+      input current
+    - [arm64] optee: fix uninited async notif value
+    - fs: fix undefined behavior in bit shift for SB_NOUSER
+    - [arm64] regulator: pca9450: Fix BUCK2 enable_mask
+    - [x86] platform/x86: ISST: Remove 8 socket limit
+    - [armhf] dts: imx6qdl-mba6: Add missing pvcie-supply regulator
+    - [x86] pci/xen: populate MSI sysfs entries
+    - [x86] show_trace_log_lvl: Ensure stack pointer is aligned, again
+    - [x86] ASoC: Intel: Skylake: Fix declaration of enum skl_ch_cfg
+    - cxl: Wait Memory_Info_Valid before access memory related info
+    - sctp: fix an issue that plpmtu can never go to complete state
+    - [x86] forcedeth: Fix an error handling path in nv_probe()
+    - net/mlx5e: Fix SQ wake logic in ptp napi_poll context
+    - net/mlx5e: Fix deadlock in tc route query code
+    - net/mlx5e: Use correct encap attribute during invalidation
+    - net/mlx5e: do as little as possible in napi poll when budget is 0
+    - [s390x] net/mlx5: DR, Fix crc32 calculation to work on big-endian (BE)
+      CPUs
+    - net/mlx5: Handle pairing of E-switch via uplink un/load APIs
+    - net/mlx5: DR, Check force-loopback RC QP capability independently from
+      RoCE
+    - net/mlx5: Fix error message when failing to allocate device memory
+    - net/mlx5: Collect command failures data only for known commands
+    - net/mlx5: Devcom, fix error flow in mlx5_devcom_register_device
+    - net/mlx5: Devcom, serialize devcom registration
+    - [arm64] dts: imx8mn-var-som: fix PHY detection bug by adding deassert
+      delay
+    - net/smc: Reset connection when trying to use SMCRv2 fails.
+    - [x86] 3c589_cs: Fix an error handling path in tc589_probe()
+    - net: phy: mscc: add VSC8502 to MODULE_DEVICE_TABLE
 
   [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
