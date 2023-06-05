@@ -1,4 +1,4 @@
-linux (6.1.31-1) UNRELEASED; urgency=medium
+linux (6.1.32-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.28
@@ -1019,6 +1019,40 @@ linux (6.1.31-1) UNRELEASED; urgency=medium
     - net/smc: Reset connection when trying to use SMCRv2 fails.
     - [x86] 3c589_cs: Fix an error handling path in tc589_probe()
     - net: phy: mscc: add VSC8502 to MODULE_DEVICE_TABLE
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.32
+    - inet: Add IP_LOCAL_PORT_RANGE socket option
+    - ipv{4,6}/raw: fix output xfrm lookup wrt protocol
+    - tls: rx: device: fix checking decryption status
+    - tls: rx: strp: set the skb->len of detached / CoW'ed skbs
+    - tls: rx: strp: fix determining record length in copy mode
+    - tls: rx: strp: force mixed decrypted records into copy mode
+    - tls: rx: strp: factor out copying skb data
+    - tls: rx: strp: preserve decryption status of skbs when needed
+    - net/mlx5: E-switch, Devcom, sync devcom events and devcom comp register
+    - [x86] gpio-f7188x: fix chip name and pin count on Nuvoton chip
+    - bpf, sockmap: Pass skb ownership through read_skb
+    - bpf, sockmap: Convert schedule_work into delayed_work
+    - bpf, sockmap: Reschedule is now done through backlog
+    - bpf, sockmap: Improved check for empty queue
+    - bpf, sockmap: Handle fin correctly
+    - bpf, sockmap: TCP data stall on recv before accept
+    - bpf, sockmap: Wake up polling after data copy
+    - bpf, sockmap: Incorrectly handling copied_seq
+    - blk-mq: fix race condition in active queue accounting
+    - vfio/type1: check pfn valid before converting to struct page
+    - net: page_pool: use in_softirq() instead
+    - page_pool: fix inconsistency for page_pool_ring_[un]lock()
+    - net: phy: mscc: enable VSC8501/2 RGMII RX clock
+    - wifi: iwlwifi: mvm: support wowlan info notification version 2
+    - wifi: iwlwifi: mvm: fix potential memory leak
+    - RDMA/rxe: Fix the error "trying to register non-static key in
+      rxe_cleanup_task"
+    - drm/amd: Don't allow s0ix on APUs older than Raven
+    - bluetooth: Add cmd validity checks at the start of hci_sock_ioctl()
+    - block: fix bio-cache for passthru IO
+    - [x86] cpufreq: amd-pstate: Update policy->cur in amd_pstate_adjust_perf()
+    - [x86] cpufreq: amd-pstate: Add ->fast_switch() callback
+    - netfilter: ctnetlink: Support offloaded conntrack entry deletion
 
   [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
