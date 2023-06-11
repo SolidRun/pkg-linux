@@ -1,7 +1,11 @@
 linux (6.1.27-2) UNRELEASED; urgency=medium
 
+  [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
   * d/rules.real: Fix typo in setup_image target.
+
+  [ Cyril Brulebois ]
+  * udeb: Add r8188eu to nic-wireless-modules (Closes: #1035824)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 29 May 2023 09:07:30 +0200
 
