@@ -1,8 +1,8 @@
-From b502456899bdc983af64b4d105c70694141fd9ad Mon Sep 17 00:00:00 2001
+From 8794162833c14bb74e0087a3bfeb076d7ed2b49b Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:15:32 +0200
 Subject: [PATCH 04/52] spi: Remove the obsolte u64_stats_fetch_*_irq() users.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.

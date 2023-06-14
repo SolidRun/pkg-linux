@@ -1,8 +1,8 @@
-From 2aec2a8a00b2af2f8f51e6ff0c7799f8805697c5 Mon Sep 17 00:00:00 2001
+From af684ce7cf3bd88f1e5ce8ee1831a3be023b96f6 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 13 Jul 2021 07:52:52 +0200
 Subject: [PATCH 35/52] entry: Fix the preempt lazy fallout
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Common code needs common defines....
 

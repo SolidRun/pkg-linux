@@ -1,8 +1,8 @@
-From e7de076298da73bbd33c163452df53e25ecbd184 Mon Sep 17 00:00:00 2001
+From b50eb478df3a812745d555f76a84ca659ec4a329 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 16 Aug 2022 09:45:22 +0200
 Subject: [PATCH 01/52] vduse: Remove include of rwlock.h
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.28-rt10.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 rwlock.h should not be included directly. Instead linux/splinlock.h
 should be included. Including it directly will break the RT build.
