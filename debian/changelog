@@ -1,4 +1,4 @@
-linux (6.1.33-1) UNRELEASED; urgency=medium
+linux (6.1.34-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.28
@@ -25,8 +25,6 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - PCI: pciehp: Fix AB-BA deadlock between reset_lock and device_lock
     - [arm64] PCI: qcom: Fix the incorrect register usage in v2.7.0 config
     - [arm64] phy: qcom-qmp-pcie: sc8180x PCIe PHY has 2 lanes
-    - usb: gadget: udc: core: Invoke usb_gadget_connect only when started
-    - usb: gadget: udc: core: Prevent redundant calls to pullup
     - [arm64,armhf] usb: dwc3: gadget: Stall and restart EP0 if host is
       unresponsive
     - [arm64,armhf] USB: dwc3: fix runtime pm imbalance on probe errors
@@ -107,8 +105,6 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - bus: mhi: host: Use mhi_tryset_pm_state() for setting fw error state
     - bus: mhi: host: Range check CHDBOFF and ERDBOFF
     - rcu: Fix missing TICK_DEP_MASK_RCU_EXP dependency check
-    - selinux: fix Makefile dependencies of flask.h
-    - selinux: ensure av_permissions.h is built when needed
     - tpm, tpm_tis: Do not skip reset of original interrupt vector
     - tpm, tpm_tis: Claim locality before writing TPM_INT_ENABLE register
     - tpm, tpm_tis: Disable interrupts if tpm_tis_probe_irq() failed
@@ -404,10 +400,10 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - afs: Fix getattr to report server i_size on dirs, not local size
     - afs: Avoid endless loop if file is larger than expected
     - ALSA: usb-audio: Add quirk for Pioneer DDJ-800
-    - ALSA: hda/realtek: Add quirk for ThinkPad P1 Gen 6
-    - ALSA: hda/realtek: Add quirk for ASUS UM3402YAR using CS35L41
-    - ALSA: hda/realtek: support HP Pavilion Aero 13-be0xxx Mute LED
-    - ALSA: hda/realtek: Fix mute and micmute LEDs for an HP laptop
+    - [x86] ALSA: hda/realtek: Add quirk for ThinkPad P1 Gen 6
+    - [x86] ALSA: hda/realtek: Add quirk for ASUS UM3402YAR using CS35L41
+    - [x86] ALSA: hda/realtek: support HP Pavilion Aero 13-be0xxx Mute LED
+    - [x86] ALSA: hda/realtek: Fix mute and micmute LEDs for an HP laptop
     - nilfs2: do not write dirty data after degenerating to read-only
     - nilfs2: fix infinite loop in nilfs_mdt_get_block()
     - mm: do not reclaim private data from pinned page
@@ -681,7 +677,6 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - [x86] drm/i915: taint kernel when force probing unsupported devices
     - [x86] fbdev: arcfb: Fix error handling in arcfb_probe()
     - ext4: reflect error codes from ext4_multi_mount_protect() to its callers
-    - ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled
     - ext4: allow to find by goal if EXT4_MB_HINT_GOAL_ONLY is set
     - ext4: allow ext4_get_group_info() to fail
     - rcu: Protect rcu_print_task_exp_stall() ->exp_tasks access
@@ -764,7 +759,6 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - Bluetooth: Add new quirk for broken set random RPA timeout for ATS2851
     - Bluetooth: L2CAP: fix "bad unlock balance" in l2cap_disconnect_rsp
     - Bluetooth: btrtl: Add the support for RTL8851B
-    - [x86] staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE
     - HID: apple: Set the tilde quirk flag on the Geyser 4 and later
     - [x86] ASoC: amd: yc: Add DMI entries to support HP OMEN 16-n0xxx (8A42)
     - HID: logitech-hidpp: Don't use the USB serial for USB devices
@@ -774,8 +768,8 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - ALSA: hda: LNL: add HD Audio PCI ID
     - [x86] ASoC: amd: Add Dell G15 5525 to quirks list
     - [x86] ASoC: amd: yc: Add ThinkBook 14 G5+ ARP to quirks list for acp6x
-    - HID: apple: Set the tilde quirk flag on the Geyser 3
-    - HID: Ignore battery for ELAN touchscreen on ROG Flow X13 GV301RA
+    - [x86] HID: apple: Set the tilde quirk flag on the Geyser 3
+    - [x86] HID: Ignore battery for ELAN touchscreen on ROG Flow X13 GV301RA
     - HID: wacom: generic: Set battery quirk only when we see battery data
     - usb: typec: tcpm: fix multiple times discover svids error
     - serial: 8250: Reinit port->pm on port specific driver unbind
@@ -864,17 +858,14 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - [arm64,armhf] usb: dwc3: debugfs: Resume dwc3 before accessing registers
     - usb: gadget: u_ether: Fix host MAC address case
     - usb: typec: altmodes/displayport: fix pin_assignment_show
-    - Revert "usb: gadget: udc: core: Prevent redundant calls to pullup"
-    - Revert "usb: gadget: udc: core: Invoke usb_gadget_connect only when
-      started"
     - xhci-pci: Only run d3cold avoidance quirk for s2idle
     - xhci: Fix incorrect tracking of free space on transfer rings
     - ALSA: hda: Fix Oops by 9.1 surround channel names
     - ALSA: hda: Add NVIDIA codec IDs a3 through a7 to patch table
-    - ALSA: hda/realtek: Add quirk for Clevo L140AU
-    - ALSA: hda/realtek: Add a quirk for HP EliteDesk 805
-    - ALSA: hda/realtek: Add quirk for 2nd ASUS GU603
-    - ALSA: hda/realtek: Add quirk for HP EliteBook G10 laptops
+    - [x86] ALSA: hda/realtek: Add quirk for Clevo L140AU
+    - [x86] ALSA: hda/realtek: Add a quirk for HP EliteDesk 805
+    - [x86] ALSA: hda/realtek: Add quirk for 2nd ASUS GU603
+    - [x86] ALSA: hda/realtek: Add quirk for HP EliteBook G10 laptops
     - ALSA: hda/realtek: Fix mute and micmute LEDs for yet another HP laptop
     - can: j1939: recvmsg(): allow MSG_CMSG_COMPAT flag
     - can: isotp: recvmsg(): allow MSG_CMSG_COMPAT flag
@@ -952,10 +943,10 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - drm/amd/pm: add missing NotifyPowerSource message mapping for SMU13.0.7
     - drm/amd/pm: Fix output of pp_od_clk_voltage
     - Revert "binder_alloc: add missing mmap_lock calls when using the VMA"
-    - [arm*] Revert "android: binder: stop saving a pointer to the VMA"
-    - [arm*] binder: add lockless binder_alloc_(set|get)_vma()
-    - [arm*] binder: fix UAF caused by faulty buffer cleanup
-    - [arm*] binder: fix UAF of alloc->vma in race with munmap()
+    - Revert "android: binder: stop saving a pointer to the VMA"
+    - binder: add lockless binder_alloc_(set|get)_vma()
+    - binder: fix UAF caused by faulty buffer cleanup
+    - binder: fix UAF of alloc->vma in race with munmap()
     - drm/amd/amdgpu: limit one queue per gang
     - [x86] perf/x86/uncore: Correct the number of CHAs on SPR
     - [x86] topology: Fix erroneous smp_num_siblings on Intel Hybrid platforms
@@ -1231,6 +1222,114 @@ linux (6.1.33-1) UNRELEASED; urgency=medium
     - tls: rx: strp: don't use GFP_KERNEL in softirq context
     - [arm64] efi: Use SMBIOS processor version to key off Ampere quirk
     - ext4: enable the lazy init thread when remounting read/write
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.34
+    - scsi: megaraid_sas: Add flexible array member for SGLs
+    - net: sfp: fix state loss when updating state_hw_mask
+    - [x86] platform/surface: aggregator: Allow completion work-items to be
+      executed in parallel
+    - [x86] platform/surface: aggregator_tabletsw: Add support for book mode in
+      KIP subsystem
+    - [arm64] spi: qup: Request DMA before enabling clocks
+    - afs: Fix setting of mtime when creating a file/dir/symlink
+    - wifi: mt76: mt7615: fix possible race in mt7615_mac_sta_poll
+    - bpf, sockmap: Avoid potential NULL dereference in
+      sk_psock_verdict_data_ready()
+    - neighbour: fix unaligned access to pneigh_entry
+    - net/ipv4: ping_group_range: allow GID from 2147483648 to 4294967294
+    - bpf: Fix UAF in task local storage
+    - bpf: Fix elem_size not being set for inner maps
+    - net/ipv6: fix bool/int mismatch for skip_notify_on_dev_down
+    - net/smc: Avoid to access invalid RMBs' MRs in SMCRv1 ADD LINK CONT
+    - [arm64] net: enetc: correct the statistics of rx bytes
+    - [arm64] net: enetc: correct rx_bytes statistics of XDP
+    - net/sched: fq_pie: ensure reasonable TCA_FQ_PIE_QUANTUM values
+    - [x86] drm/i915: Explain the magic numbers for AUX SYNC/precharge length
+    - [x86] drm/i915: Use 18 fast wake AUX sync len
+    - Bluetooth: hci_sync: add lock to protect HCI_UNREGISTER
+    - Bluetooth: Fix l2cap_disconnect_req deadlock
+    - Bluetooth: ISO: don't try to remove CIG if there are bound CIS left
+    - Bluetooth: L2CAP: Add missing checks for invalid DCID
+    - wifi: mac80211: use correct iftype HE cap
+    - wifi: cfg80211: reject bad AP MLD address
+    - wifi: mac80211: mlme: fix non-inheritence element
+    - wifi: mac80211: don't translate beacon/presp addrs
+    - qed/qede: Fix scheduling while atomic
+    - wifi: cfg80211: fix locking in sched scan stop work
+    - netfilter: nft_bitwise: fix register tracking
+    - netfilter: conntrack: fix NULL pointer dereference in nf_confirm_cthelper
+    - netfilter: ipset: Add schedule point in call_ad().
+    - netfilter: nf_tables: out-of-bound check in chain blob
+    - ipv6: rpl: Fix Route of Death. (CVE-2023-2156)
+    - tcp: gso: really support BIG TCP
+    - rfs: annotate lockless accesses to sk->sk_rxhash
+    - rfs: annotate lockless accesses to RFS sock flow table
+    - net: sched: add rcu annotations around qdisc->qdisc_sleeping
+    - net: sched: move rtm_tca_policy declaration to include file
+    - net: sched: act_police: fix sparse errors in tcf_police_dump()
+    - net: sched: fix possible refcount leak in tc_chain_tmplt_add()
+    - bpf: Add extra path pointer check to d_path helper
+    - drm/amdgpu: fix Null pointer dereference error in
+      amdgpu_device_recover_vram
+    - lib: cpu_rmap: Fix potential use-after-free in irq_cpu_rmap_release()
+    - [arm64] net: bcmgenet: Fix EEE implementation
+    - bnxt_en: Don't issue AP reset during ethtool's reset operation
+    - bnxt_en: Query default VLAN before VNIC setup on a VF
+    - bnxt_en: Skip firmware fatal error recovery if chip is not accessible
+    - bnxt_en: Prevent kernel panic when receiving unexpected PHC_UPDATE event
+    - bnxt_en: Implement .set_port / .unset_port UDP tunnel callbacks
+    - batman-adv: Broken sync while rescheduling delayed work
+    - Input: xpad - delete a Razer DeathAdder mouse VID/PID entry
+    - Input: psmouse - fix OOB access in Elantech protocol
+    - Input: fix open count when closing inhibited device
+    - ALSA: hda: Fix kctl->id initialization
+    - ALSA: ymfpci: Fix kctl->id initialization
+    - [i386] ALSA: gus: Fix kctl->id initialization
+    - ALSA: cmipci: Fix kctl->id initialization
+    - [x86] ALSA: hda/realtek: Add quirk for Clevo NS50AU
+    - ALSA: ice1712,ice1724: fix the kcontrol->id initialization
+    - [x86] ALSA: hda/realtek: Add a quirk for HP Slim Desktop S01
+    - [x86] ALSA: hda/realtek: Add Lenovo P3 Tower platform
+    - [x86] ALSA: hda/realtek: Add quirks for Asus ROG 2024 laptops using
+      CS35L41
+    - [x86] drm/i915/gt: Use the correct error value when kernel_context() fails
+    - drm/amd/pm: conditionally disable pcie lane switching for some
+      sienna_cichlid SKUs
+    - drm/amdgpu: fix xclk freq on CHIP_STONEY
+    - drm/amdgpu: change reserved vram info print
+    - drm/amd/pm: Fix power context allocation in SMU13
+    - drm/amd/display: Reduce sdp bw after urgent to 90%
+    - wifi: iwlwifi: mvm: Fix -Warray-bounds bug in iwl_mvm_wait_d3_notif()
+    - can: j1939: j1939_sk_send_loop_abort(): improved error queue handling in
+      J1939 Socket
+    - can: j1939: change j1939_netdev_lock type to mutex
+    - can: j1939: avoid possible use-after-free when j1939_can_rx_register fails
+    - mptcp: only send RM_ADDR in nl_cmd_remove
+    - mptcp: add address into userspace pm list
+    - mptcp: update userspace pm infos
+    - ceph: fix use-after-free bug for inodes when flushing capsnaps
+    - [s390x] dasd: Use correct lock while counting channel queue length
+    - Bluetooth: Fix use-after-free in hci_remove_ltk/hci_remove_irk
+    - Bluetooth: fix debugfs registration
+    - Bluetooth: hci_qca: fix debugfs registration
+    - rbd: move RBD_OBJ_FLAG_COPYUP_ENABLED flag setting
+    - rbd: get snapshot context after exclusive lock is ensured to be held
+    - virtio_net: use control_buf for coalesce params
+    - [arm64] pinctrl: meson-axg: add missing GPIOA_18 gpio group
+    - usb: usbfs: Enforce page requirements for mmap
+    - usb: usbfs: Use consistent mmap functions
+    - [arm64] dts: imx8qm-mek: correct GPIOs for USDHC2 CD and WP signals
+    - [arm*] ASoC: simple-card-utils: fix PCM constraint error check
+    - blk-mq: fix blk_mq_hw_ctx active request accounting
+    - [arm64] dts: imx8mn-beacon: Fix SPI CS pinmux
+    - [arm*] i2c: mv64xxx: Fix reading invalid status value in atomic mode
+    - soundwire: stream: Add missing clear of alloc_slave_rt
+    - vhost: support PACKED when setting-getting vring_base
+    - ksmbd: fix out-of-bound read in deassemble_neg_contexts()
+    - ksmbd: fix out-of-bound read in parse_lease_state()
+    - ksmbd: check the validation of pdu_size in ksmbd_conn_handler_loop
+    - ext4: only check dquot_initialize_needed() when debugging
+    - wifi: rtw89: correct PS calculation for SUPPORTS_DYNAMIC_PS
+    - wifi: rtw88: correct PS calculation for SUPPORTS_DYNAMIC_PS
 
   [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
