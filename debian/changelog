@@ -3,6 +3,7 @@ linux (6.1.27-2) UNRELEASED; urgency=medium
   [ Salvatore Bonaccorso ]
   * d/salsa-ci.yml: Update for bookworm: Set RELEASE to bookworm
   * d/rules.real: Fix typo in setup_image target.
+  * [amd64,arm64] drivers/virtio: Enable VIRTIO_MEM as module (Closes: #1038665)
 
   [ Cyril Brulebois ]
   * udeb: Add r8188eu to nic-wireless-modules (Closes: #1035824)
