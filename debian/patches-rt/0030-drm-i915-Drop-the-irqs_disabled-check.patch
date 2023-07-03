@@ -1,8 +1,8 @@
-From 8cd3b7f4ef0c7f8748a15c67cf348262ae9e2f92 Mon Sep 17 00:00:00 2001
+From af1c3ab63ba0824cec3703f291afc3fdbee9ecdd Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 1 Oct 2021 20:01:03 +0200
 Subject: [PATCH 30/52] drm/i915: Drop the irqs_disabled() check
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 The !irqs_disabled() check triggers on PREEMPT_RT even with
 i915_sched_engine::lock acquired. The reason is the lock is transformed
@@ -41,5 +41,5 @@ index 62fad16a55e8..af07927650b2 100644
  
  	/*
 -- 
-2.40.0
+2.40.1
 

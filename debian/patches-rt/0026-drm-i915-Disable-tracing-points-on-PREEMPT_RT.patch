@@ -1,8 +1,8 @@
-From b0ffe8a8cb961676ae77ea696bf502f0da0ee8c8 Mon Sep 17 00:00:00 2001
+From 6387ecaa724f6b8bc8ba01591d6b60c654f75e33 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 6 Dec 2018 09:52:20 +0100
 Subject: [PATCH 26/52] drm/i915: Disable tracing points on PREEMPT_RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Luca Abeni reported this:
 | BUG: scheduling while atomic: kworker/u8:2/15203/0x00000003
@@ -47,5 +47,5 @@ index 37b5c9e9d260..1434485cb536 100644
  #include <linux/types.h>
  #include <linux/tracepoint.h>
 -- 
-2.40.0
+2.40.1
 

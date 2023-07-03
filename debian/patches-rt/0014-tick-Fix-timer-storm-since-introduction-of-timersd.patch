@@ -1,8 +1,8 @@
-From eeeebd2a5b2699ce755c1b0b0e6fa3a77dba463e Mon Sep 17 00:00:00 2001
+From 4a5ff66f19da19064f9b3ab76255bfd84c574503 Mon Sep 17 00:00:00 2001
 From: Frederic Weisbecker <frederic@kernel.org>
 Date: Tue, 5 Apr 2022 03:07:52 +0200
 Subject: [PATCH 14/52] tick: Fix timer storm since introduction of timersd
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 If timers are pending while the tick is reprogrammed on nohz_mode, the
 next expiry is not armed to fire now, it is delayed one jiffy forward
@@ -99,10 +99,10 @@ index 1892af494cdd..ab1fe34326ba 100644
  static void wake_timersd(void)
  {
 diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index b0e3c9205946..133e4160ed54 100644
+index a46506f7ec6d..1ae9e4e8a071 100644
 --- a/kernel/time/tick-sched.c
 +++ b/kernel/time/tick-sched.c
-@@ -779,7 +779,7 @@ static void tick_nohz_restart(struct tick_sched *ts, ktime_t now)
+@@ -789,7 +789,7 @@ static void tick_nohz_restart(struct tick_sched *ts, ktime_t now)
  
  static inline bool local_timer_softirq_pending(void)
  {
@@ -112,5 +112,5 @@ index b0e3c9205946..133e4160ed54 100644
  
  static ktime_t tick_nohz_next_event(struct tick_sched *ts, int cpu)
 -- 
-2.40.0
+2.40.1
 

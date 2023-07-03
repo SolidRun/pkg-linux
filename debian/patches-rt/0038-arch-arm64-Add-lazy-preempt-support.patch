@@ -1,8 +1,8 @@
-From fac59fde7629dad2733d35a2bec29968a0839ef5 Mon Sep 17 00:00:00 2001
+From 58493629d58feb59057b582abf4de5854766fd51 Mon Sep 17 00:00:00 2001
 From: Anders Roxell <anders.roxell@linaro.org>
 Date: Thu, 14 May 2015 17:52:17 +0200
 Subject: [PATCH 38/52] arch/arm64: Add lazy preempt support
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 arm64 is missing support for PREEMPT_RT. The main feature which is
 lacking is support for lazy preemption. The arch-specific entry code,
@@ -142,5 +142,5 @@ index 43adbfa5ead7..bd3f2f4603ac 100644
  			local_daif_restore(DAIF_PROCCTX_NOIRQ);
  
 -- 
-2.40.0
+2.40.1
 

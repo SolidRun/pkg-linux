@@ -1,9 +1,9 @@
-From c6c29b80a00481a25af3a4993f2caaed51390cf3 Mon Sep 17 00:00:00 2001
+From d40366b5a5dc68e98dad1e5a6fcfcb67a027397a Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:15:44 +0200
 Subject: [PATCH 05/52] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (drivers).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -555,7 +555,7 @@ index 38df602f2869..274891a18ae5 100644
  			data[i++] = tmp_tx_bytes;
  			data[i++] = tx->wake_queue;
 diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index d3e3ac242bfc..5a229a01f49d 100644
+index 2e5e0a887270..07b2ab8d054c 100644
 --- a/drivers/net/ethernet/google/gve/gve_main.c
 +++ b/drivers/net/ethernet/google/gve/gve_main.c
 @@ -51,10 +51,10 @@ static void gve_get_stats(struct net_device *dev, struct rtnl_link_stats64 *s)
@@ -584,7 +584,7 @@ index d3e3ac242bfc..5a229a01f49d 100644
  						       start));
  			s->tx_packets += packets;
  			s->tx_bytes += bytes;
-@@ -1273,9 +1273,9 @@ void gve_handle_report_stats(struct gve_priv *priv)
+@@ -1260,9 +1260,9 @@ void gve_handle_report_stats(struct gve_priv *priv)
  			}
  
  			do {
@@ -691,7 +691,7 @@ index 2cca9e84e31e..34ab5ff9823b 100644
  		stats->tx_packets += packets;
  		stats->tx_bytes   += bytes;
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-index f6fa63e4253c..1465ed7a6166 100644
+index e632041aed5f..995b2a7c8973 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
 @@ -154,7 +154,7 @@ __i40e_add_ethtool_stats(u64 **data, void *pointer,
@@ -724,7 +724,7 @@ index f6fa63e4253c..1465ed7a6166 100644
  	/* Once we successfully copy the stats in, update the data pointer */
  	*data += size;
 diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 68f390ce4f6e..6492d87107e1 100644
+index 0e01b1927c1c..9eef9d47efec 100644
 --- a/drivers/net/ethernet/intel/i40e/i40e_main.c
 +++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
 @@ -419,10 +419,10 @@ static void i40e_get_netdev_stats_struct_tx(struct i40e_ring *ring,
@@ -824,7 +824,7 @@ index 83cfc54a4706..6f171d1d85b7 100644
  	/* Once we successfully copy the stats in, update the data pointer */
  	*data += size;
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index cfc57cfc46e4..14560e166ffe 100644
+index 6a50f8ba3940..dbcaf197ecb5 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
 @@ -6393,10 +6393,10 @@ ice_fetch_u64_stats_per_ring(struct u64_stats_sync *syncp,
@@ -981,7 +981,7 @@ index 1d9b70e0ff67..56d611fbeee8 100644
  		packets += _packets;
  	}
 diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index e88e3dfac8c2..eda7188e8df4 100644
+index 0051aa676e19..1c22ff2dba9b 100644
 --- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
 +++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
 @@ -1335,10 +1335,10 @@ static void ixgbe_get_ethtool_stats(struct net_device *netdev,
@@ -1011,10 +1011,10 @@ index e88e3dfac8c2..eda7188e8df4 100644
  	}
  
 diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index faf3a094ac54..4507fba8747a 100644
+index 9b8848daeb43..03e583cf4815 100644
 --- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
 +++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -9047,10 +9047,10 @@ static void ixgbe_get_ring_stats64(struct rtnl_link_stats64 *stats,
+@@ -9051,10 +9051,10 @@ static void ixgbe_get_ring_stats64(struct rtnl_link_stats64 *stats,
  
  	if (ring) {
  		do {
@@ -1027,7 +1027,7 @@ index faf3a094ac54..4507fba8747a 100644
  		stats->tx_packets += packets;
  		stats->tx_bytes   += bytes;
  	}
-@@ -9070,10 +9070,10 @@ static void ixgbe_get_stats64(struct net_device *netdev,
+@@ -9074,10 +9074,10 @@ static void ixgbe_get_stats64(struct net_device *netdev,
  
  		if (ring) {
  			do {
@@ -1424,7 +1424,7 @@ index 8b77582bdfa0..a6b6ca1fd55e 100644
  		stats->tx_bytes += tbytes;
  		stats->tx_packets += tpkts;
 diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index daa028729d44..0605d1ee490d 100644
+index 486cbc8ab224..7a549b834e97 100644
 --- a/drivers/net/ethernet/nvidia/forcedeth.c
 +++ b/drivers/net/ethernet/nvidia/forcedeth.c
 @@ -1734,12 +1734,12 @@ static void nv_get_stats(int cpu, struct fe_priv *np,
@@ -1915,10 +1915,10 @@ index 9a1a5b203624..e470e3398abc 100644
  
  static int
 diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
-index 62ade69295a9..d10606f257c4 100644
+index b524bd374d68..555b0b1e9a78 100644
 --- a/drivers/net/team/team.c
 +++ b/drivers/net/team/team.c
-@@ -1865,13 +1865,13 @@ team_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
+@@ -1866,13 +1866,13 @@ team_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
  	for_each_possible_cpu(i) {
  		p = per_cpu_ptr(team->pcpu_stats, i);
  		do {
@@ -2001,10 +2001,10 @@ index a71786b3e7ba..9d42a8c6aab7 100644
  		result->xdp_tx_err += xdp_tx_err;
  		result->xdp_packets += packets;
 diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 3f1883814ce2..c9cf5be14bd8 100644
+index 47788f093551..fe6b567de3e5 100644
 --- a/drivers/net/virtio_net.c
 +++ b/drivers/net/virtio_net.c
-@@ -2075,18 +2075,18 @@ static void virtnet_stats(struct net_device *dev,
+@@ -2105,18 +2105,18 @@ static void virtnet_stats(struct net_device *dev,
  		struct send_queue *sq = &vi->sq[i];
  
  		do {
@@ -2027,7 +2027,7 @@ index 3f1883814ce2..c9cf5be14bd8 100644
  
  		tot->rx_packets += rpackets;
  		tot->tx_packets += tpackets;
-@@ -2697,12 +2697,12 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
+@@ -2724,12 +2724,12 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
  
  		stats_base = (u8 *)&rq->stats;
  		do {
@@ -2042,7 +2042,7 @@ index 3f1883814ce2..c9cf5be14bd8 100644
  		idx += VIRTNET_RQ_STATS_LEN;
  	}
  
-@@ -2711,12 +2711,12 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
+@@ -2738,12 +2738,12 @@ static void virtnet_get_ethtool_stats(struct net_device *dev,
  
  		stats_base = (u8 *)&sq->stats;
  		do {
@@ -2147,5 +2147,5 @@ index dc404e05970c..14aec417fa06 100644
  		tot->rx_packets += rx_packets;
  		tot->tx_packets += tx_packets;
 -- 
-2.40.0
+2.40.1
 

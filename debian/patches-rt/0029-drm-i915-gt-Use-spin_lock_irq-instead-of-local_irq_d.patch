@@ -1,9 +1,9 @@
-From 1156d26a56c89c510b4936c595f906705d3f0794 Mon Sep 17 00:00:00 2001
+From fffb2c13f69d24c9cf63fe008c7db2047062e189 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 8 Sep 2021 19:03:41 +0200
 Subject: [PATCH 29/52] drm/i915/gt: Use spin_lock_irq() instead of
  local_irq_disable() + spin_lock()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 execlists_dequeue() is invoked from a function which uses
 local_irq_disable() to disable interrupts so the spin_lock() behaves
@@ -91,5 +91,5 @@ index fc4a84628985..fc937697fe14 100644
  	}
  
 -- 
-2.40.0
+2.40.1
 

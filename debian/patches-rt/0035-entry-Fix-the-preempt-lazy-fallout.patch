@@ -1,8 +1,8 @@
-From 856c63a8e3e3dded78cdf17017a61e506c728d39 Mon Sep 17 00:00:00 2001
+From af684ce7cf3bd88f1e5ce8ee1831a3be023b96f6 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 13 Jul 2021 07:52:52 +0200
 Subject: [PATCH 35/52] entry: Fix the preempt lazy fallout
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Common code needs common defines....
 
@@ -45,5 +45,5 @@ index 93cc1ae12125..3dc3704a3cdb 100644
  	(_TIF_SIGPENDING | _TIF_NOTIFY_RESUME | _TIF_UPROBE |		\
  	 _TIF_NEED_RESCHED_MASK | _TIF_PATCH_PENDING | _TIF_NOTIFY_SIGNAL |	\
 -- 
-2.40.0
+2.40.1
 

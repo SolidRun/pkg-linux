@@ -1,8 +1,8 @@
-From 4b8e1fa3cdb1a99404bc373ad5f590308ecd58c4 Mon Sep 17 00:00:00 2001
+From da02563926ebf7a39b6d7ff9ee0f65826801f79f Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 15 Aug 2022 17:29:50 +0200
 Subject: [PATCH 09/52] net: Avoid the IPI to free the
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 skb_attempt_defer_free() collects a skbs, which was allocated on a
 remote CPU, on a per-CPU list. These skbs are either freed on that
@@ -25,10 +25,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  3 files changed, 38 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index b072449b0f1a..5f818dc98ca3 100644
+index eac51e22a52a..ca0ab5bae817 100644
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -3165,7 +3165,11 @@ struct softnet_data {
+@@ -3166,7 +3166,11 @@ struct softnet_data {
  	int			defer_count;
  	int			defer_ipi_scheduled;
  	struct sk_buff		*defer_list;
@@ -41,10 +41,10 @@ index b072449b0f1a..5f818dc98ca3 100644
  
  static inline void input_queue_head_incr(struct softnet_data *sd)
 diff --git a/net/core/dev.c b/net/core/dev.c
-index f540b47faf79..dec69ba97e5e 100644
+index 93c10ae3a50b..2181ee13df8e 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -4585,15 +4585,6 @@ static void rps_trigger_softirq(void *data)
+@@ -4587,15 +4587,6 @@ static void rps_trigger_softirq(void *data)
  
  #endif /* CONFIG_RPS */
  
@@ -60,7 +60,7 @@ index f540b47faf79..dec69ba97e5e 100644
  /*
   * Check if this softnet_data structure is another cpu one
   * If yes, queue it to our IPI list and return 1
-@@ -6651,6 +6642,30 @@ static void skb_defer_free_flush(struct softnet_data *sd)
+@@ -6653,6 +6644,30 @@ static void skb_defer_free_flush(struct softnet_data *sd)
  	}
  }
  
@@ -91,7 +91,7 @@ index f540b47faf79..dec69ba97e5e 100644
  static __latent_entropy void net_rx_action(struct softirq_action *h)
  {
  	struct softnet_data *sd = this_cpu_ptr(&softnet_data);
-@@ -11392,7 +11407,11 @@ static int __init net_dev_init(void)
+@@ -11394,7 +11409,11 @@ static int __init net_dev_init(void)
  		INIT_CSD(&sd->csd, rps_trigger_softirq, sd);
  		sd->cpu = i;
  #endif
@@ -104,10 +104,10 @@ index f540b47faf79..dec69ba97e5e 100644
  
  		init_gro_hash(&sd->backlog);
 diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index cd4b3a610961..60ec16b6e97a 100644
+index ef9772b12624..ee4ee477aa3b 100644
 --- a/net/core/skbuff.c
 +++ b/net/core/skbuff.c
-@@ -6662,6 +6662,11 @@ nodefer:	__kfree_skb(skb);
+@@ -6675,6 +6675,11 @@ nodefer:	__kfree_skb(skb);
  	/* Make sure to trigger NET_RX_SOFTIRQ on the remote CPU
  	 * if we are unlucky enough (this seems very unlikely).
  	 */
@@ -121,5 +121,5 @@ index cd4b3a610961..60ec16b6e97a 100644
 +	}
  }
 -- 
-2.40.0
+2.40.1
 

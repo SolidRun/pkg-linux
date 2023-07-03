@@ -1,8 +1,8 @@
-From 6165254b203bb46c34b0822d66f2b3e11c8bdf61 Mon Sep 17 00:00:00 2001
+From d54f6584e77d85eb25bddf68f776729d272c4717 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 21 Feb 2022 17:59:14 +0100
 Subject: [PATCH 31/52] Revert "drm/i915: Depend on !PREEMPT_RT."
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.26-rt8.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
 
 Once the known issues are addressed, it should be safe to enable the
 driver.
@@ -13,7 +13,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  1 file changed, 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index 3a6e176d77aa..43b8bf809962 100644
+index 6b10868ec72f..1fbdb7b4e6e1 100644
 --- a/drivers/gpu/drm/i915/Kconfig
 +++ b/drivers/gpu/drm/i915/Kconfig
 @@ -3,7 +3,6 @@ config DRM_I915
@@ -25,5 +25,5 @@ index 3a6e176d77aa..43b8bf809962 100644
  	select INTERVAL_TREE
  	# we need shmfs for the swappable backing store, and in particular
 -- 
-2.40.0
+2.40.1
 
