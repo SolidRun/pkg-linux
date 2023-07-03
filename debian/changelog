@@ -1632,6 +1632,7 @@ linux (6.1.37-1) UNRELEASED; urgency=medium
   * [amd64,arm64] drivers/virtio: Enable VIRTIO_MEM as module (Closes: #1038665)
   * Bump ABI to 10
   * [rt] Update to 6.1.33-rt11
+  * Revert "drm/amd/display: edp do not add non-edid timings"
 
   [ Cyril Brulebois ]
   * udeb: Add r8188eu to nic-wireless-modules (Closes: #1035824)
