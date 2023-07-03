@@ -1,4 +1,4 @@
-linux (6.1.37-1) UNRELEASED; urgency=medium
+linux (6.1.37-1) bookworm-security; urgency=high
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.28
@@ -1642,7 +1642,7 @@ linux (6.1.37-1) UNRELEASED; urgency=medium
   * d/b/test-patches: Build linux-{kbuild,bootwrapper} packages
     (Closes: #871216, #1035359)
 
- -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 29 May 2023 09:07:30 +0200
+ -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 03 Jul 2023 21:28:31 +0200
 
 linux (6.1.27-1) unstable; urgency=medium
 
