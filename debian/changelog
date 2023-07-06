@@ -1,3 +1,20 @@
+linux (6.1.38-1) UNRELEASED; urgency=medium
+
+  * New upstream stable update:
+    https://www.kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.1.38
+    - drm/amd/display: Remove optimization for VRR updates
+    - drm/amd/display: Do not update DRR while BW optimizations pending
+    - PCI/ACPI: Validate acpi_pci_set_power_state() parameter
+    - PCI/ACPI: Call _REG when transitioning D-states
+    - execve: always mark stack as growing down during early stack setup
+    - perf symbols: Symbol lookup with kcore can fail if multiple segments match
+      stext
+    - scripts/tags.sh: Resolve gtags empty index generation
+    - drm/amdgpu: Validate VM ioctl flags.
+    - drm/amd/display: Ensure vmin and vmax adjust for DCE
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 06 Jul 2023 21:47:57 +0200
+
 linux (6.1.37-1) bookworm-security; urgency=high
 
   * New upstream stable update:
