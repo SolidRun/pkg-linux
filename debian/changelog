@@ -13,6 +13,9 @@ linux (6.1.38-1) UNRELEASED; urgency=medium
     - drm/amdgpu: Validate VM ioctl flags.
     - drm/amd/display: Ensure vmin and vmax adjust for DCE
 
+  [ Salvatore Bonaccorso ]
+  * drm: use mgr->dev in drm_dbg_kms in drm_dp_add_payload_part2
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 06 Jul 2023 21:47:57 +0200
 
 linux (6.1.37-1) bookworm-security; urgency=high
