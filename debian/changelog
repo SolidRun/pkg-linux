@@ -16,6 +16,8 @@ linux (6.1.38-1) UNRELEASED; urgency=medium
   [ Salvatore Bonaccorso ]
   * drm: use mgr->dev in drm_dbg_kms in drm_dp_add_payload_part2
   * mm/mmap: Fix VM_LOCKED check in do_vmi_align_munmap()
+  * netfilter: nf_tables: do not ignore genmask when looking up chain by id
+    (CVE-2023-31248)
 
  -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 06 Jul 2023 21:47:57 +0200
 
