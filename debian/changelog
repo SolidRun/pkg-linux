@@ -1,3 +1,10 @@
+linux (6.1.38-2+sr1) bookworm; urgency=medium
+
+  * support i.MX6 hummingboard CBi
+  * enable ADIN1300 PHY driver
+
+ -- Josua Mayer <josua@solid-run.com>  Thu, 03 Aug 2023 15:21:01 +0300
+
 linux (6.1.38-2) bookworm-security; urgency=high
 
   * [x86] cpu/amd: Move the errata checking functionality up
